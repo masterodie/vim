@@ -3,7 +3,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "Set to Vim Mode
-"set nocompatible
+set nocompatible
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Usability settings
@@ -30,7 +30,6 @@ let maplocalleader = ","
 "Auto indentation
 set pastetoggle=<F11>
 set autoindent
-filetype plugin indent on
 set smartindent
 
 "Bigger History
@@ -92,12 +91,15 @@ map k gk
 map j gj
 
 "Set default Shell
-set shell=/bin/zsh
+set shell=/bin/bash
+set shellcmdflag=-lic
 
+"""
+" Pathogen
+"""
 
-"Automatically cd into the directory that the file is in
-"autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
-"set autochdir
+call pathogen#infect()
+call pathogen#helptags()
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
@@ -132,10 +134,12 @@ set guifont=Envy\ Code\ R:h13
 set antialias
 
 ""Theme Settings
-colorscheme zenburn
-set t_Co=256
-""let g:solarized_termcolors=256
-""let g:solarized_termtrans=1
+set background=dark
+colorscheme solarized
+"set t_Co=256
+let g:solarized_termcolors=256
+"let g:solarized_termtrans=1
+call togglebg#map("<F7>")
 
 
 "Status line gnarliness
@@ -181,24 +185,16 @@ set tags+=./tags;
 filetype plugin on
 filetype indent on
 
-"""Auto Completion Settings
-
-"setlocal omnifunc=javacomplete#Complete
-"setlocal completefunc=javacomplete#CompleteParamsInfo
-
 """ Buftabs
 "Buffer Settings
 let g:buftabs_only_basename=1
-
-""" vim-latex
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor = "latex"
 
 """ NERDTree
 nnoremap <F3>  :NERDTreeToggle<CR>
 
 """ TagList
 nnoremap <F4>  :TlistToggle<CR>
+let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
 let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 25
 
@@ -206,36 +202,9 @@ let Tlist_WinWidth = 25
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 
-""" Java Settings
-"nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
-"nnoremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
-"nnoremap <silent> <buffer> <cr>      :JavaSearchContext<cr>
-
-"""
-" Jekyll Settings
-"""
-
-"let g:jekyll_path = "~/Dokumente/Projects/Blog"
-"let g:jekyll_build_command = '/Users/odie/.rvm/rubies/ruby-1.9.3-p392/bin/ruby /Users/odie/.rvm/rubies/ruby-1.9.3-p392/bin/jekyll --no-auto --no-server'
-
-"""
-" SrcEpl
-"""
-
-nmap <F6> :SrcExplToggle<CR>
-
-"""
-" Pathogen
-"""
-
-call pathogen#infect()
-call pathogen#helptags()
-
-"""
-" MRU
-"""
-
-nmap <F2> :MRU<CR>
+""" Easytags
+let g:easytags_cmd = '/usr/local/bin/ctags'
+let g:easytags_dynamic_files = 1
 
 """
 " NFO files
@@ -258,21 +227,18 @@ endfunction
 au BufReadPre *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
 au BufReadPost *.nfo call RestoreFileEncodings()
 
-" Minibufexplorer
-let g:miniBufExplorerMoreThanOne = 2
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
 "Delimitmate
 let delimitMate_matchpairs = '(:),[:],{:},<:>'
 let delimitMate_quotes = "\" ' ` | %"
 
-"Closetag
-"autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
-"autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
-"
 "Ragtag
 let g:ragtag_global_maps = 1
+
+"""
+" Ruby Settings
+"""
+
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1

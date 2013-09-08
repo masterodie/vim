@@ -1,0 +1,9 @@
+snippet t "Multi line HTML Tag" b
+<${1:div}>
+  ${2}
+</${1/(\w+).*/$1/}>
+endsnippet
+
+snippet tl "Single line HTML Tag"
+<${1:div}>${2}</${1/(\w+).*/$1/}>
+endsnippet
