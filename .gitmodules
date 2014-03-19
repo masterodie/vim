@@ -90,3 +90,6 @@
 [submodule "bundle/cocoa.vim"]
 	path = bundle/cocoa.vim
 	url = https://github.com/msanders/cocoa.vim.git
+[submodule "bundle/pathogen"]
+	path = bundle/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
