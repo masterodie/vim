@@ -84,3 +84,9 @@
 [submodule "bundle/vim-project"]
 	path = bundle/vim-project
 	url = https://github.com/amiorin/vim-project.git
+[submodule "bundle/VimRepress"]
+	path = bundle/VimRepress
+	url = https://github.com/vim-scripts/VimRepress.git
+[submodule "bundle/cocoa.vim"]
+	path = bundle/cocoa.vim
+	url = https://github.com/msanders/cocoa.vim.git

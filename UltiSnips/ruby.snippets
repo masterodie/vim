@@ -1,3 +1,19 @@
 snippet todo "Todo" b
 # TODO: [DATE: ${2:${1:`date +%d`}.`date +%m`}.`date +%Y`] $3
 endsnippet
+
+snippet header "Header Block" b
+#####################################################
+# File: ${1:`!v expand('%:t')`}
+# Author: ${2:`echo $USER`}
+# Description: ${3}
+#${4: Last Modified: `!v strftime("%B %d, %Y")`}
+#####################################################o
+
+$0
+endsnippet
+
+snippet exec "#!/usr/bin/env ruby" b
+#!/usr/bin/env ruby
+
+endsnippet

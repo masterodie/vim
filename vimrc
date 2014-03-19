@@ -20,8 +20,8 @@ set whichwrap=<,>,[,],h,l
 
 "Set Tab to 2 spaces
 set expandtab
-set shiftwidth=2
-set softtabstop=2
+"set shiftwidth=2
+"set softtabstop=2
 
 "Set Leader Key
 let mapleader = ","
@@ -237,6 +237,8 @@ let g:ragtag_global_maps = 1
 """
 " Ruby Settings
 """
+autocmd FileType ruby setlocal ts=4
+autocmd FileType ruby setlocal sw=4
 
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
@@ -245,3 +247,22 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 
+"""
+" vim-project
+"""
+
+let g:project_use_nerdtree = 1
+set rtp+=~/.vim/bundle/vim-project/
+call project#rc()
+
+Project  '~/.vim' , 'vim'
+Project  '/Library/WebServer/Documents/wordpress/wp-content/themes/gcBootstrap/',  'gcBootstrap'
+Project  '~/Documents/Projects/tutorial/railstutorial/first_app', 'railstutorial first_app'
+Project  '~/Documents/Projects/tutorial/railstutorial/demo_app', 'railstutorial demo_app'
+Project  '~/Documents/Projects/tutorial/railstutorial/sample_app', 'railstutorial sample_app'
+Project  '~/Documents/Projects/wpde_address_widget/', 'wpde_address_widget'
+Project  '~/Sites/neff-steindesign.de/', 'neff-steindesign'
+Project  '~/Sites/neff-steindesign.de/wp-content/themes/wpbs/', 'WPBS'
+Project  '~/Documents/Projects/cards/solitaire/', 'cardgames solitaire'
+Project  '~/Documents/Projects/games/ruby/map/', 'games map'
+Project  '~/Documents/Projects/Xcode/Patience/', 'Patience'
