@@ -97,6 +97,25 @@ set shellcmdflag=-lic
 """
 " Pathogen
 """
+
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = []
+
+if !has('ruby')
+  call add(g:pathogen_disabled, 'vim-ruby')
+  call add(g:pathogen_disabled, 'vim-rails')
+  call add(g:pathogen_disabled, 'vim-rspec')
+  call add(g:pathogen_disabled, 'vim-endwise')
+endif
+
+if !has('python')
+  call add(g:pathogen_disabled, 'ultisnips')
+endif
+
+if !filereadable("/usr/bin/ctags")
+  call add(g:pathogen_disabled, 'vim-easytags')
+endif
+
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
