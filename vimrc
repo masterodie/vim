@@ -91,7 +91,7 @@ map k gk
 map j gj
 
 "Set default Shell
-set shell=/bin/bash
+set shell=/bin/zsh
 set shellcmdflag=-lic
 
 """
@@ -100,6 +100,8 @@ set shellcmdflag=-lic
 
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled = []
+
+call add(g:pathogen_disabled, 'command-t')
 
 if !has('ruby')
   call add(g:pathogen_disabled, 'vim-ruby')
@@ -194,8 +196,7 @@ else
    map <F12> :w!<CR>:!aspell --lang=de_DE check %<CR>:e! %<CR>
 endif
 
-set tags=~/.vim/tags
-set tags+=./tags;
+set tags=~/.vim/tags,./tags,tags
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Plugin Settings
@@ -211,11 +212,8 @@ let g:buftabs_only_basename=1
 """ NERDTree
 nnoremap <F3>  :NERDTreeToggle<CR>
 
-""" TagList
-nnoremap <F4>  :TlistToggle<CR>
-let Tlist_Ctags_Cmd="/usr/local/bin/ctags"
-let Tlist_Use_Right_Window = 1
-let Tlist_WinWidth = 25
+""" Tagbar
+nnoremap <F4>  :TagbarToggle<CR>
 
 """ UndoTree
 nnoremap <F5> :UndotreeToggle<CR>
@@ -248,7 +246,6 @@ au BufReadPost *.nfo call RestoreFileEncodings()
 
 "Delimitmate
 let delimitMate_matchpairs = '(:),[:],{:},<:>'
-let delimitMate_quotes = "\" ' ` | %"
 
 "Ragtag
 let g:ragtag_global_maps = 1
@@ -256,8 +253,8 @@ let g:ragtag_global_maps = 1
 """
 " Ruby Settings
 """
-autocmd FileType ruby setlocal ts=4
-autocmd FileType ruby setlocal sw=4
+autocmd FileType ruby setlocal ts=2
+autocmd FileType ruby setlocal sw=2
 
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
@@ -265,6 +262,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
+let g:rubycomplete_load_gemfile = 1
 
 """
 " vim-project
@@ -272,6 +270,18 @@ let g:rubycomplete_rails = 1
 
 let g:project_use_nerdtree = 1
 set rtp+=~/.vim/bundle/vim-project/
-call project#rc()
+call project#rc("~/Documents/Projects/")
 
 Project  '~/.vim' , 'vim'
+Project  'Ruby/minecraft' , 'Minecraft'
+Project  'Ruby/gajacraft' , 'gajaCraft'
+Project  'Ruby/minecraft_rtoolkit' , 'Minecraft::RToolkit'
+Project  'Ruby/minecraft_jsonapiv2' , 'Minecraft::JSONAPIv2'
+
+
+"""
+" command-t
+"""
+
+noremap <leader>o <Esc>:CtrlP<CR>
+noremap <leader>m <Esc>:CtrlPMixed<CR>
