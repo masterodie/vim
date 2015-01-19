@@ -91,8 +91,8 @@ map k gk
 map j gj
 
 "Set default Shell
-set shell=/bin/zsh
-set shellcmdflag=-lic
+"set shell=/bin/zsh
+"set shellcmdflag=-lic
 
 """
 " Pathogen
@@ -220,7 +220,7 @@ nnoremap <F5> :UndotreeToggle<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 
 """ Easytags
-let g:easytags_cmd = '/usr/local/bin/ctags'
+""" let g:easytags_cmd = '/usr/local/bin/ctags'
 let g:easytags_dynamic_files = 1
 
 """

@@ -1,6 +1,6 @@
-" ~/.dotfiles/vim/sessions/test.vim:
+" ~/.dotfiles/vim/sessions/restart.vim:
 " Vim session script.
-" Created by session.vim 2.6.4 on 03 August 2014 at 22:28:56.
+" Created by session.vim 2.6.4 on 03 August 2014 at 22:41:46.
 " Open this file in Vim and run :source % to restore your session.
 
 set guioptions=egmrL
@@ -19,45 +19,22 @@ if &cp | set nocp | endif
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd ~/
+cd ~/Documents/Projects/Ruby/minecraft
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
+badd +0 Gemfile
 argglobal
 silent! argdel *
+argadd Gemfile
+edit Gemfile
 set splitbelow splitright
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 31 + 32) / 65)
-exe '2resize ' . ((&lines * 31 + 32) / 65)
 argglobal
-edit .dotfiles/vim/bundle/vim-session/doc/session.txt
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
-silent! normal! zE
-let s:l = 149 - ((5 * winheight(0) + 15) / 31)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-149
-normal! 05|
-lcd ~/.dotfiles/vim
-wincmd w
-argglobal
-enew
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -66,9 +43,14 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-wincmd w
-exe '1resize ' . ((&lines * 31 + 32) / 65)
-exe '2resize ' . ((&lines * 31 + 32) / 65)
+silent! normal! zE
+let s:l = 69 - ((44 * winheight(0) + 31) / 63)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+69
+normal! 010|
+lcd ~/Documents/Projects/Ruby/minecraft
 tabnext 1
 if exists('s:wipebuf')
 "   silent exe 'bwipe ' . s:wipebuf
