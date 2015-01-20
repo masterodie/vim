@@ -149,7 +149,15 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 ""Gui Font
-set guifont=Envy\ Code\ R:h13
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Droid\ Sans\ Mono\ 10
+  elseif has("gui_macvim")
+    set guifont=Droid\ Sans\ Mono:h13
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
+endif
 
 ""Antialiasing on
 set antialias
@@ -285,3 +293,10 @@ Project  'Ruby/minecraft_jsonapiv2' , 'Minecraft::JSONAPIv2'
 
 noremap <leader>o <Esc>:CtrlP<CR>
 noremap <leader>m <Esc>:CtrlPMixed<CR>
+
+
+"""
+" python-Mode
+"""
+
+let g:pymode_rope = 0
