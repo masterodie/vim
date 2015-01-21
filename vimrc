@@ -281,11 +281,8 @@ set rtp+=~/.vim/bundle/vim-project/
 call project#rc("~/Documents/Projects/")
 
 Project  '~/.vim' , 'vim'
-Project  'Ruby/minecraft' , 'Minecraft'
-Project  'Ruby/gajacraft' , 'gajaCraft'
-Project  'Ruby/minecraft_rtoolkit' , 'Minecraft::RToolkit'
-Project  'Ruby/minecraft_jsonapiv2' , 'Minecraft::JSONAPIv2'
-
+Project  '~/code/python/Cards', 'Python Cards'
+Project  '~/code/python/ternary27', 'ternary27'
 
 """
 " command-t
@@ -300,3 +297,4 @@ noremap <leader>m <Esc>:CtrlPMixed<CR>
 """
 
 let g:pymode_rope = 0
+let g:pymode_lint = 0
