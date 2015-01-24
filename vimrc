@@ -298,17 +298,26 @@ let g:pymode_pylint = 0
 " Airline
 """
 
-set laststatus=2
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
+let g:airline_theme = "zenburn"
+if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+endif
+
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#whitespace#trailing_format = '●[%s]'
+let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'
 
 """
 " Syntastic
 """
-
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -316,3 +325,17 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
+
+
+"""
+" Ultisnips and Youcompleteme issue fix
+"""
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
