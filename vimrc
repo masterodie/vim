@@ -130,17 +130,17 @@ call pathogen#helptags()
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
 
-"function! ResCur()
-  "if line("'\"") <= line("$")
-    "normal! g`"
-    "return 1
-  "endif
-"endfunction
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
 
-"augroup resCur
-  "autocmd!
-  "autocmd BufWinEnter * call ResCur()
-"augroup END
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Visual Settings
@@ -291,8 +291,14 @@ noremap <leader>m <Esc>:CtrlPMixed<CR>
 " python-Mode
 """
 
-let g:pymode_rope = 0
+"pylint
 let g:pymode_pylint = 0
+
+"rope
+
+let g:pymode_rope = 1
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion = 0
 
 """
 " Airline
@@ -326,16 +332,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 
+"" YouCompleteMe
+let g:ycm_key_list_previous_completion=['<Up>']
+let g:ycm_min_num_of_chars_for_completion=1
 
-"""
-" Ultisnips and Youcompleteme issue fix
-"""
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"" Ultisnips
+let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsListSnippets="<c-s-tab>"
