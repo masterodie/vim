@@ -19,7 +19,9 @@ augroup END
 set number
 " Make bell visual and disable error bells
 set visualbell
+" Disable error bells
 set noerrorbells
+" Show (partial) command in status line
 "" }}}
 "" Theme Settings {{{
 set background=dark
@@ -39,15 +41,20 @@ filetype indent on
 "" Keyboard Settings {{{
 
 "Move over end of line
-set whichwrap=<,>,[,],h,l
+set whichwrap=b,s,<,>,[,],h,l
 " Backspace over autoindent, line breaks, start of insert (see :help 'backspace')
 set backspace=indent,eol,start
-"Set Tab to 2 spaces
+"Set Tab to expand into spaces
 set expandtab
 "Auto indentation
-set pastetoggle=<F11>
 set autoindent
+"Smart indentation
 set smartindent
+"Smart tab
+set smarttab
+"Tab Width
+set tabstop=4
+set shiftwidth=4
 
 "" }}}
 "" Search Settings {{{
@@ -143,6 +150,8 @@ call pathogen#helptags()
 
 """ }}}
 """ Key Bindings {{{
+" Paste mode toggle key
+set pastetoggle=<F11>
 
 "Set Leader Key
 let g:mapleader = ","
