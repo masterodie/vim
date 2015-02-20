@@ -23,14 +23,6 @@ set visualbell
 set noerrorbells
 " Show (partial) command in status line
 "" }}}
-"" Theme Settings {{{
-set background=dark
-colorscheme solarized
-"set t_Co=256
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-call togglebg#map("<F7>")
-"" }}}
 "" Plugin Settings {{{
 " Enable Syntax Highlighting
 syntax on
@@ -149,6 +141,14 @@ call pathogen#infect()
 call pathogen#helptags()
 
 """ }}}
+"" Theme Settings {{{
+set background=dark
+colorscheme solarized
+"set t_Co=256
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+call togglebg#map("<F7>")
+"" }}}
 """ Key Bindings {{{
 " Paste mode toggle key
 set pastetoggle=<F11>
@@ -290,11 +290,12 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 "" }}}
 "" YouCompleteMe {{{
-let g:ycm_key_list_previous_completion=['<Up>']
-let g:ycm_min_num_of_chars_for_completion=1
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 "" }}}
 "" Ultisnips {{{
-let g:UltiSnipsExpandTrigger="<c-tab>"
-let g:UltiSnipsListSnippets="<c-s-tab>"
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "" }}}
 """ }}}
