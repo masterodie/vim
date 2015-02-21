@@ -18,8 +18,6 @@ augroup END
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled = []
 
-call add(g:pathogen_disabled, 'command-t')
-
 if !has('ruby')
         call add(g:pathogen_disabled, 'vim-ruby')
         call add(g:pathogen_disabled, 'vim-rails')
@@ -176,7 +174,10 @@ if has("gui_running")
         elseif has("gui_macvim")
                 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
         elseif has("gui_win32")
-                set guifont=Consolas:h11:cANSI
+                set guifont=Droid\ Sans\ Mono:h10:cANSI
+                set guioptions=eg
+                set backupdir=~/vimfiles/backup
+                set directory=~/vimfiles/tmp
         endif
 
         "" Antialiasing on
