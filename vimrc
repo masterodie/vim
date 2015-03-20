@@ -15,6 +15,28 @@ augroup vimrc
         autocmd!
 augroup END
 """ }}}
+""" Pathogen disables {{{
+
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = []
+
+if !has('ruby')
+        call add(g:pathogen_disabled, 'vim-ruby')
+        call add(g:pathogen_disabled, 'vim-rails')
+        call add(g:pathogen_disabled, 'vim-rspec')
+        call add(g:pathogen_disabled, 'vim-endwise')
+endif
+
+if !has('python')
+        call add(g:pathogen_disabled, 'ultisnips')
+        call add(g:pathogen_disabled, 'pymode')
+        call add(g:pathogen_disabled, 'jedi-vim')
+endif
+
+if !filereadable("/usr/bin/ctags")
+        call add(g:pathogen_disabled, 'vim-easytags')
+endif
+""" }}}
 """ Editor Settings {{{
 "" Plugin Settings {{{
 " Enable Syntax Highlighting
@@ -71,6 +93,13 @@ let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 call togglebg#map("<F7>")
 "" }}}
+"" Plugin Settings {{{
+" Enable Syntax Highlighting
+syntax on
+filetype plugin on
+filetype indent on
+
+""" }}}
 "" Keyboard Settings {{{
 
 "Move over end of line
@@ -152,6 +181,9 @@ augroup END
 "Mouse select
 set selectmode=mouse
 "" }}}
+""" {{{ Status Line
+set laststatus=2
+""" }}}
 """ }}}
 """ Key Bindings {{{
 " Paste mode toggle key
@@ -168,6 +200,13 @@ map k gk
 map j gj
 
 """ }}}
+""" {{{ Pathogen runtime
+
+runtime bundle/pathogen/autoload/pathogen.vim
+call pathogen#infect()
+call pathogen#helptags()
+
+""" }}}
 """ GUI Sttings {{{
 
 if has("gui_running")
@@ -177,41 +216,15 @@ if has("gui_running")
         elseif has("gui_macvim")
                 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
         elseif has("gui_win32")
-                set guifont=Consolas:h11:cANSI
+                set guifont=Droid\ Sans\ Mono:h10:cANSI
+                set guioptions=eg
+                set backupdir=~/vimfiles/backup
+                set directory=~/vimfiles/tmp
         endif
 
         "" Antialiasing on
         set antialias
 endif
-
-""" }}}
-""" Spell check settings {{{
-
-
-" Use english for spellchecking, but don't spellcheck by default
-if version >= 700
-        set spl=de_20,en_us
-        set nospell
-        map <F12> :set spell!<CR>
-else
-        "Spell Checking with aspell on F12
-        map <F12> :w!<CR>:!aspell --lang=de_DE check %<CR>:e! %<CR>
-endif
-
-
-
-hi clear SpellBad
-hi clear SpellCap
-hi clear SpellRare
-hi clear SpellLocal
-hi SpellBad cterm=bold,undercurl
-hi SpellBad ctermfg=darkred
-hi SpellCap cterm=undercurl
-hi SpellCap ctermfg=darkred
-hi SpellRare cterm=bold,undercurl
-hi SpellRare ctermfg=darkgreen
-hi SpellLocal cterm=bold,undercurl
-hi SpellLocal ctermfg=darkblue
 
 """ }}}
 """ Plugins {{{
@@ -271,7 +284,7 @@ autocmd vimrc FileType python setlocal formatoptions+=t
 "" Airline {{{
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme = "zenburn"
+let g:airline_theme = "solarized"
 if !exists('g:airline_symbols')
         let g:airline_symbols = {}
 endif
@@ -296,6 +309,7 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 "" }}}
 "" YouCompleteMe {{{
+<<<<<<< HEAD
 let g:ycm_key_list_previous_completion=['<Up>']
 let g:ycm_min_num_of_chars_for_completion=1
 let g:ycm_key_list_select_completion=[]
@@ -304,5 +318,15 @@ let g:ycm_key_list_previous_completion=[]
 "" Ultisnips {{{
 "let g:UltiSnipsExpandTrigger="<c-tab>"
 "let g:UltiSnipsListSnippets="<c-s-tab>"
+=======
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+"" }}}
+"" Ultisnips {{{
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+>>>>>>> 71f7941125398907a901837b39623335b32af71f
 "" }}}
 """ }}}
+

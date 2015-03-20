@@ -106,6 +106,9 @@
 [submodule "bundle/xmledit"]
 	path = bundle/xmledit
 	url = https://github.com/sukima/xmledit
+[submodule "bundle/vim-markdown"]
+	path = bundle/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "bundle/tmuxline"]
 	path = bundle/tmuxline
 	url = https://github.com/edkolev/tmuxline.vim.git
