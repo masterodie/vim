@@ -1,0 +1,17 @@
+snippet prop "Property" b
+"""Property for $1"""
+@property
+def ${1:func}(self):
+    """${2:Getter for $1}"""
+    return self.__$1
+
+@$1.setter
+def $1(self, value):
+    self.__$1 = value
+
+@$1.deleter
+def $1(self):
+    del self.__$1
+endsnippet
+
+
