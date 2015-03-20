@@ -8,12 +8,49 @@ scriptencoding utf-8
 " Set to Vim Mode
 set nocompatible
 
+runtime bundle/pathogen/autoload/pathogen.vim
+
 """ Autocommand Group {{{
 augroup vimrc
         autocmd!
 augroup END
 """ }}}
 """ Editor Settings {{{
+"" Plugin Settings {{{
+" Enable Syntax Highlighting
+syntax on
+filetype plugin on
+filetype indent on
+
+""" }}}
+"" Pathogen {{{
+
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled = []
+
+call add(g:pathogen_disabled, 'command-t')
+
+if !has('ruby')
+        call add(g:pathogen_disabled, 'vim-ruby')
+        call add(g:pathogen_disabled, 'vim-rails')
+        call add(g:pathogen_disabled, 'vim-rspec')
+        call add(g:pathogen_disabled, 'vim-endwise')
+endif
+
+if !has('python')
+        call add(g:pathogen_disabled, 'ultisnips')
+        call add(g:pathogen_disabled, 'pymode')
+        call add(g:pathogen_disabled, 'jedi-vim')
+endif
+
+if !filereadable("/usr/bin/ctags")
+        call add(g:pathogen_disabled, 'vim-easytags')
+endif
+
+call pathogen#infect()
+call pathogen#helptags()
+
+"" }}}
 "" Visual Settings {{{
 " Line numbers
 set number
@@ -22,6 +59,9 @@ set visualbell
 " Disable error bells
 set noerrorbells
 " Show (partial) command in status line
+set showcmd
+" Enable statusline for single buffer
+set laststatus=2
 "" }}}
 "" Theme Settings {{{
 set background=dark
@@ -31,13 +71,6 @@ let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 call togglebg#map("<F7>")
 "" }}}
-"" Plugin Settings {{{
-" Enable Syntax Highlighting
-syntax on
-filetype plugin on
-filetype indent on
-
-""" }}}
 "" Keyboard Settings {{{
 
 "Move over end of line
@@ -119,35 +152,6 @@ augroup END
 "Mouse select
 set selectmode=mouse
 "" }}}
-""" }}}
-""" Pathogen {{{
-
-" To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
-
-call add(g:pathogen_disabled, 'command-t')
-
-if !has('ruby')
-        call add(g:pathogen_disabled, 'vim-ruby')
-        call add(g:pathogen_disabled, 'vim-rails')
-        call add(g:pathogen_disabled, 'vim-rspec')
-        call add(g:pathogen_disabled, 'vim-endwise')
-endif
-
-if !has('python')
-        call add(g:pathogen_disabled, 'ultisnips')
-        call add(g:pathogen_disabled, 'pymode')
-        call add(g:pathogen_disabled, 'jedi-vim')
-endif
-
-if !filereadable("/usr/bin/ctags")
-        call add(g:pathogen_disabled, 'vim-easytags')
-endif
-
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
-
 """ }}}
 """ Key Bindings {{{
 " Paste mode toggle key
@@ -253,6 +257,7 @@ noremap <leader>o <Esc>:CtrlP<CR>
 noremap <leader>m <Esc>:CtrlPMixed<CR>
 "" }}}
 "" python-Mode {{{
+let g:pymode_options = 1
 " pylint {{{
 let g:pymode_pylint = 0
 " }}}
@@ -261,6 +266,7 @@ let g:pymode_rope = 1
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
 " }}}
+autocmd vimrc FileType python setlocal formatoptions+=t
 "" }}}
 "" Airline {{{
 
@@ -292,9 +298,11 @@ let g:syntastic_aggregate_errors = 1
 "" YouCompleteMe {{{
 let g:ycm_key_list_previous_completion=['<Up>']
 let g:ycm_min_num_of_chars_for_completion=1
+let g:ycm_key_list_select_completion=[]
+let g:ycm_key_list_previous_completion=[]
 "" }}}
 "" Ultisnips {{{
-let g:UltiSnipsExpandTrigger="<c-tab>"
-let g:UltiSnipsListSnippets="<c-s-tab>"
+"let g:UltiSnipsExpandTrigger="<c-tab>"
+"let g:UltiSnipsListSnippets="<c-s-tab>"
 "" }}}
 """ }}}
