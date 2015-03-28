@@ -36,6 +36,11 @@ endif
 if !filereadable("/usr/bin/ctags")
         call add(g:pathogen_disabled, 'vim-easytags')
 endif
+
+if !has("patch-7.3.584")
+        call add(g:pathogen_disabled, 'youcompleteme')
+endif
+
 """ }}}
 """ Editor Settings {{{
 "" Plugin Settings {{{

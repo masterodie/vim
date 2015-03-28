@@ -1,0 +1,21 @@
+snippet head "File Header" b
+---
+# file: ${1:`!p snip.rv = fn`}
+# date: ${2:`date +%d.%m.%Y`}
+
+$3
+
+# vim:ft=ansible
+endsnippet
+
+snippet task "Task" b
+- name: ${1:Task Name}
+  $3
+  tags: ${2:tag}
+endsnippet
+
+snippet aptinst "Install with apt" b
+- name: ${2:`!p snip.rv = "Install %s" % (t[1].title())`}
+  apt: name=${1:vim} state=present
+  tags: $1
+endsnippet
