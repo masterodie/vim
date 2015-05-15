@@ -34,6 +34,8 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
 Plugin 'sickill/vim-monokai'
+Plugin '29decibel/codeschool-vim-theme'
+Plugin 'tomasr/molokai'
 
 "Plugins
 Plugin 'Raimondi/delimitMate'
@@ -62,6 +64,7 @@ Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'sukima/xmledit'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'edkolev/tmuxline.vim'
+
 if has('ruby')
     Plugin 'tpope/vim-rails'
     Plugin 'thoughtbot/vim-rspec'
@@ -70,9 +73,7 @@ if has('ruby')
 endif
 
 if has('python')
-    if !has('win32')
-        Plugin 'klen/python-mode'
-    endif
+    Plugin 'klen/python-mode'
     Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
 endif
@@ -82,7 +83,11 @@ if filereadable("/usr/bin/ctags")
 endif
 
 if has("patch-7.3.584")
-    Plugin 'Valloric/YouCompleteMe'
+    if !has("win32")
+        Plugin 'Valloric/YouCompleteMe'
+    else
+        Plugin 'file:///C:/Applications/vim/youcompleteme/'
+    endif
 endif
 
 call vundle#end()            " required
@@ -100,14 +105,6 @@ set noerrorbells
 set showcmd
 " Enable statusline for single buffer
 set laststatus=2
-"" }}}
-"" Theme Settings {{{
-set background=dark
-colorscheme solarized
-"set t_Co=256
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-call togglebg#map("<F7>")
 "" }}}
 "" Plugin Settings {{{
 " Enable Syntax Highlighting
@@ -229,9 +226,11 @@ map j gj
 
 """ }}}
 "" Theme Settings {{{
+"set t_Co=256
+colorscheme molokai
 set background=dark
-set t_Co=256
-colorscheme solarized
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=1
 call togglebg#map("<F7>")
 "" }}}
 """ GUI Sttings {{{
@@ -243,7 +242,7 @@ if has("gui_running")
     elseif has("gui_macvim")
         set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
     elseif has("gui_win32")
-        set guifont=Droid\ Sans\ Mono:h10:cANSI
+        set guifont=Anonymice\ Powerline:h12
         set guioptions=eg
     endif
 
@@ -296,7 +295,7 @@ noremap <leader>m <Esc>:CtrlPMixed<CR>
 "" python-Mode {{{
 let g:pymode_options = 1
 " pylint {{{
-let g:pymode_pylint = 0
+let g:pymode_pylint = 1
 " }}}
 " rope {{{
 let g:pymode_rope = 1
@@ -308,7 +307,7 @@ autocmd vimrc FileType python setlocal formatoptions+=t
 "" Airline {{{
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme = "solarized"
+let g:airline_theme = "molokai"
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
