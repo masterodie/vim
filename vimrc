@@ -8,76 +8,87 @@ scriptencoding utf-8
 " Set to Vim Mode
 set nocompatible
 
-runtime bundle/pathogen/autoload/pathogen.vim
+if has('win32')
+    source $VIMRUNTIME/mswin.vim
+endif
 
 """ Autocommand Group {{{
 augroup vimrc
-        autocmd!
+    autocmd!
 augroup END
 """ }}}
-""" Pathogen disables {{{
+""" Vundle {{{
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim/
+let path='~/.vim/bundle'
+if has('win32')
+    set rtp+=~/vimfiles/bundle/Vundle.vim/
+    let path='~/vimfiles/bundle'
+endif
+call vundle#begin(path)
 
-" To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
+"Let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
 
-if !has('ruby')
-        call add(g:pathogen_disabled, 'vim-ruby')
-        call add(g:pathogen_disabled, 'vim-rails')
-        call add(g:pathogen_disabled, 'vim-rspec')
-        call add(g:pathogen_disabled, 'vim-endwise')
+"Colorschemes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jnurmine/Zenburn'
+Plugin 'sickill/vim-monokai'
+
+"Plugins
+Plugin 'Raimondi/delimitMate'
+Plugin 'vim-scripts/loremipsum'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'majutsushi/tagbar'
+Plugin 'thisivan/vim-bufexplorer'
+Plugin 'tpope/vim-bundler'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-fugitive'
+Plugin 'xolox/vim-misc'
+Plugin 'tpope/vim-ragtag'
+Plugin 'groenewege/vim-less'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'amiorin/vim-project'
+Plugin 'vim-scripts/VimRepress'
+Plugin 'msanders/cocoa.vim'
+Plugin 'tpope/vim-pathogen'
+Plugin 'tpope/vim-surround'
+Plugin 'kien/ctrlp.vim'
+Plugin 'craigemery/vim-autotag'
+Plugin 'bling/vim-airline'
+Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'sukima/xmledit'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'edkolev/tmuxline.vim'
+if has('ruby')
+    Plugin 'tpope/vim-rails'
+    Plugin 'thoughtbot/vim-rspec'
+    Plugin 'vim-ruby/vim-ruby'
+    Plugin 'tpope/vim-endwise'
 endif
 
-if !has('python')
-        call add(g:pathogen_disabled, 'ultisnips')
-        call add(g:pathogen_disabled, 'pymode')
-        call add(g:pathogen_disabled, 'jedi-vim')
+if has('python')
+    if !has('win32')
+        Plugin 'klen/python-mode'
+    endif
+    Plugin 'SirVer/ultisnips'
+    Plugin 'honza/vim-snippets'
 endif
 
-if !filereadable("/usr/bin/ctags")
-        call add(g:pathogen_disabled, 'vim-easytags')
+if filereadable("/usr/bin/ctags")
+    Plugin 'xolox/vim-easytags'
 endif
 
-if !has("patch-7.3.584")
-        call add(g:pathogen_disabled, 'youcompleteme')
+if has("patch-7.3.584")
+    Plugin 'Valloric/YouCompleteMe'
 endif
+
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 """ }}}
-""" Editor Settings {{{
-"" Plugin Settings {{{
-" Enable Syntax Highlighting
-syntax on
-filetype plugin on
-filetype indent on
-
-""" }}}
-"" Pathogen {{{
-
-" To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
-
-call add(g:pathogen_disabled, 'command-t')
-
-if !has('ruby')
-        call add(g:pathogen_disabled, 'vim-ruby')
-        call add(g:pathogen_disabled, 'vim-rails')
-        call add(g:pathogen_disabled, 'vim-rspec')
-        call add(g:pathogen_disabled, 'vim-endwise')
-endif
-
-if !has('python')
-        call add(g:pathogen_disabled, 'ultisnips')
-        call add(g:pathogen_disabled, 'pymode')
-        call add(g:pathogen_disabled, 'jedi-vim')
-endif
-
-if !filereadable("/usr/bin/ctags")
-        call add(g:pathogen_disabled, 'vim-easytags')
-endif
-
-call pathogen#infect()
-call pathogen#helptags()
-
-"" }}}
 "" Visual Settings {{{
 " Line numbers
 set number
@@ -156,29 +167,42 @@ set hidden
 set autoread
 "Place backup and temp directory somewhere else
 set backup
-set backupdir=~/.vim/backup
-set directory=~/.vim/tmp
-" Set Tags file for exubertant-ctags
-set tags=~/.vim/tags,./tags,tags
+
+if has("win32")
+    set backupdir=~/vimfiles/backup
+    set directory=~/vimfiles/tmp
+    set tags=~/vimfiles/tags,./tags,tags
+else
+    set tags=~/.vim/tags,./tags,tags
+    set backupdir=~/.vim/backup
+    set directory=~/.vim/tmp
+endif
+
 " Enable persistent undo {{{
 if has("persistent_undo")
+    set undofile
+    if has("win32")
+        set undodir=~/vimfiles/undo
+    else
         set undodir=~/.vim/undo
         set undofile
+    endif
 endif
+
 " }}}
 " Remove any trailing whitespace that is in the file {{{
 autocmd vimrc BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 "Restore Last Cursor Position
 function! ResCur()
-        if line("'\"") <= line("$")
-                normal! g`"
-                return 1
-        endif
+    if line("'\"") <= line("$")
+        normal! g`"
+        return 1
+    endif
 endfunction
 
 augroup resCur
-        autocmd!
-        autocmd BufWinEnter * call ResCur()
+    autocmd!
+    autocmd BufWinEnter * call ResCur()
 augroup END
 "}}}
 """ }}}
@@ -186,9 +210,8 @@ augroup END
 "Mouse select
 set selectmode=mouse
 "" }}}
-""" {{{ Status Line
+""" Status Line {{{
 set laststatus=2
-""" }}}
 """ }}}
 """ Key Bindings {{{
 " Paste mode toggle key
@@ -205,30 +228,27 @@ map k gk
 map j gj
 
 """ }}}
-""" {{{ Pathogen runtime
-
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
-
-""" }}}
+"" Theme Settings {{{
+set background=dark
+set t_Co=256
+colorscheme solarized
+call togglebg#map("<F7>")
+"" }}}
 """ GUI Sttings {{{
 
 if has("gui_running")
-        "" Gui Font
-        if has("gui_gtk2")
-                set guifont=Droid\ Sans\ Mono\ 10
-        elseif has("gui_macvim")
-                set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
-        elseif has("gui_win32")
-                set guifont=Droid\ Sans\ Mono:h10:cANSI
-                set guioptions=eg
-                set backupdir=~/vimfiles/backup
-                set directory=~/vimfiles/tmp
-        endif
+    "" Gui Font
+    if has("gui_gtk2")
+        set guifont=Droid\ Sans\ Mono\ 10
+    elseif has("gui_macvim")
+        set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
+    elseif has("gui_win32")
+        set guifont=Droid\ Sans\ Mono:h10:cANSI
+        set guioptions=eg
+    endif
 
-        "" Antialiasing on
-        set antialias
+    "" Antialiasing on
+    set antialias
 endif
 
 """ }}}
@@ -262,13 +282,12 @@ let g:rubycomplete_load_gemfile = 1
 "" }}}
 "" vim-project {{{
 let g:project_use_nerdtree = 1
-set rtp+=~/.vim/bundle/vim-project/
-call project#rc("~/Documents/Projects/")
-
-Project  '~/.vim' , 'vim'
-Project  '~/.dotfiles' , 'dotfiles'
-Project  '~/code/python/Cards', 'Python Cards'
-Project  '~/code/python/ternary27', 'ternary27'
+"call project#rc("~/Documents/Projects/")
+if has('win32')
+    set rtp+=~/vimfiles/bundle/vim-project/
+else
+    set rtp+=~/.vim/bundle/vim-project/
+endif
 "" }}}
 "" command-t {{{
 noremap <leader>o <Esc>:CtrlP<CR>
@@ -291,7 +310,7 @@ autocmd vimrc FileType python setlocal formatoptions+=t
 let g:airline_powerline_fonts = 1
 let g:airline_theme = "solarized"
 if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 
 let g:airline#extensions#syntastic#enabled = 1
@@ -314,16 +333,6 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 "" }}}
 "" YouCompleteMe {{{
-<<<<<<< HEAD
-let g:ycm_key_list_previous_completion=['<Up>']
-let g:ycm_min_num_of_chars_for_completion=1
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
-"" }}}
-"" Ultisnips {{{
-"let g:UltiSnipsExpandTrigger="<c-tab>"
-"let g:UltiSnipsListSnippets="<c-s-tab>"
-=======
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 "" }}}
@@ -331,7 +340,6 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
->>>>>>> 71f7941125398907a901837b39623335b32af71f
 "" }}}
 """ }}}
 
