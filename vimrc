@@ -226,7 +226,7 @@ map j gj
 
 """ }}}
 "" Theme Settings {{{
-"set t_Co=256
+set t_Co=256
 colorscheme molokai
 set background=dark
 "let g:solarized_termcolors=256
