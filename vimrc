@@ -238,7 +238,8 @@ call togglebg#map("<F7>")
 if has("gui_running")
     "" Gui Font
     if has("gui_gtk2")
-        set guifont=Meslo\ LG\ S\ DZ\ for\ Powerline\ 10
+        set guifont=Inconsolata\ for\ Powerline\ 11
+        set guioptions=eg
     elseif has("gui_macvim")
         set guifont=Anonymous\ Pro:h12
     elseif has("gui_win32")
