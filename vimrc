@@ -39,28 +39,26 @@ Plugin 'tomasr/molokai'
 
 "Plugins
 Plugin 'Raimondi/delimitMate'
-Plugin 'vim-scripts/loremipsum'
+"Plugin 'vim-scripts/loremipsum'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 Plugin 'thisivan/vim-bufexplorer'
-Plugin 'tpope/vim-bundler'
+"Plugin 'tpope/vim-bundler'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'tpope/vim-fugitive'
-Plugin 'xolox/vim-misc'
-Plugin 'tpope/vim-ragtag'
+"Plugin 'xolox/vim-misc'
 Plugin 'groenewege/vim-less'
 Plugin 'StanAngeloff/php.vim'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'amiorin/vim-project'
 Plugin 'vim-scripts/VimRepress'
-Plugin 'msanders/cocoa.vim'
-Plugin 'tpope/vim-pathogen'
-Plugin 'tpope/vim-surround'
+"Plugin 'msanders/cocoa.vim'
+"Plugin 'tpope/vim-pathogen'
+"Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
-Plugin 'craigemery/vim-autotag'
+"Plugin 'craigemery/vim-autotag'
 Plugin 'bling/vim-airline'
-Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'sukima/xmledit'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'edkolev/tmuxline.vim'
@@ -70,10 +68,12 @@ if has('ruby')
     Plugin 'thoughtbot/vim-rspec'
     Plugin 'vim-ruby/vim-ruby'
     Plugin 'tpope/vim-endwise'
+    Plugin 'tpope/vim-ragtag'
 endif
 
 if has('python')
     Plugin 'klen/python-mode'
+    Plugin 'jmcantrell/vim-virtualenv'
     Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
 endif
@@ -264,7 +264,7 @@ nnoremap <F4>  :TagbarToggle<CR>
 let g:easytags_dynamic_files = 1
 "" }}}
 "" Delimitmate {{{
-let delimitMate_matchpairs = '(:),[:],{:},<:>'
+"let delimitMate_matchpairs = '(:),[:],{:},<:>'
 "" }}}
 "" Ragtag {{{
 let g:ragtag_global_maps = 1
@@ -340,6 +340,7 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:snips_author = "Patrick Neff"
 "" }}}
 """ }}}
 
