@@ -1,3 +1,7 @@
+snippet shebang "Shebang line" b
+#!/usr/bin/env ${1:python}
+endsnippet
+
 snippet prop "Property (read, write, delete)" b
 """Property for $1"""
 @property
@@ -19,6 +23,7 @@ snippet rwprop "Property (read, write)" b
 @property
 def ${1:func}(self):
     """${2:Getter for $1}"""
+    return self._$1
 
 @$1.setter
 def $1(self, value):
@@ -26,11 +31,9 @@ def $1(self, value):
 endsnippet
 
 snippet roprop "Property (read only)" b
-    return self.__$1
-
-@$1.setter
-def $1(self, value):
-    self.__$1 = value
-endsnippet
+"""Property for $1"""
+@property
+def ${1:func}(self):
+    """${2:Getter for $1}"""
     return self._$1
 endsnippet

@@ -62,6 +62,7 @@ Plugin 'bling/vim-airline'
 Plugin 'sukima/xmledit'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'edkolev/tmuxline.vim'
+Plugin 'joedicastro/vim-pentadactyl'
 
 if has('ruby')
     Plugin 'tpope/vim-rails'
@@ -341,6 +342,8 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author = "Patrick Neff"
+let g:snips_email = "odie86@gmail.com"
+let g:snips_github = "https://github.com/masterodie"
 "" }}}
 """ }}}
 
