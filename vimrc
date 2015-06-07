@@ -42,17 +42,15 @@ Plugin 'Raimondi/delimitMate'
 "Plugin 'vim-scripts/loremipsum'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'majutsushi/tagbar'
 Plugin 'thisivan/vim-bufexplorer'
 "Plugin 'tpope/vim-bundler'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'tpope/vim-fugitive'
-"Plugin 'xolox/vim-misc'
 Plugin 'groenewege/vim-less'
 Plugin 'StanAngeloff/php.vim'
-"Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'amiorin/vim-project'
-Plugin 'vim-scripts/VimRepress'
+"Plugin 'vim-scripts/VimRepress'
 "Plugin 'msanders/cocoa.vim'
 "Plugin 'tpope/vim-pathogen'
 Plugin 'tpope/vim-surround'
@@ -64,6 +62,8 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'joedicastro/vim-pentadactyl'
 Plugin 'edsono/vim-matchit'
+Plugin 'rendermani/vim-multiple-cursors'
+Plugin 'Shougo/neocomplete.vim'
 
 if has('ruby')
     Plugin 'tpope/vim-rails'
@@ -74,21 +74,28 @@ if has('ruby')
 endif
 
 if has('python')
-    Plugin 'klen/python-mode'
+    "Plugin 'klen/python-mode'
     Plugin 'jmcantrell/vim-virtualenv'
+    Plugin 'davidhalter/jedi-vim'
+    Plugin 'python-rope/ropevim'
+    "Plugin 'nvie/vim-flake8'
     Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
 endif
 
 if filereadable("/usr/bin/ctags")
     Plugin 'xolox/vim-easytags'
+    "Plugin 'vim-scripts/taglist.vim'
+    "Plugin 'szw/vim-tags'
+    Plugin 'xolox/vim-misc'
+    Plugin 'majutsushi/tagbar'
 endif
 
 if has("patch-7.3.584")
     if !has("win32")
-        Plugin 'Valloric/YouCompleteMe'
+        "Plugin 'Valloric/YouCompleteMe'
     else
-        Plugin 'file:///C:/Applications/vim/youcompleteme/'
+        "Plugin 'file:///C:/Applications/vim/youcompleteme/'
     endif
 endif
 
@@ -170,9 +177,9 @@ set backup
 if has("win32")
     set backupdir=~/vimfiles/backup
     set directory=~/vimfiles/tmp
-    set tags=~/vimfiles/tags,./tags,tags
+    set tags=./.tags,~/vimfiles/tags,tags
 else
-    set tags=~/.vim/tags,./tags,tags
+    set tags=./.tags,~/.vim/tags,tags
     set backupdir=~/.vim/backup
     set directory=~/.vim/tmp
 endif
@@ -260,10 +267,11 @@ nnoremap <F3>  :NERDTreeToggle<CR>
 "" }}}
 "" Tagbar {{{
 nnoremap <F4>  :TagbarToggle<CR>
+let g:tagbar_iconchars = ['▸', '▾']
 "" }}}
 "" Easytags {{{
 " let g:easytags_cmd = '/usr/local/bin/ctags'
-let g:easytags_dynamic_files = 1
+let g:easytags_dynamic_files = 2
 "" }}}
 "" Delimitmate {{{
 "let delimitMate_matchpairs = '(:),[:],{:},<:>'
@@ -296,16 +304,14 @@ noremap <leader>o <Esc>:CtrlP<CR>
 noremap <leader>m <Esc>:CtrlPMixed<CR>
 "" }}}
 "" python-Mode {{{
-let g:pymode_options = 1
-" pylint {{{
-let g:pymode_pylint = 1
-" }}}
-" rope {{{
-let g:pymode_rope = 1
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_rope_completion = 0
-" }}}
-autocmd vimrc FileType python setlocal formatoptions+=t
+let g:pymode_virtualenv = 0
+let g:pymode_lint = 0
+let g:pymode_rope = 0
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_completion = 1
+let g:pymode_rope_autoimport = 1
+let g:pymode_rope_autoimport_import_after_complete = 0
+let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
 "" }}}
 "" Airline {{{
 
@@ -335,16 +341,66 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 "" }}}
 "" YouCompleteMe {{{
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+"""" OWN SETTINGS
+"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+
+"""NEW SETTINGS
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'python' : 1,
+      \ 'mail' : 1
+      \}
 "" }}}
 "" Ultisnips {{{
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+"""" OWN SETTINGS
+"let g:UltiSnipsExpandTrigger = "<tab>"
+"let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+"""NEW SETTINGS
+let g:UltiSnipsExpandTrigger       = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
+let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
+
 let g:snips_author = "Patrick Neff"
 let g:snips_email = "odie86@gmail.com"
 let g:snips_github = "https://github.com/masterodie"
+"" }}}
+"" jedi-vim {{{
+let g:neocomplete#enable_at_startup = 1
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#popup_on_dot = 1
+let g:jedi#auto_close_doc = 1
+"" }}}
+"" neocomplete {{{
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"" }}}
+"" ropevim {{{
+let ropevim_vim_completion = 0
+let ropevim_extended_complete = 1
+let ropevim_enable_autoimport = 1
+let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
 "" }}}
 """ }}}
 
