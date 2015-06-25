@@ -383,12 +383,13 @@ let g:snips_github = "https://github.com/masterodie"
 "" }}}
 "" jedi-vim {{{
 let g:neocomplete#enable_at_startup = 1
-autocmd FileType python setlocal omnifunc=jedi#completions
+"autocmd FileType python setlocal omnifunc=jedi#completions
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 1
+let g:jedi#popup_on_dot = 0
 let g:jedi#auto_close_doc = 1
+let g:jedi#force_py_version = 2
 "" }}}
 "" neocomplete {{{
 if !exists('g:neocomplete#force_omni_input_patterns')
