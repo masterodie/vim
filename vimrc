@@ -68,7 +68,6 @@ Plugin 'ervandev/supertab'
 Plugin 'tpope/vim-git.git'
 Plugin 'rdolgushin/gitignore.vim'
 Plugin 'Rip-Rip/clang_complete'
-Plugin 'lepture/vim-jinja'
 Plugin 'sickill/vim-pasta'
 
 if has('ruby')
@@ -90,6 +89,7 @@ if has('python')
     Plugin 'hynek/vim-python-pep8-indent'
     Plugin 'hdima/python-syntax'
     Plugin 'tmhedberg/SimpylFold'
+    Plugin 'lepture/vim-jinja'
 endif
 
 if filereadable("/usr/bin/ctags")
