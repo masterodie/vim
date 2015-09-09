@@ -64,6 +64,12 @@ Plugin 'joedicastro/vim-pentadactyl'
 Plugin 'edsono/vim-matchit'
 Plugin 'rendermani/vim-multiple-cursors'
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'tpope/vim-git.git'
+Plugin 'rdolgushin/gitignore.vim'
+Plugin 'Rip-Rip/clang_complete'
+Plugin 'lepture/vim-jinja'
+Plugin 'sickill/vim-pasta'
+
 
 if has('ruby')
     Plugin 'tpope/vim-rails'
@@ -81,6 +87,9 @@ if has('python')
     "Plugin 'nvie/vim-flake8'
     Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
+    Plugin 'hynek/vim-python-pep8-indent'
+    Plugin 'hdima/python-syntax'
+    Plugin 'tmhedberg/SimpylFold'
 endif
 
 if filereadable("/usr/bin/ctags")
@@ -114,6 +123,8 @@ set noerrorbells
 set showcmd
 " Enable statusline for single buffer
 set laststatus=2
+" Faster redrawing
+set ttyfast
 "" }}}
 "" Plugin Settings {{{
 " Enable Syntax Highlighting
@@ -139,6 +150,14 @@ set smarttab
 "Tab Width
 set tabstop=4
 set shiftwidth=4
+
+""" }}}
+"" Mouse Settings {{{
+
+if has('mouse')
+    set mouse=a
+    set ttymouse=xterm2
+endif
 
 "" }}}
 "" Search Settings {{{
@@ -232,6 +251,15 @@ map <Down> gj
 map <Up> gk
 map k gk
 map j gj
+
+" Quit buffer
+map <C-x> :q<cr>
+
+" Quick save mapping
+map <leader>, :w<cr>
+
+" Disable ex mode
+noremap Q <NOP>
 
 """ }}}
 "" Theme Settings {{{
@@ -401,6 +429,16 @@ let ropevim_vim_completion = 0
 let ropevim_extended_complete = 1
 let ropevim_enable_autoimport = 1
 let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
+"" }}}
+"" python syntax {{{
+let python_highlight_all = 1
+"" }}}
+"" SympylFold {{{
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 1
+"" }}}
+"" vim-pasta {{{
+let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
 "" }}}
 """ }}}
 
