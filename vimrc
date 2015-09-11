@@ -64,11 +64,12 @@ Plugin 'joedicastro/vim-pentadactyl'
 Plugin 'edsono/vim-matchit'
 Plugin 'rendermani/vim-multiple-cursors'
 Plugin 'Shougo/neocomplete.vim'
-Plugin 'ervandev/supertab'
 Plugin 'tpope/vim-git.git'
 Plugin 'rdolgushin/gitignore.vim'
 Plugin 'Rip-Rip/clang_complete'
 Plugin 'sickill/vim-pasta'
+Plugin 'brauner/vimtux'
+Plugin 'ervandew/supertab'
 
 if has('ruby')
     Plugin 'tpope/vim-rails'
@@ -273,7 +274,7 @@ call togglebg#map("<F7>")
 if has("gui_running")
     "" Gui Font
     if has("gui_gtk2")
-        set guifont=Inconsolata\ for\ Powerline\ 11
+        set guifont=Terminess\ Powerline\ 8
         set guioptions=eg
     elseif has("gui_macvim")
         set guifont=Anonymous\ Pro:h12
@@ -366,42 +367,17 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 "" }}}
-"" YouCompleteMe {{{
-"""" OWN SETTINGS
-"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-
-"""NEW SETTINGS
-let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
-let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
-let g:ycm_complete_in_comments = 1 " Completion in comments
-let g:ycm_complete_in_strings = 1 " Completion in string
-let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'qf' : 1,
-      \ 'notes' : 1,
-      \ 'markdown' : 1,
-      \ 'unite' : 1,
-      \ 'text' : 1,
-      \ 'vimwiki' : 1,
-      \ 'pandoc' : 1,
-      \ 'infolog' : 1,
-      \ 'python' : 1,
-      \ 'mail' : 1
-      \}
-"" }}}
 "" Ultisnips {{{
 """" OWN SETTINGS
-"let g:UltiSnipsExpandTrigger = "<tab>"
-"let g:UltiSnipsJumpForwardTrigger = "<tab>"
-"let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-"""NEW SETTINGS
-let g:UltiSnipsExpandTrigger       = "<c-j>"
-let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
-let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
+""""NEW SETTINGS
+"let g:UltiSnipsExpandTrigger       = "<c-j>"
+"let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
+"let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
 
 let g:snips_author = "Patrick Neff"
 let g:snips_email = "odie86@gmail.com"
