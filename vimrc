@@ -157,6 +157,133 @@ syntax on
 filetype plugin on
 filetype indent on
 
+"" NERDTree {{{
+nnoremap <F3>  :NERDTreeToggle<CR>
+"" }}}
+"" Tagbar {{{
+nnoremap <F4>  :TagbarToggle<CR>
+let g:tagbar_iconchars = ['▸', '▾']
+"" }}}
+"" Easytags {{{
+" let g:easytags_cmd = '/usr/local/bin/ctags'
+let g:easytags_dynamic_files = 2
+"" }}}
+"" Delimitmate {{{
+"let delimitMate_matchpairs = '(:),[:],{:},<:>'
+"" }}}
+"" Ragtag {{{
+let g:ragtag_global_maps = 1
+" }}}
+"" vim-ruby {{{
+autocmd vimrc FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd vimrc FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd vimrc FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd vimrc FileType ruby,eruby let g:rubycomplete_rails = 1
+
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+let g:rubycomplete_load_gemfile = 1
+
+"" }}}
+"" vim-project {{{
+let g:project_use_nerdtree = 1
+"call project#rc("~/Documents/Projects/")
+if has('win32')
+    set rtp+=~/vimfiles/bundle/vim-project/
+else
+    set rtp+=~/.vim/bundle/vim-project/
+endif
+"" }}}
+"" command-t {{{
+noremap <leader>o <Esc>:CtrlP<CR>
+noremap <leader>m <Esc>:CtrlPMixed<CR>
+"" }}}
+"" python-Mode {{{
+let g:pymode_virtualenv = 0
+let g:pymode_lint = 0
+let g:pymode_rope = 0
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_completion = 1
+let g:pymode_rope_autoimport = 1
+let g:pymode_rope_autoimport_import_after_complete = 0
+let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
+"" }}}
+"" Airline {{{
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "molokai"
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#whitespace#trailing_format = '●[%s]'
+let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'
+"" }}}
+"" Syntastic {{{
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_aggregate_errors = 1
+"" }}}
+"" Ultisnips {{{
+"""" OWN SETTINGS
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+""""NEW SETTINGS
+"let g:UltiSnipsExpandTrigger       = "<c-j>"
+"let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
+"let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
+
+let g:snips_author = "Patrick Neff"
+let g:snips_email = "odie86@gmail.com"
+let g:snips_github = "https://github.com/masterodie"
+"" }}}
+"" jedi-vim {{{
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:neocomplete#enable_at_startup = 1
+"autocmd FileType python setlocal omnifunc=jedi#completions
+let g:virtualenv_auto_activate = 1
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#auto_close_doc = 1
+let g:jedi#force_py_version = 3
+"" neocomplete {{{
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"" }}}
+"" ropevim {{{
+let ropevim_vim_completion = 0
+let ropevim_extended_complete = 1
+let ropevim_enable_autoimport = 1
+let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
+"" }}}
+"" python syntax {{{
+let python_highlight_all = 1
+"" }}}
+"" SympylFold {{{
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 1
+"" }}}
+"" vim-pasta {{{
+let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
+"" }}}
 """ }}}
 "" Keyboard Settings {{{
 
@@ -311,134 +438,6 @@ if has("gui_running")
     set antialias
 endif
 
-""" }}}
-""" Plugins {{{
-"" NERDTree {{{
-nnoremap <F3>  :NERDTreeToggle<CR>
-"" }}}
-"" Tagbar {{{
-nnoremap <F4>  :TagbarToggle<CR>
-let g:tagbar_iconchars = ['▸', '▾']
-"" }}}
-"" Easytags {{{
-" let g:easytags_cmd = '/usr/local/bin/ctags'
-let g:easytags_dynamic_files = 2
-"" }}}
-"" Delimitmate {{{
-"let delimitMate_matchpairs = '(:),[:],{:},<:>'
-"" }}}
-"" Ragtag {{{
-let g:ragtag_global_maps = 1
-" }}}
-"" vim-ruby {{{
-autocmd vimrc FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd vimrc FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd vimrc FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd vimrc FileType ruby,eruby let g:rubycomplete_rails = 1
-
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-let g:rubycomplete_load_gemfile = 1
-
-"" }}}
-"" vim-project {{{
-let g:project_use_nerdtree = 1
-"call project#rc("~/Documents/Projects/")
-if has('win32')
-    set rtp+=~/vimfiles/bundle/vim-project/
-else
-    set rtp+=~/.vim/bundle/vim-project/
-endif
-"" }}}
-"" command-t {{{
-noremap <leader>o <Esc>:CtrlP<CR>
-noremap <leader>m <Esc>:CtrlPMixed<CR>
-"" }}}
-"" python-Mode {{{
-let g:pymode_virtualenv = 0
-let g:pymode_lint = 0
-let g:pymode_rope = 0
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_rope_completion = 1
-let g:pymode_rope_autoimport = 1
-let g:pymode_rope_autoimport_import_after_complete = 0
-let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
-"" }}}
-"" Airline {{{
-
-let g:airline_powerline_fonts = 1
-let g:airline_theme = "molokai"
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#hunks#enabled = 1
-let g:airline#extensions#hunks#non_zero_only = 1
-let g:airline#extensions#virtualenv#enabled = 1
-let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#whitespace#trailing_format = '●[%s]'
-let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'
-"" }}}
-"" Syntastic {{{
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_aggregate_errors = 1
-"" }}}
-"" Ultisnips {{{
-"""" OWN SETTINGS
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-""""NEW SETTINGS
-"let g:UltiSnipsExpandTrigger       = "<c-j>"
-"let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
-"let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
-
-let g:snips_author = "Patrick Neff"
-let g:snips_email = "odie86@gmail.com"
-let g:snips_github = "https://github.com/masterodie"
-"" }}}
-"" jedi-vim {{{
-let g:neocomplete#enable_at_startup = 1
-"autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#auto_close_doc = 1
-let g:jedi#force_py_version = 2
-"" }}}
-"" neocomplete {{{
-if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-"" }}}
-"" ropevim {{{
-let ropevim_vim_completion = 0
-let ropevim_extended_complete = 1
-let ropevim_enable_autoimport = 1
-let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
-"" }}}
-"" python syntax {{{
-let python_highlight_all = 1
-"" }}}
-"" SympylFold {{{
-let g:SimpylFold_docstring_preview = 1
-let g:SimpylFold_fold_docstring = 1
-"" }}}
-"" vim-pasta {{{
-let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
-"" }}}
 """ }}}
 
 call ApplyLocalSettings('.')
