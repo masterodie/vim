@@ -1,9 +1,0 @@
-[submodule "bundle/VimRepress"]
-	path = bundle/VimRepress
-	url = https://github.com/vim-scripts/VimRepress.git
-[submodule "bundle/cocoa.vim"]
-	path = bundle/cocoa.vim
-	url = https://github.com/msanders/cocoa.vim.git
-[submodule "bundle/Vundle.vim"]
-	path = bundle/Vundle.vim
-	url = https://github.com/gmarik/Vundle.vim

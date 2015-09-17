@@ -15,9 +15,10 @@ endif
 """ Autocommand Group {{{
 augroup vimrc
     autocmd!
+    autocmd BufWritePost ~/.vimrc :source ~/.vimrc
+    autocmd BufWritePost ~/.vim/vimrc :source ~/.vimrc
 augroup END
 
-autocmd vimrc BufWritePost ~/.vimrc :source ~/.vimrc
 
 """ }}}
 """ Vundle {{{
@@ -28,96 +29,58 @@ if has('win32')
     set rtp+=~/vimfiles/bundle/Vundle.vim/
     let path='~/vimfiles/bundle'
 endif
-call vundle#begin(path)
-
-
-"Let Vundle manage Vundle
-Plugin 'gmarik/Vundle.vim'
+call plug#begin(path)
 
 "Colorschemes
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'jnurmine/Zenburn'
-Plugin 'sickill/vim-monokai'
-Plugin '29decibel/codeschool-vim-theme'
-Plugin 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jnurmine/Zenburn'
+Plug 'sickill/vim-monokai'
+Plug '29decibel/codeschool-vim-theme'
+Plug 'tomasr/molokai'
 
-"Plugins
-Plugin 'Raimondi/delimitMate'
-"Plugin 'vim-scripts/loremipsum'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'thisivan/vim-bufexplorer'
-"Plugin 'tpope/vim-bundler'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'tpope/vim-fugitive'
-Plugin 'groenewege/vim-less'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'amiorin/vim-project'
-"Plugin 'vim-scripts/VimRepress'
-"Plugin 'msanders/cocoa.vim'
-"Plugin 'tpope/vim-pathogen'
-Plugin 'tpope/vim-surround'
-Plugin 'kien/ctrlp.vim'
-"Plugin 'craigemery/vim-autotag'
-Plugin 'bling/vim-airline'
-Plugin 'sukima/xmledit'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'joedicastro/vim-pentadactyl'
-Plugin 'edsono/vim-matchit'
-Plugin 'rendermani/vim-multiple-cursors'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'tpope/vim-git.git'
-Plugin 'rdolgushin/gitignore.vim'
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'sickill/vim-pasta'
-Plugin 'benmills/vimux'
-Plugin 'ervandew/supertab'
+""" Plugs
+"" Git
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'rdolgushin/gitignore.vim'
 
-if has('ruby')
-    Plugin 'tpope/vim-rails'
-    Plugin 'thoughtbot/vim-rspec'
-    Plugin 'vim-ruby/vim-ruby'
-    Plugin 'tpope/vim-endwise'
-    Plugin 'tpope/vim-ragtag'
-endif
+"Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
-if has('python')
-    "Plugin 'klen/python-mode'
-    Plugin 'jmcantrell/vim-virtualenv'
-    Plugin 'davidhalter/jedi-vim'
-    Plugin 'python-rope/ropevim'
-    "Plugin 'nvie/vim-flake8'
-    Plugin 'SirVer/ultisnips'
-    Plugin 'honza/vim-snippets'
-    Plugin 'hynek/vim-python-pep8-indent'
-    Plugin 'hdima/python-syntax'
-    Plugin 'tmhedberg/SimpylFold'
-    Plugin 'lepture/vim-jinja'
-endif
+Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'thisivan/vim-bufexplorer'
+Plug 'groenewege/vim-less'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-surround'
+Plug 'kien/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'sukima/xmledit'
+Plug 'plasticboy/vim-markdown'
+Plug 'edkolev/tmuxline.vim'
+Plug 'joedicastro/vim-pentadactyl'
+Plug 'rendermani/vim-multiple-cursors'
+Plug 'sickill/vim-pasta'
+Plug 'benmills/vimux'
+Plug 'Shougo/neocomplete.vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'davidhalter/jedi-vim'
+Plug 'python-rope/ropevim'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'hdima/python-syntax'
+Plug 'tmhedberg/SimpylFold'
+Plug 'lepture/vim-jinja'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+Plug 'majutsushi/tagbar'
 
-if filereadable("/usr/bin/ctags")
-    Plugin 'xolox/vim-easytags'
-    "Plugin 'vim-scripts/taglist.vim'
-    "Plugin 'szw/vim-tags'
-    Plugin 'xolox/vim-misc'
-    Plugin 'majutsushi/tagbar'
-endif
-
-if has("patch-7.3.584")
-    if !has("win32")
-        "Plugin 'Valloric/YouCompleteMe'
-    else
-        "Plugin 'file:///C:/Applications/vim/youcompleteme/'
-    endif
-endif
-
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 
 """ }}}
-""" {{{ Functions
+""" Functions {{{
 " recursively search up from dirname, sourcing all .vimrc.local files along the way
 function! ApplyLocalSettings(dirname)
     " convert windows paths to unix style
@@ -136,6 +99,15 @@ function! ApplyLocalSettings(dirname)
         exec ':source' . l:settingsFile
     endif
 endfunction
+
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber
+    else
+        set relativenumber
+    endif
+
+endfunc
 """ }}}
 "" Visual Settings {{{
 " Line numbers
@@ -151,6 +123,143 @@ set laststatus=2
 " Faster redrawing
 set ttyfast
 "" }}}
+"" Keyboard Settings {{{
+
+
+"Move over end of line
+set whichwrap=b,s,<,>,[,],h,l
+" Backspace over autoindent, line breaks, start of insert (see :help 'backspace')
+set backspace=indent,eol,start
+"Set Tab to expand into spaces
+set expandtab
+"Auto indentation
+set autoindent
+"Smart indentation
+set smartindent
+"Smart tab
+set smarttab
+"Tab Width
+set tabstop=4
+set shiftwidth=4
+
+""" }}}
+""" Key Bindings {{{
+" Paste mode toggle key
+set pastetoggle=<F11>
+
+"Set Leader Key
+let g:mapleader = ","
+let g:maplocalleader = ","
+
+"Make cursor recognize wrapped lines
+map <Down> gj
+map <Up> gk
+map k gk
+map j gj
+
+" Split management with CTRL + movement keys
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" Quit buffer
+nmap <C-y> :q<CR>
+" Quick save mapping
+nmap <leader>, :w<CR>
+" Disable ex mode
+noremap Q <NOP>
+
+nmap <leader>rel :call NumberToggle()<cr>
+
+nmap <leader>vimrc :e ~/.vimrc<cr>
+nmap <leader>vr :source ~/.vimrc<cr>
+
+""" }}}
+"" Mouse Settings {{{
+
+if has('mouse')
+    set mouse=a
+    "set ttymouse=xterm2
+    "Mouse select
+    set selectmode=mouse
+endif
+
+"" }}}
+"" Search Settings {{{
+
+"Better Tab Completion
+set wildmenu
+set wildmode=list:longest
+" Highlight things that we find with the search
+set hlsearch
+" Ignoring case is a fun trick
+set ignorecase
+" And so is Artificial Intellegence!
+set smartcase
+" Incremental searching is sexy
+set incsearch
+
+"" }}}
+"" Misc Settings {{{
+
+"Bigger History
+set history=1000
+" keep at least 5 lines above/below
+set scrolloff=5
+set sidescrolloff=5
+"1000 Undos
+set undolevels=1000
+"Dont move to startofline
+set nostartofline
+"Activate hidden buffers
+set hidden
+"Automatically read buffer when changed outside of vim
+set autoread
+"Place backup and temp directory somewhere else
+set backup
+
+"Compatibility options
+set cpoptions+=d
+
+
+if has("win32")
+    set backupdir=~/vimfiles/backup
+    set directory=~/vimfiles/tmp
+    set tags=./.tags,~/vimfiles/tags,tags
+else
+    set tags=./.tags,~/.vim/tags,tags
+    set backupdir=~/.vim/backup
+    set directory=~/.vim/tmp
+endif
+
+" Enable persistent undo {{{
+if has("persistent_undo")
+    set undofile
+    if has("win32")
+        set undodir=~/vimfiles/undo
+    else
+        set undodir=~/.vim/undo
+    endif
+endif
+
+" }}}
+" Remove any trailing whitespace that is in the file {{{
+autocmd vimrc BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+"Restore Last Cursor Position
+function! ResCur()
+    if line("'\"") <= line("$")
+        normal! g`"
+        return 1
+    endif
+endfunction
+
+augroup resCur
+    autocmd!
+    autocmd BufWinEnter * call ResCur()
+augroup END
+"}}}
+""" }}}
 "" Plugin Settings {{{
 " Enable Syntax Highlighting
 syntax on
@@ -194,8 +303,9 @@ else
     set rtp+=~/.vim/bundle/vim-project/
 endif
 "" }}}
-"" command-t {{{
-noremap <leader>o <Esc>:CtrlP<CR>
+"" CtrlP {{{
+noremap <leader>p <Esc>:CtrlP<CR>
+noremap <leader>o <Esc>:CtrlPBuffer<CR>
 noremap <leader>m <Esc>:CtrlPMixed<CR>
 "" }}}
 "" python-Mode {{{
@@ -252,8 +362,6 @@ let g:snips_email = "odie86@gmail.com"
 let g:snips_github = "https://github.com/masterodie"
 "" }}}
 "" jedi-vim {{{
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:neocomplete#enable_at_startup = 1
 "autocmd FileType python setlocal omnifunc=jedi#completions
 let g:virtualenv_auto_activate = 1
 let g:jedi#completions_enabled = 0
@@ -262,11 +370,6 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#auto_close_doc = 1
 let g:jedi#force_py_version = 3
-"" neocomplete {{{
-if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "" }}}
 "" ropevim {{{
 let ropevim_vim_completion = 0
@@ -284,133 +387,18 @@ let g:SimpylFold_fold_docstring = 1
 "" vim-pasta {{{
 let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
 "" }}}
-""" }}}
-"" Keyboard Settings {{{
-
-"Move over end of line
-set whichwrap=b,s,<,>,[,],h,l
-" Backspace over autoindent, line breaks, start of insert (see :help 'backspace')
-set backspace=indent,eol,start
-"Set Tab to expand into spaces
-set expandtab
-"Auto indentation
-set autoindent
-"Smart indentation
-set smartindent
-"Smart tab
-set smarttab
-"Tab Width
-set tabstop=4
-set shiftwidth=4
-
-""" }}}
-"" Mouse Settings {{{
-
-if has('mouse')
-    set mouse=a
-    set ttymouse=xterm2
+"" neocomplete {{{
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
 endif
-
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+let g:neocomplete#enable_auto_select=1
 "" }}}
-"" Search Settings {{{
-
-"Better Tab Completion
-set wildmenu
-set wildmode=list:longest
-" Highlight things that we find with the search
-set hlsearch
-" Ignoring case is a fun trick
-set ignorecase
-" And so is Artificial Intellegence!
-set smartcase
-" Incremental searching is sexy
-set incsearch
-
-"" }}}
-"" Misc Settings {{{
-
-"Bigger History
-set history=1000
-" keep at least 5 lines above/below
-set scrolloff=5
-set sidescrolloff=5
-"1000 Undos
-set undolevels=1000
-"Dont move to startofline
-set nostartofline
-"Activate hidden buffers
-set hidden
-"Automatically read buffer when changed outside of vim
-set autoread
-"Place backup and temp directory somewhere else
-set backup
-
-if has("win32")
-    set backupdir=~/vimfiles/backup
-    set directory=~/vimfiles/tmp
-    set tags=./.tags,~/vimfiles/tags,tags
-else
-    set tags=./.tags,~/.vim/tags,tags
-    set backupdir=~/.vim/backup
-    set directory=~/.vim/tmp
-endif
-
-" Enable persistent undo {{{
-if has("persistent_undo")
-    set undofile
-    if has("win32")
-        set undodir=~/vimfiles/undo
-    else
-        set undodir=~/.vim/undo
-        set undofile
-    endif
-endif
-
-" }}}
-" Remove any trailing whitespace that is in the file {{{
-autocmd vimrc BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-"Restore Last Cursor Position
-function! ResCur()
-    if line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
-endfunction
-
-augroup resCur
-    autocmd!
-    autocmd BufWinEnter * call ResCur()
-augroup END
-"}}}
 """ }}}
-"" Mouse Setings {{{
-"Mouse select
-set selectmode=mouse
-"" }}}
 """ Status Line {{{
 set laststatus=2
-""" }}}
-""" Key Bindings {{{
-" Paste mode toggle key
-set pastetoggle=<F11>
-
-"Set Leader Key
-let g:mapleader = ","
-let g:maplocalleader = ","
-
-"Make cursor recognize wrapped lines
-map <Down> gj
-map <Up> gk
-map k gk
-map j gj
-
-" Quit buffer
-nmap <C-x> :q<CR>
-" Quick save mapping
-nmap <leader>, :w<CR>
-" Disable ex mode
-noremap Q <NOP>
-
 """ }}}
 "" Theme Settings {{{
 set t_Co=256
@@ -439,5 +427,6 @@ if has("gui_running")
 endif
 
 """ }}}
+
 
 call ApplyLocalSettings('.')
