@@ -3,7 +3,6 @@
 """ vim:fdm=marker
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable UTF-8 Mode
-set encoding=utf-8
 scriptencoding utf-8
 " Set to Vim Mode
 set nocompatible
@@ -21,7 +20,7 @@ augroup END
 
 
 """ }}}
-""" Vundle {{{
+""" Plug {{{
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim/
 let path='~/.vim/bundle'
@@ -38,7 +37,6 @@ Plug 'sickill/vim-monokai'
 Plug '29decibel/codeschool-vim-theme'
 Plug 'tomasr/molokai'
 
-""" Plugs
 "" Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -47,6 +45,13 @@ Plug 'rdolgushin/gitignore.vim'
 "Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+"Completion
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim'
+else
+    Plug 'Shougo/neocomplete.vim'
+endif
 
 Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/nerdcommenter'
@@ -64,7 +69,6 @@ Plug 'joedicastro/vim-pentadactyl'
 Plug 'rendermani/vim-multiple-cursors'
 Plug 'sickill/vim-pasta'
 Plug 'benmills/vimux'
-Plug 'Shougo/neocomplete.vim'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim'
 Plug 'python-rope/ropevim'
@@ -75,6 +79,8 @@ Plug 'lepture/vim-jinja'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'majutsushi/tagbar'
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-repeat'
 
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -122,6 +128,8 @@ set showcmd
 set laststatus=2
 " Faster redrawing
 set ttyfast
+" Colorize column 80
+set colorcolumn=80
 "" }}}
 "" Keyboard Settings {{{
 
@@ -276,6 +284,8 @@ let g:tagbar_iconchars = ['▸', '▾']
 "" Easytags {{{
 " let g:easytags_cmd = '/usr/local/bin/ctags'
 let g:easytags_dynamic_files = 2
+map <S-F11> :!ctags -R -f $VIRTUAL_ENV/.tags $VIRTUAL_ENV/lib/python3.5/site-packages<CT>
+set tags+=$VIRTUAL_ENV/.tags
 "" }}}
 "" Delimitmate {{{
 "let delimitMate_matchpairs = '(:),[:],{:},<:>'
@@ -369,13 +379,13 @@ let g:jedi#auto_vim_configuration = 0
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#auto_close_doc = 1
-let g:jedi#force_py_version = 3
+"let g:jedi#force_py_version = 3
 "" }}}
 "" ropevim {{{
 let ropevim_vim_completion = 0
 let ropevim_extended_complete = 1
 let ropevim_enable_autoimport = 1
-let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
+let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'flask.*']
 "" }}}
 "" python syntax {{{
 let python_highlight_all = 1
@@ -388,6 +398,7 @@ let g:SimpylFold_fold_docstring = 1
 let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
 "" }}}
 "" neocomplete {{{
+if !has('nvim')
 if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
 endif
@@ -395,6 +406,18 @@ autocmd FileType python setlocal omnifunc=jedi#completions
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 let g:neocomplete#enable_auto_select=1
+endif
+"" }}}
+"" deoplete {{{
+if has('nvim')
+if !exists('g:deoplete#force_omni_input_patterns')
+        let g:deoplete#force_omni_input_patterns = {}
+endif
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+let g:deoplete#enable_auto_select=1
+endif
 "" }}}
 """ }}}
 """ Status Line {{{
