@@ -7,6 +7,7 @@ scriptencoding utf-8
 " Set to Vim Mode
 set nocompatible
 
+" Load windows Environment
 if has('win32')
     source $VIMRUNTIME/mswin.vim
 endif
@@ -20,117 +21,7 @@ augroup END
 
 
 """ }}}
-""" Plug {{{
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
-let path='~/.vim/bundle'
-if has('win32')
-    set rtp+=~/vimfiles/bundle/Vundle.vim/
-    let path='~/vimfiles/bundle'
-endif
-call plug#begin(path)
-
-"Colorschemes
-Plug 'altercation/vim-colors-solarized'
-Plug 'jnurmine/Zenburn'
-Plug 'sickill/vim-monokai'
-Plug '29decibel/codeschool-vim-theme'
-Plug 'tomasr/molokai'
-
-"" Git
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'rdolgushin/gitignore.vim'
-
-"Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-"Completion
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim'
-else
-    Plug 'Shougo/neocomplete.vim'
-endif
-
-Plug 'Raimondi/delimitMate'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'thisivan/vim-bufexplorer'
-Plug 'groenewege/vim-less'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-surround'
-Plug 'kien/ctrlp.vim'
-Plug 'bling/vim-airline'
-Plug 'sukima/xmledit'
-Plug 'plasticboy/vim-markdown'
-Plug 'edkolev/tmuxline.vim'
-Plug 'joedicastro/vim-pentadactyl'
-Plug 'rendermani/vim-multiple-cursors'
-Plug 'sickill/vim-pasta'
-Plug 'benmills/vimux'
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'davidhalter/jedi-vim'
-Plug 'python-rope/ropevim'
-Plug 'hynek/vim-python-pep8-indent'
-Plug 'hdima/python-syntax'
-Plug 'tmhedberg/SimpylFold'
-Plug 'lepture/vim-jinja'
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
-Plug 'majutsushi/tagbar'
-Plug 'ervandew/supertab'
-Plug 'tpope/vim-repeat'
-
-call plug#end()            " required
-filetype plugin indent on    " required
-
-""" }}}
-""" Functions {{{
-" recursively search up from dirname, sourcing all .vimrc.local files along the way
-function! ApplyLocalSettings(dirname)
-    " convert windows paths to unix style
-    let l:curDir = substitute(a:dirname, '\\', '/', 'g')
-
-    " walk to the top of the dir tree
-    let l:parentDir = strpart(l:curDir, 0, strridx(l:curDir, '/'))
-    if isdirectory(l:parentDir)
-        call ApplyLocalSettings(l:parentDir)
-    endif
-
-    " now walk back down the path and source .vimsettings as you find them.
-    " child directories can inherit from their parents
-    let l:settingsFile = a:dirname . '/.vimrc.local'
-    if filereadable(l:settingsFile)
-        exec ':source' . l:settingsFile
-    endif
-endfunction
-
-function! NumberToggle()
-    if(&relativenumber == 1)
-        set norelativenumber
-    else
-        set relativenumber
-    endif
-
-endfunc
-""" }}}
-"" Visual Settings {{{
-" Line numbers
-set number
-" Make bell visual and disable error bells
-set visualbell
-" Disable error bells
-set noerrorbells
-" Show (partial) command in status line
-set showcmd
-" Enable statusline for single buffer
-set laststatus=2
-" Faster redrawing
-set ttyfast
-" Colorize column 80
-set colorcolumn=80
-"" }}}
+""" Settings {{{
 "" Keyboard Settings {{{
 
 
@@ -150,39 +41,13 @@ set smarttab
 set tabstop=4
 set shiftwidth=4
 
-""" }}}
-""" Key Bindings {{{
+"" Keybindings
 " Paste mode toggle key
 set pastetoggle=<F11>
 
 "Set Leader Key
 let g:mapleader = ","
-let g:maplocalleader = ","
-
-"Make cursor recognize wrapped lines
-map <Down> gj
-map <Up> gk
-map k gk
-map j gj
-
-" Split management with CTRL + movement keys
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
-" Quit buffer
-nmap <C-y> :q<CR>
-" Quick save mapping
-nmap <leader>, :w<CR>
-" Disable ex mode
-noremap Q <NOP>
-
-nmap <leader>rel :call NumberToggle()<cr>
-
-nmap <leader>vimrc :e ~/.vimrc<cr>
-nmap <leader>vr :source ~/.vimrc<cr>
-
+let g:maplocalleader = ";"
 """ }}}
 "" Mouse Settings {{{
 
@@ -211,6 +76,8 @@ set incsearch
 "" }}}
 "" Misc Settings {{{
 
+" Status Line
+set laststatus=2
 "Bigger History
 set history=1000
 " keep at least 5 lines above/below
@@ -267,69 +134,167 @@ augroup resCur
     autocmd BufWinEnter * call ResCur()
 augroup END
 "}}}
+
 """ }}}
-"" Plugin Settings {{{
-" Enable Syntax Highlighting
+"" }}}
+""" PlugIns {{{
 syntax on
 filetype plugin on
 filetype indent on
-
-"" NERDTree {{{
-nnoremap <F3>  :NERDTreeToggle<CR>
-"" }}}
-"" Tagbar {{{
-nnoremap <F4>  :TagbarToggle<CR>
-let g:tagbar_iconchars = ['▸', '▾']
-"" }}}
-"" Easytags {{{
-" let g:easytags_cmd = '/usr/local/bin/ctags'
-let g:easytags_dynamic_files = 2
-map <S-F11> :!ctags -R -f $VIRTUAL_ENV/.tags $VIRTUAL_ENV/lib/python3.5/site-packages<CT>
-set tags+=$VIRTUAL_ENV/.tags
-"" }}}
-"" Delimitmate {{{
-"let delimitMate_matchpairs = '(:),[:],{:},<:>'
-"" }}}
-"" Ragtag {{{
-let g:ragtag_global_maps = 1
-" }}}
-"" vim-ruby {{{
-autocmd vimrc FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd vimrc FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd vimrc FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd vimrc FileType ruby,eruby let g:rubycomplete_rails = 1
-
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-let g:rubycomplete_load_gemfile = 1
-
-"" }}}
-"" vim-project {{{
-let g:project_use_nerdtree = 1
-"call project#rc("~/Documents/Projects/")
-if has('win32')
-    set rtp+=~/vimfiles/bundle/vim-project/
-else
-    set rtp+=~/.vim/bundle/vim-project/
+" filetype off
+" !Plug Path {{{
+let path='~/.vim/bundle'
+if has('nvim')
+    let path='~/.config/nvim/bundle'
+elseif has('win32')
+    let path='~/vimfiles/bundle'
 endif
-"" }}}
-"" CtrlP {{{
-noremap <leader>p <Esc>:CtrlP<CR>
-noremap <leader>o <Esc>:CtrlPBuffer<CR>
-noremap <leader>m <Esc>:CtrlPMixed<CR>
-"" }}}
-"" python-Mode {{{
-let g:pymode_virtualenv = 0
-let g:pymode_lint = 0
-let g:pymode_rope = 0
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_rope_completion = 1
-let g:pymode_rope_autoimport = 1
-let g:pymode_rope_autoimport_import_after_complete = 0
-let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']
-"" }}}
-"" Airline {{{
+" }}}
+" !Plug Start {{{
+call plug#begin(path)
+" }}}
 
+"" Colorschemes {{{
+" vim-colors-solarized {{{
+Plug 'altercation/vim-colors-solarized'
+" }}}
+" Zenburn {{{
+Plug 'jnurmine/Zenburn'
+" }}}
+" vim-monokai {{{
+Plug 'sickill/vim-monokai'
+" }}}
+" codeschool-vim-theme {{{
+Plug '29decibel/codeschool-vim-theme'
+" }}}
+" molokai {{{
+Plug 'tomasr/molokai'
+" }}}
+"" }}}
+"" Git {{{
+" vim-fugitive {{{
+Plug 'tpope/vim-fugitive'
+" }}}
+" vim-git {{{
+Plug 'tpope/vim-git'
+" }}}
+" gitignore.vim {{{
+Plug 'rdolgushin/gitignore.vim'
+" }}}
+"" }}}
+"" Snippets {{{
+" ultisnips {{{
+Plug 'SirVer/ultisnips'
+"let g:UltiSnipsExpandTrigger = "<tab>"
+"let g:UltiSnipsJumpForwardTrigger = "<tab>"
+"let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:snips_author = "Patrick Neff"
+let g:snips_email = "odie86@gmail.com"
+let g:snips_github = "https://github.com/masterodie"
+" }}}
+" vim-snippets {{{
+Plug 'honza/vim-snippets'
+" }}}
+"" }}}
+"" Completion {{{
+" neocomplete.vim {{{
+if !has('nvim')
+Plug 'Shougo/neocomplete.vim'
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"let g:neocomplete#enable_auto_select=0
+endif
+" }}}
+" deoplete.vim {{{
+if has('nvim')
+Plug 'Shougo/deoplete.nvim'
+if !exists('g:deoplete#force_omni_input_patterns')
+        let g:deoplete#force_omni_input_patterns = {}
+endif
+autocmd vimrc FileType python setlocal omnifunc=jedi#completions
+autocmd vimrc FileType python setlocal completefunc=jedi#completions
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"let g:deoplete#enable_auto_select=0
+endif
+" }}}
+" supertab {{{
+Plug 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
+" }}}
+""  }}}
+"" Delimiters {{{
+" delimitMate {{{
+Plug 'Raimondi/delimitMate'
+"let delimitMate_matchpairs = '(:),[:],{:},<:>'
+au FileType python let b:delimitMate_nesting_quotes = ['"']
+au FileType python let b:delimitMate_expand_cr = 1
+au FileType python let b:delimitMate_expand_inside_quotes = 1
+" }}}
+" vim-surround {{{
+Plug 'tpope/vim-surround'
+autocmd vimrc FileType jinja let b:surround_45 = "{{ \r }}"
+autocmd vimrc FileType jinja let b:surround_95 = "{% \r %}"
+autocmd vimrc FileType python let b:surround_45 = "_(\r)"
+" }}}
+" vim-repeat {{{
+Plug 'tpope/vim-repeat'
+" }}}
+"" }}}
+"" File Browsing  {{{
+" nerdtree {{{
+Plug 'scrooloose/nerdtree'
+nnoremap <F3>  :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]', '\~$']
+" }}}
+" vim-bufexplorer {{{
+Plug 'thisivan/vim-bufexplorer'
+" }}}
+" ctrlp.vim {{{
+Plug 'kien/ctrlp.vim'
+noremap <leader>m <Esc>:CtrlP<CR>
+noremap <leader>p <Esc>:CtrlPBuffer<CR>
+noremap <leader>o <Esc>:CtrlPMixed<CR>
+" }}}
+"" }}}
+"" Comments {{{
+" nerdcommenter {{{
+Plug 'scrooloose/nerdcommenter'
+" }}}
+"" }}}
+"" Syntax {{{
+" syntastic {{{
+Plug 'scrooloose/syntastic'
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_aggregate_errors = 1
+" }}}
+"" }}}
+"" Markdown {{{
+" vim-markdown {{{
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" }}}
+"" }}}
+"" Tmux {{{
+" vimux {{{
+Plug 'benmills/vimux'
+" }}}
+"" }}}
+"" Statusline {{{
+" vim-airline {{{
+Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline_theme = "molokai"
 if !exists('g:airline_symbols')
@@ -344,95 +309,148 @@ let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#whitespace#trailing_format = '●[%s]'
 let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'
+" }}}
+" tmuxline.vim {{{
+Plug 'edkolev/tmuxline.vim'
+" }}}
 "" }}}
-"" Syntastic {{{
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_aggregate_errors = 1
+"" Ctags {{{
+" vim-easytags {{{
+"Plug 'xolox/vim-easytags'
+" let g:easytags_cmd = '/usr/local/bin/ctags'
+let g:easytags_dynamic_files = 2
+map <S-F11> :!ctags -R -f $VIRTUAL_ENV/.tags $VIRTUAL_ENV/lib/python3.5/site-packages<CT>
+set tags+=$VIRTUAL_ENV/.tags
+" }}}
+" vim-misc {{{
+"Plug 'xolox/vim-misc'
+" }}}
+" tagbar {{{
+"Plug 'majutsushi/tagbar'
+nnoremap <F4>  :TagbarToggle<CR>
+let g:tagbar_iconchars = ['▸', '▾']
+" }}}
 "" }}}
-"" Ultisnips {{{
-"""" OWN SETTINGS
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-""""NEW SETTINGS
-"let g:UltiSnipsExpandTrigger       = "<c-j>"
-"let g:UltiSnipsJumpForwardTrigger  = "<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger = "<c-p>"
-"let g:UltiSnipsListSnippets        = "<c-k>" "List possible snippets based on current file
-
-let g:snips_author = "Patrick Neff"
-let g:snips_email = "odie86@gmail.com"
-let g:snips_github = "https://github.com/masterodie"
-"" }}}
-"" jedi-vim {{{
-"autocmd FileType python setlocal omnifunc=jedi#completions
+"" Python {{{
+" vim-virtualenv {{{
+Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
 let g:virtualenv_auto_activate = 1
+" }}}
+" jedi-vim {{{
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
+autocmd vimrc FileType python setlocal omnifunc=jedi#completions
+autocmd vimrc FileType python setlocal completefunc=jedi#completions
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#auto_close_doc = 1
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#show_call_signatures = 0
 "let g:jedi#force_py_version = 3
-"" }}}
-"" ropevim {{{
+" }}}
+" ropevim {{{
+"Plug 'python-rope/ropevim', {'for': 'python'}
 let ropevim_vim_completion = 0
-let ropevim_extended_complete = 1
+let ropevim_extended_complete = 0
 let ropevim_enable_autoimport = 1
 let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'flask.*']
-"" }}}
-"" python syntax {{{
+" }}}
+" vim-python-pep8-indent {{{
+Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+" }}}
+" python-syntax {{{
+Plug 'hdima/python-syntax', {'for': 'python'}
 let python_highlight_all = 1
-"" }}}
-"" SympylFold {{{
+" }}}
+" SimpylFold {{{
+Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 let g:SimpylFold_docstring_preview = 1
 let g:SimpylFold_fold_docstring = 1
+" }}}
 "" }}}
-"" vim-pasta {{{
-let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
+"" JavaScript {{{
+autocmd vimrc FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" vim-javascript {{{
+" Plug 'pangloss/vim-javascript'
+" }}}
+" jslint.vim {{{
+" Plug 'hallettj/jslint.vim'
+" }}}
+" vim-jquery {{{
+Plug 'nono/jquery.vim'
+" }}}
 "" }}}
-"" neocomplete {{{
-if !has('nvim')
-if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-endif
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-let g:neocomplete#enable_auto_select=1
-endif
+"" LUA {{{
+Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
 "" }}}
-"" deoplete {{{
-if has('nvim')
-if !exists('g:deoplete#force_omni_input_patterns')
-        let g:deoplete#force_omni_input_patterns = {}
-endif
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-let g:deoplete#enable_auto_select=1
-endif
+"" HTML {{{
+" xmledit', {'for': ['html', 'xml', 'jinja {{{
+Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja']}
+" }}}
 "" }}}
-""" }}}
-""" Status Line {{{
-set laststatus=2
-""" }}}
-"" Theme Settings {{{
-set t_Co=256
-colorscheme molokai
-set background=dark
-"let g:solarized_termcolors=256
-"let g:solarized_termtrans=1
-call togglebg#map("<F7>")
+"" Jinja {{{
+" vim-jinja {{{
+Plug 'lepture/vim-jinja'
+" }}}
 "" }}}
-""" GUI Sttings {{{
+"" Less {{{
+" vim-less {{{
+Plug 'groenewege/vim-less'
+" }}}
+"" }}}
+"" Pentadactyl {{{
+" vim-pentadactyl {{{
+Plug 'joedicastro/vim-pentadactyl'
+" }}}
+"" }}}
+"" Vimperator {{{
+" vim-vimperator {{{
+Plug 'TluxGhelew/vim-vimperator'
+" }}}
+"" }}}
+"" gettext {{{
+Plug 'vim-scripts/po.vim'
+let g:po_translator = "Patrick Neff <odie86@gmail.com>"
+let g:po_lang_team = "myself"
 
+Plug 'vim-scripts/po.vim--gray'
+"" }}}
+"" Tests {{{
+" vim-test {{{
+Plug 'janko-m/vim-test'
+" make test commands execute using dispatch.vim
+let test#strategy = "vimux"
+let test#python#nose#options = '--verbose'
+let g:test#preserve_screen = 1
+" }}}
+"" }}}
+"" Misc {{{
+" vim-pasta {{{
+Plug 'sickill/vim-pasta'
+let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
+" }}}
+"" }}}
+
+" !Plug Stop {{{
+call plug#end()            " required
+" }}}
+""" }}}
+""" Visual {{{
+"" Visual Settings {{{
+" Line numbers
+set number
+" Make bell visual and disable error bells
+set visualbell
+" Disable error bells
+set noerrorbells
+" Show (partial) command in status line
+set showcmd
+" Enable statusline for single buffer
+set laststatus=2
+" Faster redrawing
+set ttyfast
+" Colorize column 80
+set colorcolumn=80
+"" }}}
+"" GUI Sttings {{{
 if has("gui_running")
     "" Gui Font
     if has("gui_gtk2")
@@ -448,8 +466,82 @@ if has("gui_running")
     "" Antialiasing on
     set antialias
 endif
-
 """ }}}
+"" Theme Settings {{{
+set t_Co=256
+colorscheme molokai
+set background=dark
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=1
+call togglebg#map("<F7>")
+"" }}}
+"""}}}
+""" Functions {{{
+" recursively search up from dirname, sourcing all .vimrc.local files along the way
+function! ApplyLocalSettings(dirname)
+    " convert windows paths to unix style
+    let l:curDir = substitute(a:dirname, '\\', '/', 'g')
 
+    " walk to the top of the dir tree
+    let l:parentDir = strpart(l:curDir, 0, strridx(l:curDir, '/'))
+    if isdirectory(l:parentDir)
+        call ApplyLocalSettings(l:parentDir)
+    endif
 
-call ApplyLocalSettings('.')
+    " now walk back down the path and source .vimsettings as you find them.
+    " child directories can inherit from their parents
+    let l:settingsFile = a:dirname . '/.vimrc.local'
+    if filereadable(l:settingsFile)
+        exec ':source' . l:settingsFile
+    endif
+endfunction
+
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set norelativenumber
+    else
+        set relativenumber
+    endif
+
+endfunc
+""" }}}
+""" Keybindings {{{
+
+"Make cursor recognize wrapped lines
+map <Down> gj
+map <Up> gk
+map k gk
+map j gj
+
+" Quit buffer
+nmap <leader>q :q<CR>
+nmap <leader>qa :qa<CR>
+" Quick save mapping
+nmap <leader>, :w<CR>
+nmap <leader>,q :wq<CR>
+" Discard Buffer
+nmap <leader>d :bd<CR>
+" Disable ex mode
+noremap Q <NOP>
+
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>w :Gwrite<CR>
+
+nmap <leader>rel :call NumberToggle()<cr>
+
+nmap <leader>cs :let @/ = ""<cr>
+
+nmap <leader>v :e ~/.vimrc<cr>
+nmap <leader>vr :source ~/.vimrc<cr>
+
+nmap <leader>tt :TestSuite<cr>
+nmap <leader>tf :TestFile<cr>
+
+" Split management with CTRL + movement keys
+noremap <C-J> :wincmd j<cr>
+noremap <C-K> :wincmd k<cr>
+noremap <C-L> :wincmd l<cr>
+noremap <C-H> :wincmd h<cr>
+""" }}}
+"call ApplyLocalSettings('.')
