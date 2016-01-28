@@ -1,0 +1,22 @@
+global !p
+from snippet_helpers import *
+endglobal
+
+snippet pel "Pelican Header" b
+Title: ${1:`!p snip.rv = title_case(os.path.splitext(os.path.basename(path))[0].replace('_', ' '))`}
+Tags: $2
+Category: ${3:`!p snip.rv = os.path.dirname(path).split('/')[-1]`}
+Date: `date '+%Y-%m-%d %H:%M'`
+Modified: `date '+%Y-%m-%d %H:%M'`
+Slug: `!p
+user_input = re.sub('[%s]' % re.escape(string.punctuation), '', t[1])
+snip.rv = user_input.replace(' ', '-').lower()`
+Subtitle: $4
+Summary: $5
+Keywords: $6
+Authors: ${7:`echo $USER`}
+
+${8:#`!p snip.rv = t[1]`}
+
+$0
+endsnippet
