@@ -234,7 +234,8 @@ let g:SuperTabContextDefaultCompletionType = "<c-p>"
 " delimitMate {{{
 Plug 'Raimondi/delimitMate'
 "let delimitMate_matchpairs = '(:),[:],{:},<:>'
-au FileType python let b:delimitMate_nesting_quotes = ['"']
+let delimitMate_balance_matchpairs = 1
+au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
 au FileType python let b:delimitMate_expand_cr = 1
 au FileType python let b:delimitMate_expand_inside_quotes = 1
 " }}}
@@ -278,11 +279,14 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8']
+"let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 " }}}
 "" }}}
 "" Markdown {{{
+" tabular {{{
+Plug 'godlygeek/tabular'
+" }}}
 " vim-markdown {{{
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 " }}}
