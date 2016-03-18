@@ -1,0 +1,158 @@
+global !p
+import datetime
+from snippet_helpers import *
+
+def replace_with_whitespace(string):
+ 	return string.replace('_', ' ')
+
+def category(path):
+	dirs = path.split('/')
+	new_dirs = []
+	for d in dirs:
+		new_dirs.append(replace_with_whitespace(d))
+	return new_dirs[1:]
+
+def fill(string, fill):
+	fill = fill*len(string)
+	return fill
+
+def filename():
+	return os.path.splitext(os.path.basename(path))[0]
+
+def title():
+	return replace_with_whitespace(
+		titlecase(process_filename()[1])
+	)
+
+def process_date():
+	try:
+		return '-'.join(process_filename()[0])
+	except:
+		date = datetime.date.strftime(datetime.datetime.now(None), '%Y-%m-%d')
+		return date
+
+def process_filename():
+	date, name = filename().split('-')
+	year, month, day = date.split('_')
+	date = [year, month, day]
+	return date, name
+
+def complete(t, opts):
+	if t:
+		opts = [m[len(t):] for m in opts if m.startswith(t)]
+	if len(opts) == 1:
+		return opts[0]
+	return '(' + '|'.join(opts) + ')'
+endglobal
+
+snippet pel "Pelican Header" b
+`!p snip.rv = fill('# '+t[1], '#')`
+# ${1:`!p snip.rv = title()`}
+`!p snip.rv = fill('# '+t[1], '#')`
+
+:title: `!p snip.rv = t[1]`
+:tags: ${2:`!p snip.rv = ', '.join(category(path)[0:-1])`}
+:category: ${3:`!p snip.rv = category(path)[0]`}
+:date: `!p snip.rv = process_date()`
+:slug: `!p
+user_input = re.sub('[%s]' % re.escape(string.punctuation), '', t[1])
+snip.rv = user_input.replace(' ', '_').replace('ä', 'ae').replace('ö',
+'oe').replace('ü', 'ue').lower()`
+:subtitle: $4
+:summary: $5
+:keywords: ${6:`!p snip.rv = t[2]`}
+:authors: ${7:`echo $USER`}
+:status: $8`!p snip.rv = complete(t[8], ['draft', 'published'])`
+
+$0
+endsnippet
+
+snippet pelp "Pelican Page Header" b
+`!p snip.rv = fill('# '+t[1], '#')`
+# ${1:`!p snip.rv = titlecase(filename())`}
+`!p snip.rv = fill('# '+t[1], '#')`
+
+:title: `!p snip.rv = t[1]`
+:date: `!p snip.rv = process_date()`
+
+endsnippet
+
+snippet li "Link"
+\`${1:Title} <${2:https://www.example.com}>\`_
+endsnippet
+
+post_expand ""
+snippet _ "Link"
+\`${1:Title}\`_
+
+.. _`!p snip.rv = t[1]`: ${2:https://www.example.com}
+endsnippet
+
+snippet - "Link"
+\`${1:Title}\`_
+endsnippet
+
+snippet dt "Document Title"
+`!p snip.rv = fill(t[1], '=')`
+${1:Document Title}
+`!p snip.rv = fill(t[1], '=')`
+endsnippet
+
+snippet dst "Document Subtitle"
+`!p snip.rv = fill(t[1], '-')`
+${1:Document Title}
+`!p snip.rv = fill(t[1], '-')`
+endsnippet
+
+snippet h1 "Section level 1"
+${1:Headline}
+`!p snip.rv = fill(t[1], '=')`
+
+$0
+endsnippet
+
+snippet h2 "Section level 2"
+${1:Headline}
+`!p snip.rv = fill(t[1], '-')`
+
+$0
+endsnippet
+
+snippet h3 "Section level 3"
+${1:Headline}
+`!p snip.rv = fill(t[1], '#')`
+
+$0
+endsnippet
+
+snippet h4 "Section level 4"
+${1:Headline}
+`!p snip.rv = fill(t[1], '+')`
+
+$0
+endsnippet
+
+snippet h5 "Section level 5"
+${1:Headline}
+`!p snip.rv = fill(t[1], '*')`
+
+$0
+endsnippet
+
+snippet h6 "Section level 6"
+${1:Headline}
+`!p snip.rv = fill(t[1], '~')`
+
+$0
+endsnippet
+
+snippet abbr "Abbreviation"
+:abbr:\`$1 ($2)\`
+endsnippet
+
+snippet thumb: "Thumbnail Figure" b
+.. figure:: {static|/images/${1:image.jpg}|thumb='200x_'}
+	:alt: ${2:$1}
+	:figclass: thumbnail pull-${3:left}
+	:target: {static|/images/$1}
+endsnippet
