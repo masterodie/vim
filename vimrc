@@ -111,6 +111,7 @@ Plug 'TluxGhelew/vim-vimperator'
 Plug 'vim-scripts/po.vim', {'for': 'po'}
 Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
+Plug 'mustache/vim-mustache-handlebars'
 
 
 "Plug 'godlygeek/tabular'
