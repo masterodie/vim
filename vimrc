@@ -96,7 +96,7 @@ Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'python-rope/ropevim', {'for': 'python'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
-Plug 'hdima/python-syntax', {'for': 'python'}
+Plug 'hdima/python-syntax'
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'hallettj/jslint.vim', {'for': 'javascript'}
