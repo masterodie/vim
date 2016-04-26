@@ -65,10 +65,10 @@ endif
 call plug#begin(path)
 
 " Colorschemes
-Plug 'altercation/vim-colors-solarized'
-Plug 'jnurmine/Zenburn'
-Plug 'sickill/vim-monokai'
-Plug '29decibel/codeschool-vim-theme'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'jnurmine/Zenburn'
+"Plug 'sickill/vim-monokai'
+"Plug '29decibel/codeschool-vim-theme'
 Plug 'tomasr/molokai'
 
 " Plugins
@@ -84,10 +84,10 @@ Plug 'thisivan/vim-bufexplorer', {'on': 'BufExplorer'}
 Plug 'kien/ctrlp.vim', {'on': ['CtrlP','CtrlPMixed','CtrlPBuffer']}
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'xolox/vim-misc'
+Plug 'rkitover/vimpager'
 
 
 " Filetype Plugins
@@ -260,7 +260,7 @@ colorscheme molokai
 set background=dark
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
-call togglebg#map("<F7>")
+"call togglebg#map("<F7>")
 
 """"""""""""""""""
 "" PLUGIN SETTINGS
@@ -394,6 +394,10 @@ let g:test#preserve_screen = 1
 "vim-pasta
 let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']
 
+"vimpager
+let g:vimpager = {}
+let g:less = {}
+
 """"""""""""""
 "" KEYBINDINGS
 """"""""""""""
@@ -421,7 +425,7 @@ nmap <leader>w :Gwrite<CR>
 
 nmap <leader>rel :call NumberToggle()<cr>
 
-nmap <leader>cs :let @/ = ""<cr>
+nmap <leader>cl :let @/ = ""<cr>
 
 nmap <leader>v :e ~/.vimrc<cr>
 nmap <leader>vr :source ~/.vimrc<cr>
@@ -440,6 +444,13 @@ nnoremap <F4>  :TagbarToggle<CR>
 
 " vim-easytags
 map <S-F11> :!ctags -R -f $VIRTUAL_ENV/.tags $VIRTUAL_ENV/lib/python3.5/site-packages<CT>
+
+if exists('g:vimpager.enabled') && g:vimpager.enabled == 1
+    if exists('g:less.enabled') && g:less.enabled == 1
+        unmap k
+        unmap j
+    endif
+endif
 
 """"""""""""""""""""
 "" AUTOCOMMAND GROUP
