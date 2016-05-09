@@ -245,14 +245,16 @@ if has("gui_running")
     if has("gui_gtk2")
         set guifont=Terminess\ Powerline\ 8
         set guioptions=eg
+        set antialias
     elseif has("gui_macvim")
-        set guifont=Anonymous\ Pro:h12
+        set guifont=Terminus\ (TTF):h16
+        set noantialias
     elseif has("gui_win32")
         set guifont=Anonymice\ Powerline:h12
         set guioptions=eg
+        set antialias
     endif
     "" Antialiasing on
-    set antialias
 endif
 " Colorscheme
 set t_Co=256
