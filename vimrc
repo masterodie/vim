@@ -113,7 +113,7 @@ Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'masterodie/vim-poe-filter-syntax'
-Plug 'StanAngeloff/php.vim.git', {'for': 'php'}
+Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
 
 
