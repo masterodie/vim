@@ -102,8 +102,8 @@ Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'hallettj/jslint.vim', {'for': 'javascript'}
 Plug 'nono/jquery.vim', {'for': 'javascript'}
 Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
-Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja']}
-Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja']}
+Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php']}
+Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php']}
 Plug 'lepture/vim-jinja', {'for': 'jinja'}
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'joedicastro/vim-pentadactyl'
@@ -113,6 +113,8 @@ Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'masterodie/vim-poe-filter-syntax'
+Plug 'StanAngeloff/php.vim.git', {'for': 'php'}
+Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
 
 
 "Plug 'godlygeek/tabular'
