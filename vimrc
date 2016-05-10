@@ -116,6 +116,7 @@ Plug 'masterodie/vim-poe-filter-syntax'
 Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
 Plug 'dsawardekar/wordpress.vim'
+Plug 'editorconfig/editorconfig-vim'
 
 
 "Plug 'godlygeek/tabular'
