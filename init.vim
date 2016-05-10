@@ -1,1 +1,1 @@
-/home/odie/.dotfiles/vim/vim.symlink/vimrc
+vimrc
