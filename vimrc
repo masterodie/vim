@@ -79,8 +79,8 @@ Plug 'ervandew/supertab'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle' }
-Plug 'thisivan/vim-bufexplorer', {'on': 'BufExplorer'}
+Plug 'scrooloose/nerdtree'
+Plug 'thisivan/vim-bufexplorer'
 Plug 'kien/ctrlp.vim', {'on': ['CtrlP','CtrlPMixed','CtrlPBuffer']}
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
@@ -115,7 +115,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'masterodie/vim-poe-filter-syntax'
 Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
-Plug 'dsawardekar/wordpress.vim', {'for': 'php'}
+Plug 'dsawardekar/wordpress.vim'
 
 
 "Plug 'godlygeek/tabular'
