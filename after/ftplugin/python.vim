@@ -5,6 +5,8 @@ setlocal textwidth=79
 setlocal expandtab
 setlocal nosmarttab
 
+let testrunner = 'green'
+
 augroup vimrc_python
 
 augroup END

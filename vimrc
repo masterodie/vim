@@ -121,10 +121,10 @@ Plug 'editorconfig/editorconfig-vim'
 
 "Plug 'godlygeek/tabular'
 "Plug 'Rykka/riv.vim'
-"Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test'
 "Plug 'sickill/vim-pasta'
 "Plug 'pearofducks/ansible-vim'
-"Plug 'benmills/vimux'
+Plug 'benmills/vimux'
 
 if !has('nvim')
 Plug 'Shougo/neocomplete.vim'
@@ -333,6 +333,16 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_loc_list_height = 4
+" Syntastic settings for phpcs and WordPress coding standards
+"
+" Run base PHP checker first, then run phpcs with WordPress standard
+" If phpcs does not exist or the standard does not exist,
+" Syntastic skips them (failing gracefully)
+let g:syntastic_php_checkers = ['php', 'phpcs']
+let g:syntastic_php_phpcs_args = '--standard=WordPress'
+
+" If phpcs.xml is found, it supercedes the standard set above
+let g:syntastic_php_phpcs_standard_file = "phpcs.xml"
 
 " riv.vim
 let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
@@ -394,7 +404,6 @@ let g:po_lang_team = "myself"
 " vim-test
 " make test commands execute using dispatch.vim
 let test#strategy = "vimux"
-let test#python#nose#options = '--verbose'
 let g:test#preserve_screen = 1
 
 "vim-pasta
@@ -436,8 +445,10 @@ nmap <leader>cl :let @/ = ""<cr>
 nmap <leader>v :e ~/.vimrc<cr>
 nmap <leader>vr :source ~/.vimrc<cr>
 
-nmap <leader>tt :TestSuite<cr>
-nmap <leader>tf :TestFile<cr>
+
+nmap <leader>tt :VimuxRunCommand('clear; ' . testrunner)<cr>
+nmap <leader>tf :VimuxRunCommand('clear; ' . testrunner . ' ' . bufname('%'))<cr>
+nmap <Leader>tz :VimuxZoomRunner<cr>
 
 " Split management with CTRL + movement keys
 noremap <C-J> :wincmd j<cr>

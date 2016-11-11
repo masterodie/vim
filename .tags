@@ -1,0 +1,87 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+<C-h>	/home/odie/.vimrc	/^map <C-h> <C-w>h$/;"	m	language:Vim
+<C-j>	/home/odie/.vimrc	/^map <C-j> <C-w>j$/;"	m	language:Vim
+<C-k>	/home/odie/.vimrc	/^map <C-k> <C-w>k$/;"	m	language:Vim
+<C-l>	/home/odie/.vimrc	/^map <C-l> <C-w>l$/;"	m	language:Vim
+<C-y>	/home/odie/.vimrc	/^nmap <C-y> :q<CR>$/;"	m	language:Vim
+<Down>	/home/odie/.vimrc	/^map <Down> gj$/;"	m	language:Vim
+<F3>	/home/odie/.vimrc	/^nnoremap <F3>  :NERDTreeToggle<CR>$/;"	m	language:Vim
+<F4>	/home/odie/.vimrc	/^nnoremap <F4>  :TagbarToggle<CR>$/;"	m	language:Vim
+<leader>,	/home/odie/.vimrc	/^nmap <leader>, :w<CR>$/;"	m	language:Vim
+<leader>m	/home/odie/.vimrc	/^noremap <leader>m <Esc>:CtrlPMixed<CR>$/;"	m	language:Vim
+<leader>o	/home/odie/.vimrc	/^noremap <leader>o <Esc>:CtrlPBuffer<CR>$/;"	m	language:Vim
+<leader>p	/home/odie/.vimrc	/^noremap <leader>p <Esc>:CtrlP<CR>$/;"	m	language:Vim
+<leader>rel	/home/odie/.vimrc	/^nmap <leader>rel :call NumberToggle()<cr>$/;"	m	language:Vim
+<leader>vimrc	/home/odie/.vimrc	/^nmap <leader>vimrc :e ~\/.vimrc<cr>$/;"	m	language:Vim
+<leader>vr	/home/odie/.vimrc	/^nmap <leader>vr :source ~\/.vimrc<cr>$/;"	m	language:Vim
+<Up>	/home/odie/.vimrc	/^map <Up> gk$/;"	m	language:Vim
+ApplyLocalSettings	/home/odie/.vimrc	/^function! ApplyLocalSettings(dirname)$/;"	f	language:Vim
+g:airline#extensions#hunks#enabled	/home/odie/.vimrc	/^let g:airline#extensions#hunks#enabled = 1$/;"	v	language:Vim
+g:airline#extensions#hunks#non_zero_only	/home/odie/.vimrc	/^let g:airline#extensions#hunks#non_zero_only = 1$/;"	v	language:Vim
+g:airline#extensions#syntastic#enabled	/home/odie/.vimrc	/^let g:airline#extensions#syntastic#enabled = 1$/;"	v	language:Vim
+g:airline#extensions#tagbar#enabled	/home/odie/.vimrc	/^let g:airline#extensions#tagbar#enabled = 1$/;"	v	language:Vim
+g:airline#extensions#virtualenv#enabled	/home/odie/.vimrc	/^let g:airline#extensions#virtualenv#enabled = 1$/;"	v	language:Vim
+g:airline#extensions#whitespace#enabled	/home/odie/.vimrc	/^let g:airline#extensions#whitespace#enabled = 1$/;"	v	language:Vim
+g:airline#extensions#whitespace#mixed_indent_format	/home/odie/.vimrc	/^let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'$/;"	v	language:Vim
+g:airline#extensions#whitespace#trailing_format	/home/odie/.vimrc	/^let g:airline#extensions#whitespace#trailing_format = '●[%s]'$/;"	v	language:Vim
+g:airline_powerline_fonts	/home/odie/.vimrc	/^let g:airline_powerline_fonts = 1$/;"	v	language:Vim
+g:airline_symbols	/home/odie/.vimrc	/^    let g:airline_symbols = {}$/;"	v	language:Vim
+g:airline_theme	/home/odie/.vimrc	/^let g:airline_theme = "molokai"$/;"	v	language:Vim
+g:easytags_dynamic_files	/home/odie/.vimrc	/^let g:easytags_dynamic_files = 2$/;"	v	language:Vim
+g:jedi#auto_close_doc	/home/odie/.vimrc	/^let g:jedi#auto_close_doc = 1$/;"	v	language:Vim
+g:jedi#auto_vim_configuration	/home/odie/.vimrc	/^let g:jedi#auto_vim_configuration = 0$/;"	v	language:Vim
+g:jedi#completions_enabled	/home/odie/.vimrc	/^let g:jedi#completions_enabled = 0$/;"	v	language:Vim
+g:jedi#popup_on_dot	/home/odie/.vimrc	/^let g:jedi#popup_on_dot = 0$/;"	v	language:Vim
+g:jedi#use_tabs_not_buffers	/home/odie/.vimrc	/^let g:jedi#use_tabs_not_buffers = 0$/;"	v	language:Vim
+g:mapleader	/home/odie/.vimrc	/^let g:mapleader = ","$/;"	v	language:Vim
+g:maplocalleader	/home/odie/.vimrc	/^let g:maplocalleader = ","$/;"	v	language:Vim
+g:neocomplete#enable_at_startup	/home/odie/.vimrc	/^let g:neocomplete#enable_at_startup = 1$/;"	v	language:Vim
+g:neocomplete#enable_auto_select	/home/odie/.vimrc	/^let g:neocomplete#enable_auto_select=1$/;"	v	language:Vim
+g:neocomplete#force_omni_input_patterns	/home/odie/.vimrc	/^        let g:neocomplete#force_omni_input_patterns = {}$/;"	v	language:Vim
+g:neocomplete#force_omni_input_patterns	/home/odie/.vimrc	/^let g:neocomplete#force_omni_input_patterns.python = '\\%([^. \\t]\\.\\|^\\s*@\\|^\\s*from\\s.\\+import \\|^\\s*from \\|^\\s*import \\)\\w*'$/;"	v	language:Vim
+g:pasta_enabled_filetypes	/home/odie/.vimrc	/^let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh']$/;"	v	language:Vim
+g:project_use_nerdtree	/home/odie/.vimrc	/^let g:project_use_nerdtree = 1$/;"	v	language:Vim
+g:pymode_lint	/home/odie/.vimrc	/^let g:pymode_lint = 0$/;"	v	language:Vim
+g:pymode_rope	/home/odie/.vimrc	/^let g:pymode_rope = 0$/;"	v	language:Vim
+g:pymode_rope_autoimport	/home/odie/.vimrc	/^let g:pymode_rope_autoimport = 1$/;"	v	language:Vim
+g:pymode_rope_autoimport_import_after_complete	/home/odie/.vimrc	/^let g:pymode_rope_autoimport_import_after_complete = 0$/;"	v	language:Vim
+g:pymode_rope_autoimport_modules	/home/odie/.vimrc	/^let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']$/;"	v	language:Vim
+g:pymode_rope_complete_on_dot	/home/odie/.vimrc	/^let g:pymode_rope_complete_on_dot = 1$/;"	v	language:Vim
+g:pymode_rope_completion	/home/odie/.vimrc	/^let g:pymode_rope_completion = 1$/;"	v	language:Vim
+g:pymode_virtualenv	/home/odie/.vimrc	/^let g:pymode_virtualenv = 0$/;"	v	language:Vim
+g:ragtag_global_maps	/home/odie/.vimrc	/^let g:ragtag_global_maps = 1$/;"	v	language:Vim
+g:ropevim_autoimport_modules	/home/odie/.vimrc	/^let g:ropevim_autoimport_modules = ['os', 'shutil', 'datetime', 'django.*']$/;"	v	language:Vim
+g:rubycomplete_classes_in_global	/home/odie/.vimrc	/^let g:rubycomplete_classes_in_global = 1$/;"	v	language:Vim
+g:rubycomplete_load_gemfile	/home/odie/.vimrc	/^let g:rubycomplete_load_gemfile = 1$/;"	v	language:Vim
+g:rubycomplete_rails	/home/odie/.vimrc	/^let g:rubycomplete_rails = 1$/;"	v	language:Vim
+g:SimpylFold_docstring_preview	/home/odie/.vimrc	/^let g:SimpylFold_docstring_preview = 1$/;"	v	language:Vim
+g:SimpylFold_fold_docstring	/home/odie/.vimrc	/^let g:SimpylFold_fold_docstring = 1$/;"	v	language:Vim
+g:snips_author	/home/odie/.vimrc	/^let g:snips_author = "Patrick Neff"$/;"	v	language:Vim
+g:snips_email	/home/odie/.vimrc	/^let g:snips_email = "odie86@gmail.com"$/;"	v	language:Vim
+g:snips_github	/home/odie/.vimrc	/^let g:snips_github = "https:\/\/github.com\/masterodie"$/;"	v	language:Vim
+g:syntastic_aggregate_errors	/home/odie/.vimrc	/^let g:syntastic_aggregate_errors = 1$/;"	v	language:Vim
+g:syntastic_always_populate_loc_list	/home/odie/.vimrc	/^let g:syntastic_always_populate_loc_list = 1$/;"	v	language:Vim
+g:syntastic_auto_loc_list	/home/odie/.vimrc	/^let g:syntastic_auto_loc_list = 1$/;"	v	language:Vim
+g:syntastic_check_on_open	/home/odie/.vimrc	/^let g:syntastic_check_on_open = 1$/;"	v	language:Vim
+g:syntastic_check_on_wq	/home/odie/.vimrc	/^let g:syntastic_check_on_wq = 0$/;"	v	language:Vim
+g:syntastic_error_symbol	/home/odie/.vimrc	/^let g:syntastic_error_symbol = '✗'$/;"	v	language:Vim
+g:syntastic_python_checkers	/home/odie/.vimrc	/^let g:syntastic_python_checkers = ['flake8']$/;"	v	language:Vim
+g:syntastic_warning_symbol	/home/odie/.vimrc	/^let g:syntastic_warning_symbol = '⚠'$/;"	v	language:Vim
+g:tagbar_iconchars	/home/odie/.vimrc	/^let g:tagbar_iconchars = ['▸', '▾']$/;"	v	language:Vim
+g:UltiSnipsExpandTrigger	/home/odie/.vimrc	/^let g:UltiSnipsExpandTrigger = "<tab>"$/;"	v	language:Vim
+g:UltiSnipsJumpBackwardTrigger	/home/odie/.vimrc	/^let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"$/;"	v	language:Vim
+g:UltiSnipsJumpForwardTrigger	/home/odie/.vimrc	/^let g:UltiSnipsJumpForwardTrigger = "<tab>"$/;"	v	language:Vim
+g:virtualenv_auto_activate	/home/odie/.vimrc	/^let g:virtualenv_auto_activate = 1$/;"	v	language:Vim
+j	/home/odie/.vimrc	/^map j gj$/;"	m	language:Vim
+k	/home/odie/.vimrc	/^map k gk$/;"	m	language:Vim
+NumberToggle	/home/odie/.vimrc	/^function! NumberToggle()$/;"	f	language:Vim
+path	/home/odie/.vimrc	/^    let path='~\/vimfiles\/bundle'$/;"	v	language:Vim
+path	/home/odie/.vimrc	/^let path='~\/.vim\/bundle'$/;"	v	language:Vim
+python_highlight_all	/home/odie/.vimrc	/^let python_highlight_all = 1$/;"	v	language:Vim
+Q	/home/odie/.vimrc	/^noremap Q <NOP>$/;"	m	language:Vim
+resCur	/home/odie/.vimrc	/^augroup resCur$/;"	a	language:Vim
+ResCur	/home/odie/.vimrc	/^function! ResCur()$/;"	f	language:Vim
+ropevim_enable_autoimport	/home/odie/.vimrc	/^let ropevim_enable_autoimport = 1$/;"	v	language:Vim
+ropevim_extended_complete	/home/odie/.vimrc	/^let ropevim_extended_complete = 1$/;"	v	language:Vim
+ropevim_vim_completion	/home/odie/.vimrc	/^let ropevim_vim_completion = 0$/;"	v	language:Vim
+vimrc	/home/odie/.vimrc	/^augroup vimrc$/;"	a	language:Vim
