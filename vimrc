@@ -88,6 +88,7 @@ Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'xolox/vim-misc'
 Plug 'rkitover/vimpager'
+Plug 'Konfekt/FastFold'
 
 
 " Filetype Plugins
