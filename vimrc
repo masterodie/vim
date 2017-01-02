@@ -261,7 +261,7 @@ if has("gui_running")
         set guifont=Terminus\ (TTF):h16
         set noantialias
     elseif has("gui_win32")
-        set guifont=Anonymice\ Powerline:h12
+        set guifont=Terminus\ \(TTF\)\ for\ Windows:h12
         set guioptions=eg
         set antialias
     endif
