@@ -1,6 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_host_prog = '/home/odie/.virtualenvs/neovim2/bin/python'
+let g:python3_host_prog = '/home/odie/.virtualenvs/neovim3/bin/python3'
 
 """"""""""""
 "" FUNCTIONS
@@ -93,8 +95,10 @@ Plug 'Konfekt/FastFold'
 
 " Filetype Plugins
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'jmcantrell/vim-virtualenv', {'for': 'python'}
-Plug 'davidhalter/jedi-vim', {'for': 'python'}
+Plug 'jmcantrell/vim-virtualenv'
+if has('nvim')
+else
+endif
 Plug 'python-rope/ropevim', {'for': 'python'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'hdima/python-syntax'
@@ -128,10 +132,12 @@ Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
 
 if !has('nvim')
-Plug 'Shougo/neocomplete.vim'
+    Plug 'Shougo/neocomplete.vim'
+    Plug 'davidhalter/jedi-vim', {'for': 'python'}
 endif
 if has('nvim')
-Plug 'Shougo/deoplete.nvim'
+    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+    Plug 'zchee/deoplete-jedi', {'for': 'python'}
 endif
 
 call plug#end()            " required
@@ -269,6 +275,7 @@ set background=dark
 "let g:solarized_termtrans=1
 "call togglebg#map("<F7>")
 
+
 """"""""""""""""""
 "" PLUGIN SETTINGS
 """"""""""""""""""
@@ -280,6 +287,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:snips_author = "Patrick Neff"
 let g:snips_email = "odie86@gmail.com"
 let g:snips_github = "https://github.com/masterodie"
+let g:ultisnips_python_style = 'sphinx'
+let g:ultisnips_python_quoting_style = 'single'
+let g:ultisnips_python_triple_quoting_style = 'double'
 
 " Completion
 " neocomplete (for vim)
@@ -288,7 +298,10 @@ if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "let g:neocomplete#enable_auto_select=0
 endif
 
@@ -298,16 +311,28 @@ if !exists('g:deoplete#force_omni_input_patterns')
         let g:deoplete#force_omni_input_patterns = {}
 endif
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+"let g:deoplete#sources#syntax#min_keyword_length 
+"let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
 let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "let g:deoplete#enable_auto_select=0
+
+" deoplete-jedi
+
+let g:deoplete#sources#jedi#statement_length = 50
+let g:deoplete#sources#jedi#enable_cache = 1 
+let g:deoplete#sources#jedi#show_docstring = 1
+"let g:deoplete#sources#jedi#python_path
+"let g:deoplete#sources#jedi#debug_server
+"let g:deoplete#sources#jedi#extra_path
 endif
 "
 " supertab
-let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+"let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 "let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
+"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 
 " delimitMate
 "let delimitMate_matchpairs = '(:),[:],{:},<:>'
@@ -377,8 +402,8 @@ let g:virtualenv_auto_activate = 1
 " jedi-vim
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#show_call_signatures = 0
+"let g:jedi#smart_auto_mappings = 1
+"let g:jedi#show_call_signatures = 1
 "let g:jedi#force_py_version = 3
 
 " ropevim
@@ -452,10 +477,23 @@ nmap <leader>tf :VimuxRunCommand('clear; ' . testrunner . ' ' . bufname('%'))<cr
 nmap <Leader>tz :VimuxZoomRunner<cr>
 
 " Split management with CTRL + movement keys
-noremap <C-J> :wincmd j<cr>
-noremap <C-K> :wincmd k<cr>
-noremap <C-L> :wincmd l<cr>
-noremap <C-H> :wincmd h<cr>
+"noremap <C-J> :wincmd j<cr>
+"noremap <C-K> :wincmd k<cr>
+"noremap <C-L> :wincmd l<cr>
+"noremap <C-H> :wincmd h<cr>
+"tnoremap <C-J> :wincmd j<cr>
+"tnoremap <C-K> :wincmd k<cr>
+"tnoremap <C-L> :wincmd l<cr>
+"tnoremap <C-H> :wincmd h<cr>
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+tnoremap <ESC><ESC> <C-\><C-n> 
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 " tagbar
 nnoremap <F4>  :TagbarToggle<CR>
@@ -480,13 +518,14 @@ augroup vimrc
     autocmd BufWritePost ~/.vim/vimrc :source ~/.vimrc
     autocmd BufWritePost * :call DeleteTrailingWS()
     autocmd BufWinEnter * call ResCur()
-    autocmd FileType python setlocal omnifunc=jedi#completions
-    autocmd FileType python setlocal completefunc=jedi#completions
     autocmd FileType jinja let b:surround_45 = "{{ \r }}"
     autocmd FileType jinja let b:surround_95 = "{% \r %}"
     autocmd FileType python let b:surround_45 = "_(\r)"
-    autocmd FileType python setlocal omnifunc=jedi#completions
-    autocmd FileType python setlocal completefunc=jedi#completions
+    if has('nvim')
+    else
+        autocmd FileType python setlocal omnifunc=jedi#completions
+        autocmd FileType python setlocal completefunc=jedi#completions
+    endif
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType html let delimitMate_matchpairs = '(:),[:],{:}'
     autocmd FileType python let b:delimitMate_nesting_quotes = ['"', "'"]

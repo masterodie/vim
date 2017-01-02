@@ -5,10 +5,13 @@ setlocal textwidth=79
 setlocal expandtab
 setlocal nosmarttab
 
-let testrunner = 'green'
+let testrunner = 'py.test'
 
 augroup vimrc_python
 
 augroup END
 
-autocmd vimrc_python FileType python setlocal omnifunc=jedi#completions
+if has('nvim')
+else
+    autocmd vimrc_python FileType python setlocal omnifunc=jedi#completions
+endif
