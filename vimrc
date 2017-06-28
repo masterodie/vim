@@ -1,8 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:python_host_prog = '/home/odie/.virtualenvs/neovim2/bin/python'
-let g:python3_host_prog = '/home/odie/.virtualenvs/neovim3/bin/python3'
+"let g:python_host_prog = '/home/odie/.virtualenvs/neovim2/bin/python'
+"let g:python3_host_prog = '/home/odie/.virtualenvs/neovim3/bin/python3'
 
 """"""""""""
 "" FUNCTIONS
@@ -485,11 +485,13 @@ nmap <Leader>tz :VimuxZoomRunner<cr>
 "tnoremap <C-K> :wincmd k<cr>
 "tnoremap <C-L> :wincmd l<cr>
 "tnoremap <C-H> :wincmd h<cr>
+if has('nvim')
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
 tnoremap <ESC><ESC> <C-\><C-n> 
+endif
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
