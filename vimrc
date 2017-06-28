@@ -1,8 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:python_host_prog = '/home/odie/.virtualenvs/neovim2/bin/python'
-let g:python3_host_prog = '/home/odie/.virtualenvs/neovim3/bin/python3'
+"let g:python_host_prog = '/usr/bin/python2'
+"let g:python3_host_prog = '/usr/bin/python3'
 
 """"""""""""
 "" FUNCTIONS
@@ -112,7 +112,7 @@ Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php']}
 Plug 'lepture/vim-jinja', {'for': 'jinja'}
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'joedicastro/vim-pentadactyl'
-Plug 'TluxGhelew/vim-vimperator'
+Plug 'vimperator/vimperator.vim'
 Plug 'vim-scripts/po.vim', {'for': 'po'}
 Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
@@ -122,6 +122,7 @@ Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
 Plug 'dsawardekar/wordpress.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'jaredly/vim-debug'
 
 
 "Plug 'godlygeek/tabular'
@@ -438,6 +439,7 @@ let g:pasta_enabled_filetypes = ['python', 'ruby', 'javascript', 'css', 'c', 'sh
 "vimpager
 let g:vimpager = {}
 let g:less = {}
+let g:vimpager.less = 0
 
 """"""""""""""
 "" KEYBINDINGS
@@ -502,7 +504,7 @@ nnoremap <F4>  :TagbarToggle<CR>
 map <S-F11> :!ctags -R -f $VIRTUAL_ENV/.tags $VIRTUAL_ENV/lib/python3.5/site-packages<CT>
 
 if exists('g:vimpager.enabled') && g:vimpager.enabled == 1
-    if exists('g:less.enabled') && g:less.enabled == 1
+    if exists('g:less.enabled')
         unmap k
         unmap j
     endif
