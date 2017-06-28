@@ -262,7 +262,7 @@ if has("gui_running")
         set guifont=Terminus\ (TTF):h16
         set noantialias
     elseif has("gui_win32")
-        set guifont=Anonymice\ Powerline:h12
+        set guifont=Terminus\ \(TTF\)\ for\ Windows:h12
         set guioptions=eg
         set antialias
     endif
@@ -478,20 +478,15 @@ nmap <leader>tt :VimuxRunCommand('clear; ' . testrunner)<cr>
 nmap <leader>tf :VimuxRunCommand('clear; ' . testrunner . ' ' . bufname('%'))<cr>
 nmap <Leader>tz :VimuxZoomRunner<cr>
 
+
 " Split management with CTRL + movement keys
-"noremap <C-J> :wincmd j<cr>
-"noremap <C-K> :wincmd k<cr>
-"noremap <C-L> :wincmd l<cr>
-"noremap <C-H> :wincmd h<cr>
-"tnoremap <C-J> :wincmd j<cr>
-"tnoremap <C-K> :wincmd k<cr>
-"tnoremap <C-L> :wincmd l<cr>
-"tnoremap <C-H> :wincmd h<cr>
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-tnoremap <ESC><ESC> <C-\><C-n> 
+if has('nvim')
+    tnoremap <A-h> <C-\><C-n><C-w>h
+    tnoremap <A-j> <C-\><C-n><C-w>j
+    tnoremap <A-k> <C-\><C-n><C-w>k
+    tnoremap <A-l> <C-\><C-n><C-w>l
+    tnoremap <ESC><ESC> <C-\><C-n> 
+endif
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
