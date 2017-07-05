@@ -1,5 +1,6 @@
 global !p
 import datetime
+import titlecase
 from snippet_helpers import *
 
 def replace_with_whitespace(string):
@@ -21,7 +22,7 @@ def filename():
 
 def title():
 	return replace_with_whitespace(
-		titlecase(process_filename()[1])
+		titlecase.titlecase(process_filename()[1])
 	)
 
 def process_date():
@@ -33,7 +34,9 @@ def process_date():
 
 def process_filename():
 	date, name = filename().split('-')
-	year, month, day = date.split('_')
+	year = date[0:4]
+	month = date[4:6]
+	day = date[6:8]
 	date = [year, month, day]
 	return date, name
 
@@ -69,7 +72,7 @@ endsnippet
 
 snippet pelp "Pelican Page Header" b
 `!p snip.rv = fill('# '+t[1], '#')`
-# ${1:`!p snip.rv = titlecase(filename())`}
+# ${1:`!p snip.rv = titlecase.titlecase(filename())`}
 `!p snip.rv = fill('# '+t[1], '#')`
 
 :title: `!p snip.rv = t[1]`
