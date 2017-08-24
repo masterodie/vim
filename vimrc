@@ -1,12 +1,17 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:python_host_prog = '/usr/bin/python2'
-"let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python'
 
 """"""""""""
 "" FUNCTIONS
 """"""""""""
+
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 " Recursively search up from dirname, sourcing all .vimrc.local files along the way
 function! ApplyLocalSettings(dirname)
@@ -55,9 +60,13 @@ endfunction
 "" PLUGINS
 """"""""""
 
-syntax on
-filetype plugin on
-filetype indent on
+" Install Vim Plug if not installed
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
+
 let path='~/.vim/bundle'
 if has('nvim')
     let path='~/.config/nvim/bundle'
@@ -96,10 +105,7 @@ Plug 'Konfekt/FastFold'
 " Filetype Plugins
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'jmcantrell/vim-virtualenv'
-if has('nvim')
-else
-endif
-Plug 'python-rope/ropevim', {'for': 'python'}
+"Plug 'python-rope/ropevim', {'for': 'python'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'hdima/python-syntax'
 Plug 'tmhedberg/SimpylFold', {'for': 'python'}
@@ -111,8 +117,6 @@ Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php']}
 Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php']}
 Plug 'lepture/vim-jinja', {'for': 'jinja'}
 Plug 'groenewege/vim-less', {'for': 'less'}
-Plug 'joedicastro/vim-pentadactyl'
-Plug 'vimperator/vimperator.vim'
 Plug 'vim-scripts/po.vim', {'for': 'po'}
 Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
@@ -121,9 +125,12 @@ Plug 'masterodie/vim-poe-filter-syntax'
 Plug 'StanAngeloff/php.vim', {'for': 'php'}
 Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
 Plug 'dsawardekar/wordpress.vim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'jaredly/vim-debug'
-
+Plug 'Shougo/vimproc.vim', {'do': 'make'}
+Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
+Plug 'leafgarland/typescript-vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'bdauria/angular-cli.vim'
 
 "Plug 'godlygeek/tabular'
 "Plug 'Rykka/riv.vim'
@@ -132,16 +139,19 @@ Plug 'janko-m/vim-test'
 "Plug 'pearofducks/ansible-vim'
 Plug 'benmills/vimux'
 
-if !has('nvim')
-    Plug 'Shougo/neocomplete.vim'
-    Plug 'davidhalter/jedi-vim', {'for': 'python'}
-endif
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-    Plug 'zchee/deoplete-jedi', {'for': 'python'}
-endif
+Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
+Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
+Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
+Plug 'zchee/deoplete-jedi', Cond(has('nvim'), { 'for': 'python' })
+"Plug 'ternjs/tern_for_vim', Cond(has('nvim'), { 'do': 'npm install' })
+"Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'))
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
+Plug 'othree/javascript-libraries-syntax.vim'
 
 call plug#end()            " required
+syntax on
+filetype plugin on
+filetype indent on
 
 """""""""""""""
 "" VIM SETTINGS
@@ -275,6 +285,9 @@ set background=dark
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
 "call togglebg#map("<F7>")
+if has('nvim')
+  set termguicolors
+endif
 
 
 """"""""""""""""""
@@ -282,9 +295,10 @@ set background=dark
 """"""""""""""""""
 
 " UltiSnips
-"let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsExpandTrigger = "<C-j>"
+let g:UltiSnipsJumpForwardTrigger = "<C-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:snips_author = "Patrick Neff"
 let g:snips_email = "odie86@gmail.com"
 let g:snips_github = "https://github.com/masterodie"
@@ -308,14 +322,14 @@ endif
 
 " deoplete (for nvim)
 if has('nvim')
-if !exists('g:deoplete#force_omni_input_patterns')
-        let g:deoplete#force_omni_input_patterns = {}
-endif
+"if !exists('g:deoplete#force_omni_input_patterns')
+        "let g:deoplete#force_omni_input_patterns = {}
+"endif
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 "let g:deoplete#sources#syntax#min_keyword_length 
 "let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
-let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "let g:deoplete#enable_auto_select=0
 
 " deoplete-jedi
@@ -333,7 +347,7 @@ endif
 "let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 "let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 "let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 
 " delimitMate
 "let delimitMate_matchpairs = '(:),[:],{:},<:>'
@@ -370,6 +384,8 @@ let g:syntastic_php_phpcs_args = '--standard=WordPress'
 
 " If phpcs.xml is found, it supercedes the standard set above
 let g:syntastic_php_phpcs_standard_file = "phpcs.xml"
+
+let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 " riv.vim
 let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
@@ -441,6 +457,16 @@ let g:vimpager = {}
 let g:less = {}
 let g:vimpager.less = 0
 
+let g:tern_request_timeout = 1
+let g:tern_request_timeout = 6000
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+
+let g:deoplete#sources#tss#javascript_support = 1
+let g:tsuquyomi_javascript_support = 1
+let g:tsuquyomi_auto_open = 1
+let g:tsuquyomi_disable_quickfix = 1
+
 """"""""""""""
 "" KEYBINDINGS
 """"""""""""""
@@ -477,6 +503,10 @@ nmap <leader>vr :source ~/.vimrc<cr>
 nmap <leader>tt :VimuxRunCommand('clear; ' . testrunner)<cr>
 nmap <leader>tf :VimuxRunCommand('clear; ' . testrunner . ' ' . bufname('%'))<cr>
 nmap <Leader>tz :VimuxZoomRunner<cr>
+
+
+nmap <leader>l :lnext!<CR>
+nmap <leader>L :lprevious!<CR>
 
 
 " Split management with CTRL + movement keys
@@ -520,14 +550,15 @@ augroup vimrc
     autocmd FileType python let b:surround_45 = "_(\r)"
     if has('nvim')
     else
-        autocmd FileType python setlocal omnifunc=jedi#completions
-        autocmd FileType python setlocal completefunc=jedi#completions
+        "autocmd FileType python setlocal omnifunc=jedi#completions
+        "autocmd FileType python setlocal completefunc=jedi#completions
     endif
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    "autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType html let delimitMate_matchpairs = '(:),[:],{:}'
     autocmd FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
     autocmd FileType python let b:delimitMate_expand_cr = 1
     autocmd FileType python let b:delimitMate_expand_inside_quotes = 1
+    autocmd FileType typescript,html,jinja,jinja2 call angular_cli#init()
 augroup END
 
 " Aplly local settings
