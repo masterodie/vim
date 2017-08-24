@@ -1,8 +1,11 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python'
+
+let g:globalLocalSettingsFile = '~/.vim/vimrc.local'
+if filereadable(g:globalLocalSettingsFile)
+    exec ':source ' . g:globalLocalSettingsFile
+endif
 
 """"""""""""
 "" FUNCTIONS
@@ -83,7 +86,9 @@ Plug 'tomasr/molokai'
 " Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+if has('python3') || has('python')
+    Plug 'SirVer/ultisnips'| Plug 'honza/vim-snippets'
+endif
 Plug 'ervandew/supertab'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
@@ -137,14 +142,16 @@ Plug 'janko-m/vim-test'
 "Plug 'pearofducks/ansible-vim'
 Plug 'benmills/vimux'
 
-Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
-Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
-Plug 'Shougo/deoplete.nvim', Cond(has('nvim'), { 'do': ':UpdateRemotePlugins' })
-Plug 'zchee/deoplete-jedi', Cond(has('nvim'), { 'for': 'python' })
 "Plug 'ternjs/tern_for_vim', Cond(has('nvim'), { 'do': 'npm install' })
 "Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'))
-Plug 'mhartington/nvim-typescript', Cond(has('nvim'))
-Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'mhartington/nvim-typescript', Cond(has('nvim'), { 'for': 'typescript' })
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'}
+
+"Completion
+Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
+Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
+Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
+Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
 
 call plug#end()            " required
 syntax on
