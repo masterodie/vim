@@ -2,7 +2,7 @@
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:globalLocalSettingsFile = '~/.vim/vimrc.local'
+let g:globalLocalSettingsFile = '~/.vimrc.local'
 if filereadable(g:globalLocalSettingsFile)
     exec ':source ' . g:globalLocalSettingsFile
 endif
