@@ -2,11 +2,6 @@
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:globalLocalSettingsFile = '~/.vimrc.local'
-if filereadable(g:globalLocalSettingsFile)
-    exec ':source ' . g:globalLocalSettingsFile
-endif
-
 """"""""""""
 "" FUNCTIONS
 """"""""""""
@@ -107,7 +102,8 @@ Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
 
-if exists("g:pluginsHuge") && g:pluginsHuge > 0
+if exists("pluginsHuge") && pluginsHuge > 0
+    let pluginsEnabled = "hello"
     Plug 'scrooloose/syntastic'
     Plug 'xolox/vim-misc'
     Plug 'Konfekt/FastFold'
