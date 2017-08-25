@@ -2,6 +2,11 @@
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let globalLocalSettingsFile = "$HOME/.vimrc.local"
+if filereadable(globalLocalSettingsFile)
+    exec "source globalLocalSettingsFile"
+endif
+
 """"""""""""
 "" FUNCTIONS
 """"""""""""
