@@ -97,61 +97,63 @@ Plug 'scrooloose/nerdtree'
 Plug 'thisivan/vim-bufexplorer'
 Plug 'kien/ctrlp.vim', {'on': ['CtrlP','CtrlPMixed','CtrlPBuffer']}
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/syntastic'
 Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
-Plug 'xolox/vim-misc'
 Plug 'rkitover/vimpager'
-Plug 'Konfekt/FastFold'
-
-
-" Filetype Plugins
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'jmcantrell/vim-virtualenv'
-"Plug 'python-rope/ropevim', {'for': 'python'}
-Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
-Plug 'hdima/python-syntax'
-Plug 'tmhedberg/SimpylFold', {'for': 'python'}
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'hallettj/jslint.vim', {'for': 'javascript'}
-Plug 'nono/jquery.vim', {'for': 'javascript'}
-Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
-Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php']}
-Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php']}
-Plug 'lepture/vim-jinja', {'for': 'jinja'}
-Plug 'groenewege/vim-less', {'for': 'less'}
-Plug 'vim-scripts/po.vim', {'for': 'po'}
-Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
-Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'masterodie/vim-poe-filter-syntax'
-Plug 'StanAngeloff/php.vim', {'for': 'php'}
-Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
-Plug 'dsawardekar/wordpress.vim'
-Plug 'jaredly/vim-debug'
-Plug 'Shougo/vimproc.vim', {'do': 'make'}
-Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
-Plug 'leafgarland/typescript-vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'bdauria/angular-cli.vim'
-
-"Plug 'godlygeek/tabular'
-"Plug 'Rykka/riv.vim'
-Plug 'janko-m/vim-test'
-"Plug 'sickill/vim-pasta'
-"Plug 'pearofducks/ansible-vim'
-Plug 'benmills/vimux'
-
-"Plug 'ternjs/tern_for_vim', Cond(has('nvim'), { 'do': 'npm install' })
-"Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'))
-Plug 'mhartington/nvim-typescript', Cond(has('nvim'), { 'for': 'typescript' })
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'}
 
 "Completion
 Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
 Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
+
+if g:pluginsHuge > 0
+    Plug 'scrooloose/syntastic'
+    Plug 'xolox/vim-misc'
+    Plug 'Konfekt/FastFold'
+
+    " Filetype Plugins
+    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+    Plug 'jmcantrell/vim-virtualenv'
+    "Plug 'python-rope/ropevim', {'for': 'python'}
+    Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+    Plug 'hdima/python-syntax'
+    Plug 'tmhedberg/SimpylFold', {'for': 'python'}
+    Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+    Plug 'hallettj/jslint.vim', {'for': 'javascript'}
+    Plug 'nono/jquery.vim', {'for': 'javascript'}
+    Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
+    Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php']}
+    Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php']}
+    Plug 'lepture/vim-jinja', {'for': 'jinja'}
+    Plug 'groenewege/vim-less', {'for': 'less'}
+    Plug 'vim-scripts/po.vim', {'for': 'po'}
+    Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
+    Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
+    Plug 'mustache/vim-mustache-handlebars'
+    Plug 'masterodie/vim-poe-filter-syntax'
+    Plug 'StanAngeloff/php.vim', {'for': 'php'}
+    Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
+    Plug 'dsawardekar/wordpress.vim'
+    Plug 'jaredly/vim-debug'
+    Plug 'Shougo/vimproc.vim', {'do': 'make'}
+    Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
+    Plug 'leafgarland/typescript-vim'
+    Plug 'editorconfig/editorconfig-vim'
+    Plug 'bdauria/angular-cli.vim'
+
+    "Plug 'godlygeek/tabular'
+    "Plug 'Rykka/riv.vim'
+    Plug 'janko-m/vim-test'
+    "Plug 'sickill/vim-pasta'
+    "Plug 'pearofducks/ansible-vim'
+    Plug 'benmills/vimux'
+
+    "Plug 'ternjs/tern_for_vim', Cond(has('nvim'), { 'do': 'npm install' })
+    "Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'))
+    Plug 'mhartington/nvim-typescript', Cond(has('nvim'), { 'for': 'typescript' })
+    Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'}
+endif
 
 call plug#end()            " required
 syntax on
