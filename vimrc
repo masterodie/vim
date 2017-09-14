@@ -288,7 +288,9 @@ if has("gui_running")
 endif
 " Colorscheme
 set t_Co=256
-colorscheme molokai
+if !empty(glob("~/.vim/bundle/molokai/colors/molokai.vim"))
+    colorscheme molokai
+endif
 set background=dark
 "let g:solarized_termcolors=256
 "let g:solarized_termtrans=1
