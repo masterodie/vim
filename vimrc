@@ -288,7 +288,12 @@ if has("gui_running")
 endif
 " Colorscheme
 set t_Co=256
-if !empty(glob("~/.vim/bundle/molokai/colors/molokai.vim"))
+if has('win32')
+let g:themedir="~/vimfiles/bundle/molokai/colors/molokai.vim"
+else
+let g:themedir="~/.vim/bundle/molokai/colors/molokai.vim"
+endif
+if !empty(glob(g:themedir))
     colorscheme molokai
 endif
 set background=dark
