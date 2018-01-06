@@ -107,7 +107,7 @@ Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
 
-if exists("pluginsHuge") && pluginsHuge > 0
+if exists("pluginsHuge") == 1
     let pluginsEnabled = "hello"
     Plug 'scrooloose/syntastic'
     Plug 'xolox/vim-misc'
