@@ -1,12 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ VIM Config - by odie
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let globalLocalSettingsFile = "$HOME/.vimrc.local"
-if filereadable(globalLocalSettingsFile)
-    exec "source globalLocalSettingsFile"
-endif
-
+"
 """"""""""""
 "" FUNCTIONS
 """"""""""""
@@ -31,7 +26,7 @@ function! ApplyLocalSettings(dirname)
     " child directories can inherit from their parents
     let l:settingsFile = a:dirname . '/.vimrc.local'
     if filereadable(l:settingsFile)
-        exec ':source' . l:settingsFile
+        exec ':runtime' . l:settingsFile
     endif
 endfunction
 
@@ -62,6 +57,8 @@ endfunction
 """"""""""
 "" PLUGINS
 """"""""""
+
+call ApplyLocalSettings("$HOME")
 
 " Install Vim Plug if not installed
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -107,7 +104,7 @@ Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
 
-if exists("pluginsHuge") == 1
+if exists("g:pluginsHuge")
     let pluginsEnabled = "hello"
     Plug 'scrooloose/syntastic'
     Plug 'xolox/vim-misc'
@@ -559,6 +556,9 @@ augroup vimrc
     autocmd BufWritePost ~/.vimrc :source ~/.vimrc
     autocmd BufWritePost ~/.vim/vimrc :source ~/.vimrc
     autocmd BufWritePost * :call DeleteTrailingWS()
+    autocmd BufWinEnter * :source ~/.vimrc.local
+    autocmd BufWinEnter * :source ~/.vimrc
+    autocmd BufWinEnter * :AirlineRefresh
     autocmd BufWinEnter * call ResCur()
     autocmd FileType jinja let b:surround_45 = "{{ \r }}"
     autocmd FileType jinja let b:surround_95 = "{% \r %}"
