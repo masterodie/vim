@@ -2,5 +2,5 @@
 "let g:python_host_prog = '~/.virtualenvs/nvim-python2/bin/python'
 "let g:python3_host_prog = '~/.virtualenvs/nvim-python3/bin/python'
 
-" Set to 1 to install a full development environment, 0 for minimal plugins
-let g:pluginsHuge = 0
+" Uncomment to enable all plugins
+"let g:pluginsHuge = 1

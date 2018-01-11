@@ -97,6 +97,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rkitover/vimpager'
+Plug 'f-breidenstein/icinga-vim'
 
 "Completion
 Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
