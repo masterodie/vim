@@ -103,7 +103,7 @@ Plug 'f-breidenstein/icinga-vim'
 Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
 Plug 'davidhalter/jedi-vim', Cond(!has('nvim'), { 'for': 'python' })
 Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':UpdateRemotePlugins' })
-Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
+Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python', 'do': 'git submodule update' })
 
 if exists("g:pluginsHuge")
     let pluginsEnabled = "hello"
@@ -113,7 +113,7 @@ if exists("g:pluginsHuge")
 
     " Filetype Plugins
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    Plug 'jmcantrell/vim-virtualenv'
+    "Plug 'jmcantrell/vim-virtualenv'
     "Plug 'python-rope/ropevim', {'for': 'python'}
     Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
     Plug 'hdima/python-syntax'
