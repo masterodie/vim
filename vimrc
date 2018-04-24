@@ -58,7 +58,8 @@ endfunction
 "" PLUGINS
 """"""""""
 
-call ApplyLocalSettings("$HOME")
+" Aplly local settings
+source ~/.vimrc.local
 
 " Install Vim Plug if not installed
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -106,7 +107,6 @@ Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':Updat
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python' })
 
 if exists("g:pluginsHuge")
-    let pluginsEnabled = "hello"
     Plug 'scrooloose/syntastic'
     Plug 'xolox/vim-misc'
     Plug 'Konfekt/FastFold'
@@ -119,11 +119,11 @@ if exists("g:pluginsHuge")
     Plug 'hdima/python-syntax'
     Plug 'tmhedberg/SimpylFold', {'for': 'python'}
     Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-    Plug 'hallettj/jslint.vim', {'for': 'javascript'}
+    "Plug 'hallettj/jslint.vim', {'for': 'javascript'}
     Plug 'nono/jquery.vim', {'for': 'javascript'}
     Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
-    Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php']}
-    Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php']}
+    Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php', 'vue']}
+    Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php', 'vue']}
     Plug 'lepture/vim-jinja', {'for': 'jinja'}
     Plug 'groenewege/vim-less', {'for': 'less'}
     Plug 'vim-scripts/po.vim', {'for': 'po'}
@@ -151,7 +151,9 @@ if exists("g:pluginsHuge")
     "Plug 'ternjs/tern_for_vim', Cond(has('nvim'), { 'do': 'npm install' })
     "Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'))
     Plug 'mhartington/nvim-typescript', Cond(has('nvim'), { 'for': 'typescript' })
-    Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript'}
+    Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'vue' ] }
+    Plug 'sekel/vim-vue-syntastic'
+    Plug 'posva/vim-vue' 
 endif
 
 call plug#end()            " required
@@ -384,7 +386,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_loc_list_height = 4
 " Syntastic settings for phpcs and WordPress coding standards
@@ -399,6 +400,19 @@ let g:syntastic_php_phpcs_args = '--standard=WordPress'
 let g:syntastic_php_phpcs_standard_file = "phpcs.xml"
 
 let g:syntastic_typescript_checkers = ['tsuquyomi']
+
+let g:syntastic_python_checkers = ['flake8']
+
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_vue_checkers = ['eslint']
+let b:local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(b:local_eslint, "^\/\\w") == ''
+    let b:local_eslint = getcwd() . "/" . b:local_eslint
+endif
+if executable(b:local_eslint)
+    let b:syntastic_javascript_eslint_exec = b:local_eslint
+    let b:syntastic_vue_eslint_exec = b:local_eslint
+endif
 
 " riv.vim
 let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
@@ -556,9 +570,8 @@ augroup vimrc
     autocmd!
     autocmd BufWritePost ~/.vimrc :source ~/.vimrc
     autocmd BufWritePost ~/.vim/vimrc :source ~/.vimrc
+    autocmd BufWritePost ~/.config/nvim/init.vim :source ~/.vimrc
     autocmd BufWritePost * :call DeleteTrailingWS()
-    autocmd BufWinEnter * :source ~/.vimrc.local
-    autocmd BufWinEnter * :source ~/.vimrc
     autocmd BufWinEnter * :AirlineRefresh
     autocmd BufWinEnter * call ResCur()
     autocmd FileType jinja let b:surround_45 = "{{ \r }}"
@@ -575,7 +588,12 @@ augroup vimrc
     autocmd FileType python let b:delimitMate_expand_cr = 1
     autocmd FileType python let b:delimitMate_expand_inside_quotes = 1
     autocmd FileType typescript,html,jinja,jinja2 call angular_cli#init()
+    autocmd FileType vue setlocal tabstop=2
+    autocmd FileType vue setlocal shiftwidth=2 
+    autocmd FileType html setlocal tabstop=2
+    autocmd FileType html setlocal shiftwidth=2 
+    autocmd FileType css setlocal tabstop=2
+    autocmd FileType css setlocal shiftwidth=2 
+    autocmd FileType javascript setlocal tabstop=2
+    autocmd FileType javascript setlocal shiftwidth=2 
 augroup END
-
-" Aplly local settings
-call ApplyLocalSettings('.')
