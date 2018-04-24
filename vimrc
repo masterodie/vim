@@ -150,10 +150,10 @@ if exists("g:pluginsHuge")
 
     "Plug 'ternjs/tern_for_vim', Cond(has('nvim'), { 'do': 'npm install' })
     "Plug 'carlitux/deoplete-ternjs', Cond(has('nvim'))
-    Plug 'mhartington/nvim-typescript', Cond(has('nvim'), { 'for': 'typescript' })
-    Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'vue' ] }
-    Plug 'sekel/vim-vue-syntastic'
-    Plug 'posva/vim-vue' 
+    "Plug 'mhartington/nvim-typescript', Cond(has('nvim'), { 'for': 'typescript' })
+    "Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'vue' ] }
+    "Plug 'mtscout6/syntastic-local-eslint.vim'
+    Plug 'posva/vim-vue'
 endif
 
 call plug#end()            " required
@@ -405,14 +405,6 @@ let g:syntastic_python_checkers = ['flake8']
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_vue_checkers = ['eslint']
-let b:local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
-if matchstr(b:local_eslint, "^\/\\w") == ''
-    let b:local_eslint = getcwd() . "/" . b:local_eslint
-endif
-if executable(b:local_eslint)
-    let b:syntastic_javascript_eslint_exec = b:local_eslint
-    let b:syntastic_vue_eslint_exec = b:local_eslint
-endif
 
 " riv.vim
 let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
