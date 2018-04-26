@@ -107,7 +107,7 @@ Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':Updat
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python', 'do': 'git submodule update' })
 
 if exists("g:pluginsHuge")
-    Plug 'scrooloose/syntastic'
+    Plug 'vim-syntastic/syntastic'
     Plug 'xolox/vim-misc'
     Plug 'Konfekt/FastFold'
 
