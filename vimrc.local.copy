@@ -1,6 +1,6 @@
 """ Python Host Program for nvim
-"let g:python_host_prog = '~/.virtualenvs/nvim-python2/bin/python'
-"let g:python3_host_prog = '~/.virtualenvs/nvim-python3/bin/python'
+"let g:python_host_prog = expand('$HOME/.virtualenvs/neovim-python2/bin/python')
+"let g:python3_host_prog = expand('$HOME/.virtualenvs/neovim-python3/bin/python')
 
 " Uncomment to enable all plugins
 "let g:pluginsHuge = 1
