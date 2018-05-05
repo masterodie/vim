@@ -107,7 +107,11 @@ Plug 'Shougo/deoplete.nvim', Cond(has('nvim') && has('python3'), { 'do': ':Updat
 Plug 'zchee/deoplete-jedi', Cond(has('nvim') && has('python3'), { 'for': 'python', 'do': 'git submodule update' })
 
 if exists("g:pluginsHuge")
-    Plug 'vim-syntastic/syntastic'
+    if !has('nvim')
+        Plug 'vim-syntastic/syntastic'
+    else
+        Plug 'neomake/neomake'
+    endif
     Plug 'xolox/vim-misc'
     Plug 'Konfekt/FastFold'
 
@@ -121,25 +125,25 @@ if exists("g:pluginsHuge")
     Plug 'pangloss/vim-javascript', {'for': 'javascript'}
     "Plug 'hallettj/jslint.vim', {'for': 'javascript'}
     Plug 'nono/jquery.vim', {'for': 'javascript'}
-    Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
+    "Plug 'xolox/vim-lua-ftplugin', {'for': ['lua']}
     Plug 'sukima/xmledit', {'for': ['html', 'xml', 'jinja', 'php', 'vue']}
     Plug 'othree/xml.vim', {'for': ['html', 'xml', 'jinja', 'php', 'vue']}
     Plug 'lepture/vim-jinja', {'for': 'jinja'}
-    Plug 'groenewege/vim-less', {'for': 'less'}
+    "Plug 'groenewege/vim-less', {'for': 'less'}
     Plug 'vim-scripts/po.vim', {'for': 'po'}
     Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
     Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
-    Plug 'mustache/vim-mustache-handlebars'
+    "Plug 'mustache/vim-mustache-handlebars'
     Plug 'masterodie/vim-poe-filter-syntax'
     Plug 'StanAngeloff/php.vim', {'for': 'php'}
     Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
     Plug 'dsawardekar/wordpress.vim'
     Plug 'jaredly/vim-debug'
     Plug 'Shougo/vimproc.vim', {'do': 'make'}
-    Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
-    Plug 'leafgarland/typescript-vim'
+    "Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
+    "Plug 'leafgarland/typescript-vim'
     Plug 'editorconfig/editorconfig-vim'
-    Plug 'bdauria/angular-cli.vim'
+    "Plug 'bdauria/angular-cli.vim'
 
     "Plug 'godlygeek/tabular'
     "Plug 'Rykka/riv.vim'
@@ -405,6 +409,22 @@ let g:syntastic_python_checkers = ['flake8']
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_vue_checkers = ['eslint']
+
+"neomake
+
+call neomake#configure#automake('w')
+call neomake#configure#automake('nr', 500)
+
+let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
+let g:neomake_warning_sign = {'text': '⚠', 'texthl': 'WarningMsg'}
+
+let g:neomake_open_list = 2
+let g:neomake_airline = 1
+
+let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_javascript_enabled_makers = ['eslint_d']
+let g:neomake_vue_enabled_makers = ['eslint_d']
+let g:neomake_vue_eslint_d_args = ['--format=compact']
 
 " riv.vim
 let g:riv_ignored_imaps = "<Tab>,<S-Tab>"
