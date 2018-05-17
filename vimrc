@@ -158,6 +158,7 @@ if exists("g:pluginsHuge")
     "Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'vue' ] }
     "Plug 'mtscout6/syntastic-local-eslint.vim'
     Plug 'posva/vim-vue'
+    Plug 'ryanoasis/vim-devicons'
 endif
 
 call plug#end()            " required
