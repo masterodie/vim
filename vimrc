@@ -91,9 +91,9 @@ Plug 'ervandew/supertab'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'thisivan/vim-bufexplorer'
-Plug 'kien/ctrlp.vim', {'on': ['CtrlP','CtrlPMixed','CtrlPBuffer']}
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -114,6 +114,7 @@ if exists("g:pluginsHuge")
     endif
     Plug 'xolox/vim-misc'
     Plug 'Konfekt/FastFold'
+    Plug 'mhinz/vim-startify'
 
     " Filetype Plugins
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
@@ -158,6 +159,7 @@ if exists("g:pluginsHuge")
     "Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'vue' ] }
     "Plug 'mtscout6/syntastic-local-eslint.vim'
     Plug 'posva/vim-vue'
+
     Plug 'ryanoasis/vim-devicons'
 endif
 
@@ -347,7 +349,7 @@ if has('nvim')
 "endif
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
-"let g:deoplete#sources#syntax#min_keyword_length 
+"let g:deoplete#sources#syntax#min_keyword_length
 "let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
 "let g:deoplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 "let g:deoplete#enable_auto_select=0
@@ -355,7 +357,7 @@ let g:deoplete#enable_smart_case = 1
 " deoplete-jedi
 
 let g:deoplete#sources#jedi#statement_length = 50
-let g:deoplete#sources#jedi#enable_cache = 1 
+let g:deoplete#sources#jedi#enable_cache = 1
 let g:deoplete#sources#jedi#show_docstring = 1
 "let g:deoplete#sources#jedi#python_path
 "let g:deoplete#sources#jedi#debug_server
@@ -379,13 +381,18 @@ let delimitMate_balance_matchpairs = 1
 let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]', '\~$']
 nnoremap <F3>  :NERDTreeToggle<CR>
 
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:webdevicons_enable_ctrlp = 1
+
 " ctrlp.vim
 noremap <leader>m <Esc>:CtrlP<CR>
 noremap <leader>p <Esc>:CtrlPBuffer<CR>
 noremap <leader>o <Esc>:CtrlPMixed<CR>
 
 " syntastic
-let g:syntastic_error_symbol = '✗'
+let g:syntastic_error_symbol = '✖'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -414,7 +421,7 @@ let g:syntastic_vue_checkers = ['eslint']
 "neomake
 
 call neomake#configure#automake('w')
-call neomake#configure#automake('nr', 500)
+"call neomake#configure#automake('nr', 500)
 
 let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
 let g:neomake_warning_sign = {'text': '⚠', 'texthl': 'WarningMsg'}
@@ -507,6 +514,12 @@ let g:tsuquyomi_javascript_support = 1
 let g:tsuquyomi_auto_open = 1
 let g:tsuquyomi_disable_quickfix = 1
 
+
+let g:startify_custom_header = ''
+function! StartifyEntryFormat()
+    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+endfunction
+
 """"""""""""""
 "" KEYBINDINGS
 """"""""""""""
@@ -555,7 +568,7 @@ if has('nvim')
     tnoremap <A-j> <C-\><C-n><C-w>j
     tnoremap <A-k> <C-\><C-n><C-w>k
     tnoremap <A-l> <C-\><C-n><C-w>l
-    tnoremap <ESC><ESC> <C-\><C-n> 
+    tnoremap <ESC><ESC> <C-\><C-n>
 endif
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
@@ -602,11 +615,11 @@ augroup vimrc
     autocmd FileType python let b:delimitMate_expand_inside_quotes = 1
     autocmd FileType typescript,html,jinja,jinja2 call angular_cli#init()
     autocmd FileType vue setlocal tabstop=2
-    autocmd FileType vue setlocal shiftwidth=2 
+    autocmd FileType vue setlocal shiftwidth=2
     autocmd FileType html setlocal tabstop=2
-    autocmd FileType html setlocal shiftwidth=2 
+    autocmd FileType html setlocal shiftwidth=2
     autocmd FileType css setlocal tabstop=2
-    autocmd FileType css setlocal shiftwidth=2 
+    autocmd FileType css setlocal shiftwidth=2
     autocmd FileType javascript setlocal tabstop=2
-    autocmd FileType javascript setlocal shiftwidth=2 
+    autocmd FileType javascript setlocal shiftwidth=2
 augroup END
