@@ -5,13 +5,7 @@ setlocal textwidth=79
 setlocal expandtab
 setlocal nosmarttab
 
-let testrunner = 'py.test'
-
-augroup vimrc_python
-
-augroup END
-
-if has('nvim')
-else
-    autocmd vimrc_python FileType python setlocal omnifunc=jedi#completions
-endif
+let b:surround_45 = "_(\r)"
+let b:delimitMate_nesting_quotes = ['"', "'"]
+let b:delimitMate_expand_cr = 1
+let b:delimitMate_expand_inside_quotes = 1

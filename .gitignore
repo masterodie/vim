@@ -9,3 +9,5 @@ autoload/plug.vim
 autoload/plug.vim.old
 vim_phpdebug.sess
 vim.symlink
+.tags
+templates
