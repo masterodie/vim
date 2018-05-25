@@ -377,10 +377,10 @@ if has('autocmd')
         autocmd!
         autocmd BufWinEnter * :AirlineRefresh
         autocmd BufWinEnter * call myfuncs#RestoreCursor()
-        autocmd BufWritePost ~/.vimrc :source ~/.vimrc
-        autocmd BufWritePost ~/.vim/vimrc :source ~/.vim/vimrc
-        autocmd BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
         autocmd BufWritePost * :call myfuncs#DeleteTrailingWhitespace()
+        execute 'autocmd BufWritePost .vimrc :source' . g:my_vimrc
+        execute 'autocmd BufWritePost vimrc :source' . g:my_vimrc
+        execute 'autocmd BufWritePost init.vim :source' . g:my_vimrc
     augroup END
 endif
 
