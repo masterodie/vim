@@ -11,22 +11,28 @@ function! Cond(cond, ...)
   return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
+if has('nvim')
+    "let g:my_vimdir = expand('$HOME/.config/nvim')
+    let g:my_vimdir = expand('$HOME/.vim')
+    let g:my_vimrc = g:my_vimdir . '/init.vim'
+else
+    let g:my_vimdir = expand('$HOME/.vim')
+    let g:my_vimrc = expand('$HOME/.vimrc')
+endif
+let g:my_plugdir = g:my_vimdir . '/bundle'
+let g:my_plug = g:my_vimdir . '/autoload/plug.vim'
+
 """"""""""
 "" PLUGINS
 """"""""""
 
-" Aplly local settings
-source $HOME/.vimrc.local
-
 " Install Vim Plug if not installed
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob(g:my_plug))
+  execute 'silent !curl -fLo ' . g:my_plug . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall
 endif
 
-let path='~/.vim/bundle'
-call plug#begin(path)
+call plug#begin(g:my_plugdir)
 
 " Colorschemes
 Plug 'tomasr/molokai'
@@ -49,37 +55,35 @@ Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rkitover/vimpager'
 
-if exists("g:pluginsHuge")
-    " General
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'zchee/deoplete-jedi', { 'for': 'python', 'do': 'git submodule update' }
-    Plug 'neomake/neomake'
-    Plug 'mhinz/vim-startify'
-    Plug 'editorconfig/editorconfig-vim'
-    Plug 'majutsushi/tagbar'
-    Plug 'carlitux/deoplete-ternjs'
+" General
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python', 'do': 'git submodule update' }
+"Plug 'neomake/neomake'
+Plug 'mhinz/vim-startify'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'majutsushi/tagbar'
+Plug 'carlitux/deoplete-ternjs'
 
-    " Filetype Plugins
-    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
-    Plug 'hdima/python-syntax'
-    Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-    Plug 'sukima/xmledit'
-    Plug 'lepture/vim-jinja', {'for': 'jinja'}
-    Plug 'vim-scripts/po.vim', {'for': 'po'}
-    Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
-    Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
-    Plug 'masterodie/vim-poe-filter-syntax'
-    Plug 'StanAngeloff/php.vim', {'for': 'php'}
-    Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
-    Plug 'dsawardekar/wordpress.vim'
-    Plug 'f-breidenstein/icinga-vim'
-    Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-    Plug 'posva/vim-vue'
+" Filetype Plugins
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+Plug 'hdima/python-syntax'
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'sukima/xmledit'
+Plug 'lepture/vim-jinja', {'for': 'jinja'}
+Plug 'vim-scripts/po.vim', {'for': 'po'}
+Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
+Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
+Plug 'masterodie/vim-poe-filter-syntax'
+Plug 'StanAngeloff/php.vim', {'for': 'php'}
+Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
+Plug 'dsawardekar/wordpress.vim'
+Plug 'f-breidenstein/icinga-vim'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'posva/vim-vue'
 
-    """Devicons
-    Plug 'ryanoasis/vim-devicons'
-endif
+"""Devicons
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()            " required
 
@@ -147,10 +151,10 @@ set backup
 "Use "./" in the 'tags' options reads tags file relative to current directory
 set cpoptions+=d
 " Backup, tag and undo locations
-set tags=./.tags,~/.vim/tags,tags
-set backupdir=~/.vim/backup
-set directory=~/.vim/tmp
-set undodir=~/.vim/undo
+execute 'set tags=./.tags,' . g:my_vimdir . '/tags,tags'
+execute 'set backupdir=' . g:my_vimdir . '/backup'
+execute 'set directory=' . g:my_vimdir . '/tmp'
+execute 'set undodir=' . g:my_vimdir . '/undo'
 " Line numbers
 set number
 " Make bell visual and disable error bells
@@ -187,15 +191,15 @@ endif
 
 " Colorscheme
 "set t_Co=256
-let g:theme="~/.vim/bundle/molokai/colors/molokai.vim"
-if !empty(glob(g:theme))
-    colorscheme molokai
+let g:my_theme="molokai"
+let g:my_themedir=g:my_plugdir . '/' . g:my_theme . '/colors/' . g:my_theme . '.vim'
+if !empty(glob(g:my_themedir))
+    execute 'colorscheme ' . g:my_theme
 endif
 set background=dark
 if has('nvim')
   set termguicolors
 endif
-
 
 """"""""""""""""""
 "" PLUGIN SETTINGS
@@ -208,7 +212,7 @@ let loaded_netrwPlugin = 1
 let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:UltiSnipsJumpForwardTrigger = "<C-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
-let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+let g:UltiSnipsSnippetsDir = g:my_vimdir . "/UltiSnips"
 let g:snips_author = "Patrick Neff"
 let g:snips_email = "odie86@gmail.com"
 let g:snips_github = "https://github.com/masterodie"
@@ -242,7 +246,12 @@ noremap <leader>p <Esc>:CtrlPBuffer<CR>
 noremap <leader>o <Esc>:CtrlPMixed<CR>
 
 "neomake
-call neomake#configure#automake('nw', 1000)
+try
+    call neomake#configure#automake('nw', 1000)
+catch
+finally
+endtry
+
 let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
 let g:neomake_warning_sign = {'text': '⚠', 'texthl': 'WarningMsg'}
 let g:neomake_open_list = 2
@@ -330,8 +339,8 @@ noremap <leader>w :Gwrite<CR>
 
 noremap <leader>rel :call NumberToggle()<cr>
 
-noremap <leader>v :e ~/.vimrc<cr>
-noremap <leader>vr :source ~/.vimrc<cr>
+execute 'noremap <leader>v :e ' . g:my_vimrc . '<cr>'
+execute 'noremap <leader>vr :source ' . g:my_vimrc . '<cr>'
 
 noremap <leader>l :lnext!<CR>
 noremap <leader>L :lprevious!<CR>
@@ -367,10 +376,12 @@ if has('autocmd')
     augroup vimrc
         autocmd!
         autocmd BufWinEnter * :AirlineRefresh
-        autocmd BufWinEnter * call RestoreCursor()
+        autocmd BufWinEnter * call myfuncs#RestoreCursor()
         autocmd BufWritePost ~/.vimrc :source ~/.vimrc
         autocmd BufWritePost ~/.vim/vimrc :source ~/.vim/vimrc
         autocmd BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
-        autocmd BufWritePost * :call DeleteTrailingWhitespace()
+        autocmd BufWritePost * :call myfuncs#DeleteTrailingWhitespace()
     augroup END
 endif
+
+call myfuncs#ApplyLocalSettings('.')
