@@ -1,5 +1,5 @@
 " Necessary for multiple encodings
-set encoding=utf-8
+setlocal encoding=utf-8
 
 " Common code for encodings
 function! SetFileEncodings(encodings)

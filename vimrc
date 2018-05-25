@@ -11,49 +11,6 @@ function! Cond(cond, ...)
   return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
-" Recursively search up from dirname, sourcing all .vimrc.local files along the way
-function! ApplyLocalSettings(dirname)
-    " convert windows paths to unix style
-    let l:curDir = substitute(a:dirname, '\\', '/', 'g')
-
-    " walk to the top of the dir tree
-    let l:parentDir = strpart(l:curDir, 0, strridx(l:curDir, '/'))
-    if isdirectory(l:parentDir)
-        call ApplyLocalSettings(l:parentDir)
-    endif
-
-    " now walk back down the path and source .vimsettings as you find them.
-    " child directories can inherit from their parents
-    let l:settingsFile = a:dirname . '/.vimrc.local'
-    if filereadable(l:settingsFile)
-        exec ':runtime' . l:settingsFile
-    endif
-endfunction
-
-" Toggle relative number
-function! NumberToggle()
-    if(&relativenumber == 1)
-        set norelativenumber
-    else
-        set relativenumber
-    endif
-endfunction
-
-" Delete Trailing Whitespace
-function! DeleteTrailingWS()
-    if ! &bin
-        silent! %s/\s\+$//ge
-    endif
-endfunction
-
-"Restore Last Cursor Position
-function! ResCur()
-    if line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
-endfunction
-
 """"""""""
 "" PLUGINS
 """"""""""
@@ -69,9 +26,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 let path='~/.vim/bundle'
-if has('win32')
-    let path='~/vimfiles/bundle'
-endif
 call plug#begin(path)
 
 " Colorschemes
@@ -110,7 +64,7 @@ if exists("g:pluginsHuge")
     Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
     Plug 'hdima/python-syntax'
     Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-    Plug 'sukima/xmledit', { 'do': 'make' }
+    Plug 'sukima/xmledit'
     Plug 'lepture/vim-jinja', {'for': 'jinja'}
     Plug 'vim-scripts/po.vim', {'for': 'po'}
     Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
@@ -128,21 +82,14 @@ if exists("g:pluginsHuge")
 endif
 
 call plug#end()            " required
-syntax on
-filetype plugin on
-filetype indent on
 
 """""""""""""""
 "" VIM SETTINGS
 """""""""""""""
 
-" Enable UTF-8 Mode
+syntax on
+filetype plugin indent on
 scriptencoding utf-8
-
-" Load windows Environment
-if has('win32')
-    source $VIMRUNTIME/mswin.vim
-endif
 
 "Move over end of line
 set whichwrap=b,s,<,>,[,],h,l
@@ -150,13 +97,12 @@ set whichwrap=b,s,<,>,[,],h,l
 set backspace=indent,eol,start
 "Auto indentation
 set autoindent
-"Smart tab
-set smarttab
-"Tab Width
+"Tabs
 set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set smarttab
 
 " Paste mode toggle key
 set pastetoggle=<F11>
@@ -168,8 +114,6 @@ let g:maplocalleader = ";"
 "" Mouse Settings
 if has('mouse')
     set mouse=a
-    "set ttymouse=xterm2
-    "Mouse select
     set selectmode=mouse
 endif
 
@@ -177,13 +121,9 @@ endif
 "Better Tab Completion
 set wildmenu
 set wildmode=list:longest
-" Highlight things that we find with the search
 set hlsearch
-" Ignoring case is a fun trick
 set ignorecase
-" And so is Artificial Intellegence!
 set smartcase
-" Incremental searching is sexy
 set incsearch
 
 "" Misc Settings
@@ -207,21 +147,10 @@ set backup
 "Use "./" in the 'tags' options reads tags file relative to current directory
 set cpoptions+=d
 " Backup, tag and undo locations
-if has("win32")
-    set backupdir=~/vimfiles/backup
-    set directory=~/vimfiles/tmp
-    set tags=./.tags,~/vimfiles/tags,tags
-    set undodir=~/vimfiles/undo
-else
-    set tags=./.tags,~/.vim/tags,tags
-    set backupdir=~/.vim/backup
-    set directory=~/.vim/tmp
-    set undodir=~/.vim/undo
-endif
-" Enable persistent undo
-if has("persistent_undo")
-    set undofile
-endif
+set tags=./.tags,~/.vim/tags,tags
+set backupdir=~/.vim/backup
+set directory=~/.vim/tmp
+set undodir=~/.vim/undo
 " Line numbers
 set number
 " Make bell visual and disable error bells
@@ -229,12 +158,13 @@ set visualbell
 set noerrorbells
 " Show (partial) command in status line
 set showcmd
-" Faster redrawing
-if !has('nvim')
-    set ttyfast
-endif
 " Colorize column 80
 set colorcolumn=80
+"
+" Enable persistent undo
+if has("persistent_undo")
+    set undofile
+endif
 
 " GUI Settings
 if has("gui_running")
@@ -246,21 +176,18 @@ if has("gui_running")
     elseif has("gui_macvim")
         set guifont=Terminus\ (TTF):h16
         set noantialias
-    elseif has("gui_win32")
-        set guifont=Terminus\ \(TTF\)\ for\ Windows:h12
-        set guioptions=eg
-        set antialias
     endif
     "" Antialiasing on
 endif
+"
+" Faster redrawing
+if !has('nvim')
+    set ttyfast
+endif
 
 " Colorscheme
-set t_Co=256
-if has('win32')
-let g:theme="~/vimfiles/bundle/molokai/colors/molokai.vim"
-else
+"set t_Co=256
 let g:theme="~/.vim/bundle/molokai/colors/molokai.vim"
-endif
 if !empty(glob(g:theme))
     colorscheme molokai
 endif
@@ -273,6 +200,9 @@ endif
 """"""""""""""""""
 "" PLUGIN SETTINGS
 """"""""""""""""""
+
+" Disable netrw
+let loaded_netrwPlugin = 1
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger = "<C-j>"
@@ -400,8 +330,6 @@ noremap <leader>w :Gwrite<CR>
 
 noremap <leader>rel :call NumberToggle()<cr>
 
-noremap <leader>cl :let @/ = ""<cr>
-
 noremap <leader>v :e ~/.vimrc<cr>
 noremap <leader>vr :source ~/.vimrc<cr>
 
@@ -439,10 +367,10 @@ if has('autocmd')
     augroup vimrc
         autocmd!
         autocmd BufWinEnter * :AirlineRefresh
-        autocmd BufWinEnter * call ResCur()
+        autocmd BufWinEnter * call RestoreCursor()
         autocmd BufWritePost ~/.vimrc :source ~/.vimrc
         autocmd BufWritePost ~/.vim/vimrc :source ~/.vim/vimrc
         autocmd BufWritePost ~/.config/nvim/init.vim :source ~/.config/nvim/init.vim
-        autocmd BufWritePost * :call DeleteTrailingWS()
+        autocmd BufWritePost * :call DeleteTrailingWhitespace()
     augroup END
 endif
