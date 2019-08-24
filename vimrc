@@ -51,9 +51,9 @@ Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'thisivan/vim-bufexplorer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rkitover/vimpager'
+Plug 'junegunn/fzf.vim'
 
 " General
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -84,6 +84,8 @@ Plug 'posva/vim-vue'
 
 """Devicons
 Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline' 
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()            " required
 
@@ -375,7 +377,7 @@ endif
 if has('autocmd')
     augroup vimrc
         autocmd!
-        autocmd BufWinEnter * :AirlineRefresh
+        "autocmd BufWinEnter * :AirlineRefresh
         autocmd BufWinEnter * call myfuncs#RestoreCursor()
         autocmd BufWritePost * :call myfuncs#DeleteTrailingWhitespace()
         execute 'autocmd BufWritePost .vimrc :source' . g:my_vimrc
