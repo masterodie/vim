@@ -52,7 +52,7 @@ Plug 'thisivan/vim-bufexplorer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'edkolev/tmuxline.vim'
-Plug 'rkitover/vimpager'
+"Plug 'rkitover/vimpager'
 Plug 'junegunn/fzf.vim'
 
 " General
