@@ -63,6 +63,7 @@ Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'majutsushi/tagbar'
 Plug 'carlitux/deoplete-ternjs'
+Plug 'vim-syntastic/syntastic'
 
 " Filetype Plugins
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
@@ -316,6 +317,14 @@ endfunction
 let g:tern_request_timeout = 1
 let g:tern_show_signature_in_pum = '1'
 let g:tern#filetypes = ['jsx', 'javascript.jsx', 'vue', 'javascript']
+
+"syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_typescript_checkers = ['eslint']
 
 """"""""""""""
 "" KEYBINDINGS
