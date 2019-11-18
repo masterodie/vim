@@ -81,10 +81,14 @@ Plug 'dsawardekar/wordpress.vim'
 Plug 'f-breidenstein/icinga-vim'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'posva/vim-vue'
+"Plug 'Quramy/tsuquyomi'
+"Plug 'Quramy/tsuquyomi-vue'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'HerringtonDarkholme/yats.vim'
 
 """Devicons
 Plug 'ryanoasis/vim-devicons'
-Plug 'vim-airline/vim-airline' 
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()            " required
