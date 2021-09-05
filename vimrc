@@ -51,7 +51,7 @@ Plug 'tpope/vim-repeat', { 'for': ['vue','python','javascript','typescript','htm
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'Bookmark']} | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter', { 'for': ['vue','python','javascript','typescript','html']}
 Plug 'edkolev/tmuxline.vim'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!'] }
 
 " General
@@ -260,6 +260,7 @@ function! s:gitUntracked()
     let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
     return map(files, "{'line': v:val, 'path': v:val}")
 endfunction
+let g:startify_bookmarks = systemlist("cut -sd' ' -f 2- ~/.NERDTreeBookmarks")
 
 let g:startify_lists = [
         \ { 'type': 'files',     'header': ['   MRU']            },
