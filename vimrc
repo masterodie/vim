@@ -52,6 +52,7 @@ Plug 'thisivan/vim-bufexplorer'
 Plug 'scrooloose/nerdcommenter'
 Plug 'edkolev/tmuxline.vim'
 "Plug 'rkitover/vimpager'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!'] }
@@ -280,6 +281,7 @@ let g:startify_custom_header = ''
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
+let g:startify_bookmarks = systemlist("cut -sd' ' -f 2- ~/.NERDTreeBookmarks")
 
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
