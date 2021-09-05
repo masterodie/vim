@@ -17,7 +17,7 @@ if has('nvim')
     let g:my_vimrc = g:my_vimdir . '/init.vim'
 else
     let g:my_vimdir = expand('$HOME/.vim')
-    let g:my_vimrc = expand('$HOME/.vimrc')
+    let g:my_vimrc = expand('$HOME/.vim/init.vim')
 endif
 let g:my_plugdir = g:my_vimdir . '/bundle'
 let g:my_plug = g:my_vimdir . '/autoload/plug.vim'
@@ -35,51 +35,43 @@ endif
 call plug#begin(g:my_plugdir)
 
 " Colorschemes
-Plug 'crusoexia/vim-monokai'
+Plug 'patstockwell/vim-monokai-tasty'
 
 " Plugins
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-fugitive', { 'on': ['Git'] } | Plug 'tpope/vim-git'
+Plug 'w0rp/ale'
+Plug 'prabirshrestha/vim-lsp' | Plug 'mattn/vim-lsp-settings' | Plug 'rhysd/vim-lsp-ale'
 if has('python3') || has('python')
-    Plug 'SirVer/ultisnips'| Plug 'honza/vim-snippets'
+    Plug 'SirVer/ultisnips'| Plug 'honza/vim-snippets' | Plug 'thomasfaingnaert/vim-lsp-snippets' | Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 endif
-Plug 'ervandew/supertab'
-Plug 'Raimondi/delimitMate'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'thisivan/vim-bufexplorer'
-Plug 'scrooloose/nerdcommenter'
+Plug 'Raimondi/delimitMate', { 'for': ['vue','python','javascript','typescript','html']}
+Plug 'tpope/vim-surround', { 'for': ['vue','python','javascript','typescript','html']}
+Plug 'tpope/vim-repeat', { 'for': ['vue','python','javascript','typescript','html']}
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'Bookmark']} | Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdcommenter', { 'for': ['vue','python','javascript','typescript','html']}
 Plug 'edkolev/tmuxline.vim'
-"Plug 'rkitover/vimpager'
 Plug 'junegunn/fzf.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!'] }
-"Plug 'folke/which-key.nvim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'liuchengxu/vim-better-default'
 
 " General
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'zchee/deoplete-jedi', { 'for': 'python', 'do': 'git submodule update' }
-Plug 'lighttiger2505/deoplete-vim-lsp'
-"Plug 'neomake/neomake'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } | Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
-"Plug 'vim-syntastic/syntastic'
-Plug 'w0rp/ale'
 
 " Filetype Plugins
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'hdima/python-syntax'
-Plug 'sukima/xmledit'
+Plug 'hdima/python-syntax', { 'for': 'python' }
+Plug 'sukima/xmledit', { 'for': ['html'] }
 Plug 'lepture/vim-jinja', {'for': 'jinja'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
-Plug 'posva/vim-vue'
+Plug 'posva/vim-vue', {'for': 'vue'}
+Plug 'mattn/emmet-vim', {'for': ['html', 'vue']}
 
 """Devicons
 Plug 'ryanoasis/vim-devicons'
+
+"""Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -189,19 +181,18 @@ endif
 
 " Colorscheme
 "set t_Co=256
-colorscheme monokai
+let g:vim_monokai_tasty_italic = 1
+silent! colorscheme vim-monokai-tasty
+
 
 """"""""""""""""""
 "" PLUGIN SETTINGS
 """"""""""""""""""
 
 " Disable netrw
-let loaded_netrwPlugin = 1
+"let loaded_netrwPlugin = 1
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger = "<C-j>"
-let g:UltiSnipsJumpForwardTrigger = "<C-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
 let g:UltiSnipsSnippetsDir = g:my_vimdir . "/UltiSnips"
 let g:snips_author = "Patrick Neff"
 let g:snips_email = "odie86@gmail.com"
@@ -210,38 +201,15 @@ let g:ultisnips_python_style = 'sphinx'
 let g:ultisnips_python_quoting_style = 'single'
 let g:ultisnips_python_triple_quoting_style = 'double'
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
 
-" deoplete-jedi
-let g:deoplete#sources#jedi#statement_length = 50
-let g:deoplete#sources#jedi#enable_cache = 1
-let g:deoplete#sources#jedi#show_docstring = 1
-"
-" supertab
-"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+"" supertab
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 
 " delimitMate
 let delimitMate_balance_matchpairs = 1
 
 " nerdtree
-let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]', '\~$']
-
-"neomake
-try
-    call neomake#configure#automake('nw', 1000)
-catch
-finally
-endtry
-
-let g:neomake_error_sign = {'text': '✖', 'texthl': 'ErrorMsg'}
-let g:neomake_warning_sign = {'text': '⚠', 'texthl': 'WarningMsg'}
-let g:neomake_open_list = 2
-let g:neomake_airline = 1
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_javascript_enabled_makers = ['eslint_d']
-let g:neomake_vue_enabled_makers = ['eslint_d']
-let g:neomake_vue_eslint_d_args = ['--format=compact']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]', '\~$', '\.git$']
 
 " vim-devicons
 let g:webdevicons_conceal_nerdtree_brackets = 1
@@ -253,13 +221,14 @@ let g:webdevicons_enable_ctrlp = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = "molokai"
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
-let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#lsp#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#trailing_format = '●[%s]'
 let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'
 
@@ -270,79 +239,57 @@ let g:SimpylFold_fold_docstring = 1
 " xmledit
 let xml_use_xhtml = 1
 
-"vimpager
-let g:vimpager = {}
-let g:less = {}
-let g:vimpager.less = 0
-
 "startify
 let g:startify_custom_header = ''
+function! s:nerdtreeBookmarks()
+    let bookmarks = systemlist("cut -d' ' -f 2- ~/.NERDTreeBookmarks")
+    let bookmarks = bookmarks[0:-2] " Slices an empty last line
+    return map(bookmarks, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" returns all modified files of the current git repo
+" `2>/dev/null` makes the command fail quietly, so that when we are not
+" in a git repo, the list will be empty
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+let g:startify_lists = [
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': function('s:nerdtreeBookmarks'), 'header': ['   NERDTree Bookmarks']},
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+
 function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
 
-"syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_eslint_exe = 'npm run eslint --'
-
-"ale
-"let g:ale_open_list = 1
-
 let g:which_key_use_floating_win = 1
-let g:which_key_floating_relative_win = 1
-let g:which_key_floating_opts = { 'row': '-1' }
+let g:which_key_floating_opts = { 'row': '-10', 'width': '-30', 'height': '+5', 'col': '+15' }
 let g:which_key_disable_default_offset = 1
-let g:which_key_centered = 1
+let g:which_key_vertical = 1
 
 let g:which_key_map =  {}
 
-let g:which_key_map.w = {
-      \ 'name' : '+window' ,
-      \ 'w' : ['<C-W>w'     , 'other-window']          ,
-      \ 'd' : ['<C-W>c'     , 'delete-window']         ,
-      \ '-' : ['<C-W>s'     , 'split-window-below']    ,
-      \ '|' : ['<C-W>v'     , 'split-window-right']    ,
-      \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
-      \ 'h' : ['<C-W>h'     , 'window-left']           ,
-      \ 'j' : ['<C-W>j'     , 'window-below']          ,
-      \ 'l' : ['<C-W>l'     , 'window-right']          ,
-      \ 'k' : ['<C-W>k'     , 'window-up']             ,
-      \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
-      \ 'J' : [':resize +5'  , 'expand-window-below']   ,
-      \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
-      \ 'K' : [':resize -5'  , 'expand-window-up']      ,
-      \ '=' : ['<C-W>='     , 'balance-window']        ,
-      \ 's' : ['<C-W>s'     , 'split-window-below']    ,
-      \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
-      \ '?' : ['Windows'    , 'fzf-window']            ,
-      \ }
-
-let g:which_key_map.b = {
-      \ 'name' : '+buffer' ,
-      \ '1' : ['b1'        , 'buffer 1']        ,
-      \ '2' : ['b2'        , 'buffer 2']        ,
-      \ 'd' : ['bd'        , 'delete-buffer']   ,
-      \ 'F' : ['bfirst'    , 'first-buffer']    ,
-      \ 'h' : ['Startify'  , 'home-buffer']     ,
-      \ 'l' : ['blast'     , 'last-buffer']     ,
-      \ 'n' : ['bnext'     , 'next-buffer']     ,
-      \ 'p' : ['bprevious' , 'previous-buffer'] ,
-      \ 'f' : ['Buffers'   , 'fzf-buffer']      ,
-      \ }
-
-let g:which_key_map.f = {
-      \ 'name' : '+file' ,
-      \ 'f' : ['Files'   , 'fzf-files']      ,
-      \ }
-
-let g:which_key_map.s = {
-      \ 'name' : '+settings' ,
-      \ }
-
-autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
+" ale
+let g:ale_fix_on_save = 1
+let g:ale_completion_autoimport = 1
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint', 'prettier'],
+\   'vue': ['eslint', 'prettier'],
+\}
 
 """"""""""""""
 "" KEYBINDINGS
@@ -354,12 +301,109 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>
 vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
 
-nnoremap <Leader>, :Buffers<CR>
-nnoremap <Leader><Leader> :Files<CR>
-nnoremap <Leader>ff :Files<CR>
-nnoremap <Leader>bb :Buffers<CR>
-nnoremap <Leader>fr :CtrlPMRU<CR>
-nnoremap <C-p> :CtrlP<CR>
+nnoremap <leader><leader> :Files<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fs :write<CR>
+let g:which_key_map['<space>'] = 'fzf-files'
+let g:which_key_map.f = {
+      \ 'name' : '+file' ,
+      \ 'f': ['Files'   , 'fzf-files']      ,
+      \ 's': ['write'   , 'save-file']      ,
+      \ }
+
+" Buffers
+nnoremap <leader>, :Buffers<CR>
+nnoremap <leader>bb :Buffers<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bf :bfirst<CR>
+nnoremap <leader>bh :Startify<CR>
+nnoremap <leader>bl :blast<CR>
+nnoremap <leader>bp :bprevious<CR>
+nnoremap <leader>bn :bnext<CR>
+let g:which_key_map[','] = 'fzf-buffers'
+let g:which_key_map.b = {
+      \ 'name': '+buffer' ,
+      \ 'd': ['bd'        , 'delete-buffer']   ,
+      \ 'f': ['bfirst'    , 'first-buffer']    ,
+      \ 'h': ['Startify'  , 'home-buffer']     ,
+      \ 'l': ['blast'     , 'last-buffer']     ,
+      \ 'n': ['bnext'     , 'next-buffer']     ,
+      \ 'p': ['bprevious' , 'previous-buffer'] ,
+      \ 'b': ['Buffers'   , 'fzf-buffer']      ,
+      \ }
+
+nnoremap <leader>of :NERDTreeToggle<CR>
+nnoremap <leader>oh :Startify<CR>
+let g:which_key_map.o = {
+      \ 'name': '+open' ,
+      \ 'f': ['NERDTreeToggle', 'nerdtree-toggle'] ,
+      \ 'h': ['Startify'   , 'save-file']      ,
+      \ }
+
+
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gc :Git<space>commit<CR>
+nnoremap <leader>gl :Git<space>log<CR>
+let g:which_key_map.g = {
+      \ 'name' : '+git' ,
+      \ 's': ['Git', 'git-status'] ,
+      \ 'c': ['Git commit', 'git-commit'] ,
+      \ 'l': ['Git log', 'git-log'] ,
+      \ }
+
+nnoremap <leader>qq :q<CR>
+nnoremap <leader>qQ :q!<CR>
+let g:which_key_map.q = {
+      \ 'name': '+quit' ,
+      \ 'q': ['quit', 'quit'] ,
+      \ 'Q': ['quit!', 'force-quit'] ,
+      \ }
+
+nnoremap <leader>hhp :PlugUpdate<CR>
+nnoremap <leader>hhP :PlugUpgrade<CR>
+nnoremap <leader>hhc :PlugClean<CR>
+nnoremap <leader>hhs :PlugStatus<CR>
+let g:which_key_map.h = {
+      \ 'name': '+help' ,
+      \ }
+
+let g:which_key_map.h.p = {
+      \ 'name': '+plugin' ,
+      \ 'u': ['PlugUpdate', 'plug-update'] ,
+      \ 'U': ['PlugUpgrade', 'plug-upgrade'] ,
+      \ 'c': ['PlugClean', 'plug-clean'] ,
+      \ 's': ['PlugStatus', 'plug-status'] ,
+      \ }
+
+nnoremap <leader>ww :Windows<CR>
+nnoremap <leader>wc <C-W>c
+nnoremap <leader>ws <C-W>s
+nnoremap <leader>wh <C-W>h
+nnoremap <leader>wj <C-W>j
+nnoremap <leader>wk <C-W>k
+nnoremap <leader>wl <C-W>l
+nnoremap <leader>wd <C-W>c
+let g:which_key_map.w = {
+      \ 'name': '+window' ,
+      \ 'w': ['<C-W>w'     , 'fzf-windows']          ,
+      \ 'd': ['<C-W>c'     , 'delete-window']         ,
+      \ 'h': ['<C-W>h'     , 'window-left']           ,
+      \ 'j': ['<C-W>j'     , 'window-below']          ,
+      \ 'l': ['<C-W>l'     , 'window-right']          ,
+      \ 'k': ['<C-W>k'     , 'window-up']             ,
+      \ 's': ['<C-W>s'     , 'split-window-below']    ,
+      \ 'v': ['<C-W>v'     , 'split-window-below']    ,
+      \ }
+
+nnoremap <leader>pf :NERDTreeToggle<CR>
+nnoremap <leader>pB :Bookmark<CR>
+let g:which_key_map.p = {
+      \ 'name': '+project' ,
+      \ 'f': ['NERDTreeToggle', 'nerdtree-toggle'] ,
+      \ 'B': ['Bookmark', 'nerdtree-bookmark'] ,
+      \ }
+
+autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
 
 """"""""""""""""""""
 "" AUTOCOMMAND GROUP
