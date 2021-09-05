@@ -35,7 +35,7 @@ endif
 call plug#begin(g:my_plugdir)
 
 " Colorschemes
-Plug 'tomasr/molokai'
+Plug 'crusoexia/vim-monokai'
 
 " Plugins
 Plug 'tpope/vim-fugitive'
@@ -49,43 +49,34 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'thisivan/vim-bufexplorer'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'edkolev/tmuxline.vim'
 "Plug 'rkitover/vimpager'
 Plug 'junegunn/fzf.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!'] }
+"Plug 'folke/which-key.nvim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'liuchengxu/vim-better-default'
 
 " General
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi', { 'for': 'python', 'do': 'git submodule update' }
+"Plug 'zchee/deoplete-jedi', { 'for': 'python', 'do': 'git submodule update' }
+Plug 'lighttiger2505/deoplete-vim-lsp'
 "Plug 'neomake/neomake'
 Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'majutsushi/tagbar'
-Plug 'carlitux/deoplete-ternjs'
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale'
 
 " Filetype Plugins
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'hdima/python-syntax'
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'sukima/xmledit'
 Plug 'lepture/vim-jinja', {'for': 'jinja'}
-Plug 'vim-scripts/po.vim', {'for': 'po'}
-Plug 'vim-scripts/po.vim--gray', {'for': 'po'}
 Plug 'rdolgushin/gitignore.vim', {'for': 'gitignore'}
-Plug 'masterodie/vim-poe-filter-syntax'
-Plug 'StanAngeloff/php.vim', {'for': 'php'}
-Plug 'shawncplus/phpcomplete.vim', {'for': 'php'}
-Plug 'dsawardekar/wordpress.vim'
-Plug 'f-breidenstein/icinga-vim'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'posva/vim-vue'
-"Plug 'Quramy/tsuquyomi'
-"Plug 'Quramy/tsuquyomi-vue'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'HerringtonDarkholme/yats.vim'
 
 """Devicons
 Plug 'ryanoasis/vim-devicons'
@@ -119,8 +110,8 @@ set smarttab
 set pastetoggle=<F11>
 
 " Set Leader Key
-let g:mapleader = ","
-let g:maplocalleader = ";"
+let g:mapleader = "\<space>"
+let g:maplocalleader = ","
 
 "" Mouse Settings
 if has('mouse')
@@ -198,15 +189,7 @@ endif
 
 " Colorscheme
 "set t_Co=256
-let g:my_theme="molokai"
-let g:my_themedir=g:my_plugdir . '/' . g:my_theme . '/colors/' . g:my_theme . '.vim'
-if !empty(glob(g:my_themedir))
-    execute 'colorscheme ' . g:my_theme
-endif
-set background=dark
-if has('nvim')
-  set termguicolors
-endif
+colorscheme monokai
 
 """"""""""""""""""
 "" PLUGIN SETTINGS
@@ -229,7 +212,6 @@ let g:ultisnips_python_triple_quoting_style = 'double'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
 
 " deoplete-jedi
 let g:deoplete#sources#jedi#statement_length = 50
@@ -244,13 +226,6 @@ let delimitMate_balance_matchpairs = 1
 
 " nerdtree
 let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]', '\~$']
-nnoremap <F3>  :NERDTreeToggle<CR>
-nnoremap <leader>f  :NERDTreeToggle<CR>
-
-" ctrlp.vim
-noremap <leader>m <Esc>:CtrlP<CR>
-noremap <leader>p <Esc>:CtrlPBuffer<CR>
-noremap <leader>o <Esc>:CtrlPMixed<CR>
 
 "neomake
 try
@@ -283,13 +258,10 @@ endif
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#whitespace#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#whitespace#trailing_format = '●[%s]'
 let g:airline#extensions#whitespace#mixed_indent_format = '○[%s]'
-
-" tagbar
-let g:tagbar_iconchars = ['▸', '▾']
 
 " SimplyFold
 let g:SimpylFold_docstring_preview = 1
@@ -297,10 +269,6 @@ let g:SimpylFold_fold_docstring = 1
 
 " xmledit
 let xml_use_xhtml = 1
-
-" po.vim
-let g:po_translator = "Patrick Neff <odie86@gmail.com>"
-let g:po_lang_team = "myself"
 
 "vimpager
 let g:vimpager = {}
@@ -313,75 +281,85 @@ function! StartifyEntryFormat()
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
 
-"tern
-let g:tern_request_timeout = 1
-let g:tern_show_signature_in_pum = '1'
-let g:tern#filetypes = ['jsx', 'javascript.jsx', 'vue', 'javascript']
-
 "syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_typescript_checkers = ['eslint']
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_eslint_exe = 'npm run eslint --'
+
+"ale
+"let g:ale_open_list = 1
+
+let g:which_key_use_floating_win = 1
+let g:which_key_floating_relative_win = 1
+let g:which_key_floating_opts = { 'row': '-1' }
+let g:which_key_disable_default_offset = 1
+let g:which_key_centered = 1
+
+let g:which_key_map =  {}
+
+let g:which_key_map.w = {
+      \ 'name' : '+window' ,
+      \ 'w' : ['<C-W>w'     , 'other-window']          ,
+      \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+      \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+      \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+      \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+      \ 'h' : ['<C-W>h'     , 'window-left']           ,
+      \ 'j' : ['<C-W>j'     , 'window-below']          ,
+      \ 'l' : ['<C-W>l'     , 'window-right']          ,
+      \ 'k' : ['<C-W>k'     , 'window-up']             ,
+      \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+      \ 'J' : [':resize +5'  , 'expand-window-below']   ,
+      \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+      \ 'K' : [':resize -5'  , 'expand-window-up']      ,
+      \ '=' : ['<C-W>='     , 'balance-window']        ,
+      \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+      \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+      \ '?' : ['Windows'    , 'fzf-window']            ,
+      \ }
+
+let g:which_key_map.b = {
+      \ 'name' : '+buffer' ,
+      \ '1' : ['b1'        , 'buffer 1']        ,
+      \ '2' : ['b2'        , 'buffer 2']        ,
+      \ 'd' : ['bd'        , 'delete-buffer']   ,
+      \ 'F' : ['bfirst'    , 'first-buffer']    ,
+      \ 'h' : ['Startify'  , 'home-buffer']     ,
+      \ 'l' : ['blast'     , 'last-buffer']     ,
+      \ 'n' : ['bnext'     , 'next-buffer']     ,
+      \ 'p' : ['bprevious' , 'previous-buffer'] ,
+      \ 'f' : ['Buffers'   , 'fzf-buffer']      ,
+      \ }
+
+let g:which_key_map.f = {
+      \ 'name' : '+file' ,
+      \ 'f' : ['Files'   , 'fzf-files']      ,
+      \ }
+
+let g:which_key_map.s = {
+      \ 'name' : '+settings' ,
+      \ }
+
+autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
 
 """"""""""""""
 "" KEYBINDINGS
 """"""""""""""
 
-"Make cursor recognize wrapped lines
-noremap <Down> gj
-noremap <Up> gk
-noremap k gk
-noremap j gj
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
-" Quit buffer
-noremap <leader>q :q<CR>
-noremap <leader>qq :q!<CR>
-noremap <leader>qa :qa<CR>
-" Quick save mapping
-noremap <leader>, :w<CR>
-noremap <leader>,q :wq<CR>
-" Discard Buffer
-noremap <leader>d :bd<CR>
-" Disable ex mode
-noremap Q <NOP>
+nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>
+vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
 
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gs :Gstatus<CR>
-noremap <leader>w :Gwrite<CR>
-
-noremap <leader>rel :call NumberToggle()<cr>
-
-execute 'noremap <leader>v :e ' . g:my_vimrc . '<cr>'
-execute 'noremap <leader>vr :source ' . g:my_vimrc . '<cr>'
-
-noremap <leader>l :lnext!<CR>
-noremap <leader>L :lprevious!<CR>
-
-if has('nvim')
-    tnoremap <A-h> <C-\><C-n><C-w>h
-    tnoremap <A-j> <C-\><C-n><C-w>j
-    tnoremap <A-k> <C-\><C-n><C-w>k
-    tnoremap <A-l> <C-\><C-n><C-w>l
-    tnoremap <ESC><ESC> <C-\><C-n>
-endif
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-
-" tagbar
-nnoremap <F4>  :TagbarToggle<CR>
-nnoremap <leader>b  :TagbarToggle<CR>
-
-if exists('g:vimpager.enabled') && g:vimpager.enabled == 1
-    if exists('g:less.enabled')
-        unmap k
-        unmap j
-    endif
-endif
+nnoremap <Leader>, :Buffers<CR>
+nnoremap <Leader><Leader> :Files<CR>
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>bb :Buffers<CR>
+nnoremap <Leader>fr :CtrlPMRU<CR>
+nnoremap <C-p> :CtrlP<CR>
 
 """"""""""""""""""""
 "" AUTOCOMMAND GROUP
