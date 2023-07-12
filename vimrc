@@ -51,12 +51,13 @@ Plug 'tpope/vim-repeat', { 'for': ['vue','python','javascript','typescript','htm
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'Bookmark']} | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter', { 'for': ['vue','python','javascript','typescript','html']}
 Plug 'edkolev/tmuxline.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
+Plug 'junegunn/fzf.vim', { 'on': ['Files', 'Buffers', 'Windows'] } | Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual', 'WhichKeyVisual!'] }
 
 " General
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } | Plug 'lighttiger2505/deoplete-vim-lsp'
-Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify', { 'on': ['Startify'] }
 Plug 'editorconfig/editorconfig-vim'
 
 " Filetype Plugins
